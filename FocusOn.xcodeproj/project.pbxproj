@@ -48,6 +48,10 @@
 		D01FD6AC2774BA6D001DB74C /* FocusOnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnUITests.swift; sourceTree = "<group>"; };
 		D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D01FD6BF2774E9E0001DB74C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		D01FD6C02774EA0D001DB74C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D01FD6C12774EA1B001DB74C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D01FD6C42774EA84001DB74C /* swift.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swift.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +82,13 @@
 		D01FD6842774BA6A001DB74C = {
 			isa = PBXGroup;
 			children = (
+				D01FD6C02774EA0D001DB74C /* LICENSE */,
+				D01FD6C12774EA1B001DB74C /* README.md */,
+				D01FD6BF2774E9E0001DB74C /* .gitignore */,
 				D01FD68F2774BA6A001DB74C /* FocusOn */,
 				D01FD6A52774BA6D001DB74C /* FocusOnTests */,
 				D01FD6AF2774BA6D001DB74C /* FocusOnUITests */,
+				D01FD6C22774EA84001DB74C /* .github */,
 				D01FD68E2774BA6A001DB74C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,6 +139,22 @@
 				D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */,
 			);
 			path = FocusOnUITests;
+			sourceTree = "<group>";
+		};
+		D01FD6C22774EA84001DB74C /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				D01FD6C32774EA84001DB74C /* workflows */,
+			);
+			path = .github;
+			sourceTree = "<group>";
+		};
+		D01FD6C32774EA84001DB74C /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				D01FD6C42774EA84001DB74C /* swift.yml */,
+			);
+			path = workflows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
