@@ -8,61 +8,101 @@
 import SwiftUI
 
 struct TodayView: View {
-    @State private var goal = ""
-    @State private var task1 = ""
-    @State private var task2 = ""
-    @State private var task3 = ""
-    @State private var goalCompleted = false
-    @State private var task1Completed = false
-    @State private var task2Completed = false
-    @State private var task3Completed = false
-    
+    @State private var goal = Goal()
+
     var body: some View {
         Form {
 
             Section {
-                HStack {
-                    TextField("My goal is to ...", text: $goal)
-                    Button(action: { goalCompleted = (goalCompleted ? false : true)
-                    }) {
-                        Image(systemName: (goalCompleted ? "checkmark.circle.fill" : "circle"))
-                            .foregroundColor(goalCompleted ? Color("SuccessColor") : .black)
-                    }
-                }
+                GoalCreationView(
+                    goal: $goal,
+                    placeholder: "My goal is to ...",
+                    name: $goal.name,
+                    completionStatus: $goal.completionStatus)
             } header: {
                 Text("What is your goal for today?")
             }
 
             Section {
-                HStack{
-                    TextField("My first task is to ...", text: $task1)
-                    Button(action: { task1Completed = (task1Completed ? false : true)
-                    }) {
-                        Image(systemName: (task1Completed ? "checkmark.circle.fill" : "circle"))
-                            .foregroundColor(task1Completed ? Color("SuccessColor") : .black)
-                    }
-                }
-                HStack{
-                    TextField("My second task is to ...", text: $task2)
-                    Button(action: { task2Completed = (task2Completed ? false : true)
-                    }) {
-                        Image(systemName: (task2Completed ? "checkmark.circle.fill" : "circle"))
-                            .foregroundColor(task2Completed ? Color("SuccessColor") : .black)
-                    }
-                }
-                HStack{
-                    TextField("My third task is to ...", text: $task3)
-                    Button(action: { task3Completed = (task3Completed ? false : true)
-                    }) {
-                        Image(systemName: (task3Completed ? "checkmark.circle.fill" : "circle"))
-                            .foregroundColor(task3Completed ? Color("SuccessColor") : .black)
-                    }
-                }
+                TaskCreationView(
+                    goal: $goal,
+                    task: $goal.tasks[0],
+                    placeholder: "My first task is to ...",
+                    name: $goal.tasks[0].name,
+                    completionStatus: $goal.tasks[0].completionStatus)
+                TaskCreationView(
+                    goal: $goal,
+                    task: $goal.tasks[1],
+                    placeholder: "My second task is to ...",
+                    name: $goal.tasks[1].name,
+                    completionStatus: $goal.tasks[1].completionStatus)
+                TaskCreationView(
+                    goal: $goal,
+                    task: $goal.tasks[2],
+                    placeholder: "My third task is to ...",
+                    name: $goal.tasks[2].name,
+                    completionStatus: $goal.tasks[2].completionStatus)
             } header: {
                 Text("What are the three tasks to achieve it?")
             }
         }
         .navigationTitle("FocusOn")
+    }
+}
+
+struct GoalCreationView: View {
+    @Binding var goal: Goal
+    let placeholder: String
+    @Binding var name: String
+    @Binding var completionStatus: Bool
+
+    var body: some View {
+        HStack {
+            TextField(placeholder, text: $name)
+            Button(
+                action: {
+                    if (completionStatus) {
+                        if !(goal.tasks[0].completionStatus &&
+                             goal.tasks[1].completionStatus &&
+                             goal.tasks[2].completionStatus) {
+                            completionStatus = false
+                        }
+                    } else {
+                        completionStatus = true
+                        goal.tasks[0].completionStatus = true
+                        goal.tasks[1].completionStatus = true
+                        goal.tasks[2].completionStatus = true
+                    }
+                }) {
+                    Image(systemName: (completionStatus ? "checkmark.circle.fill" : "circle"))
+                        .foregroundColor(completionStatus ? Color("SuccessColor") : .black)
+                }
+        }
+    }
+}
+
+struct TaskCreationView: View {
+    @Binding var goal: Goal
+    @Binding var task: Task
+    let placeholder: String
+    @Binding var name: String
+    @Binding var completionStatus: Bool
+
+
+    var body: some View {
+        HStack {
+            TextField(placeholder, text: $name)
+            Button(
+                action: {
+                    completionStatus = (completionStatus ? false : true)
+                    goal.completionStatus = (goal.tasks[0].completionStatus &&
+                                             goal.tasks[1].completionStatus &&
+                                             goal.tasks[2].completionStatus)
+                }) {
+                    Image(systemName: (completionStatus ? "checkmark.circle.fill" : "circle"))
+                        .foregroundColor(completionStatus ? Color("SuccessColor") : .black)
+                }
+        }
     }
 }
 
