@@ -6,8 +6,23 @@
 //
 
 import Foundation
+import CoreData
 
 class TodayViewModel: ObservableObject {
+
+    let container: NSPersistentContainer
+    
+    init() {
+        container = NSPersistentContainer(name: "FocusOn")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                print("Successfully loaded core data!")
+            }
+        })
+    }
+
     @Published var goal = Goal()
 
     func checkGoalCompletionStatus() {
