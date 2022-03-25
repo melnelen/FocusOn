@@ -118,11 +118,11 @@
 		D01FD68F2774BA6A001DB74C /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
-				D0A6FE8B27EDC4D200B06218 /* Model */,
 				D0A6FE8C27EDC4DD00B06218 /* View */,
 				D0A6FE8D27EDC4E900B06218 /* ViewModel */,
+				D0A6FE8B27EDC4D200B06218 /* Model */,
+				D050584E27EE5B6700244F3D /* CoreData */,
 				D01FD6902774BA6A001DB74C /* FocusOnApp.swift */,
-				D01FD6992774BA6C001DB74C /* Persistence.swift */,
 				D01FD6942774BA6C001DB74C /* Assets.xcassets */,
 				D0DD67AB27EE40BC0051DBCD /* FocusOn.xcdatamodeld */,
 				D01FD6962774BA6C001DB74C /* Preview Content */,
@@ -169,6 +169,14 @@
 				D01FD6C42774EA84001DB74C /* swift.yml */,
 			);
 			path = workflows;
+			sourceTree = "<group>";
+		};
+		D050584E27EE5B6700244F3D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D01FD6992774BA6C001DB74C /* Persistence.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		D0A6FE8B27EDC4D200B06218 /* Model */ = {
