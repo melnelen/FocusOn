@@ -10,45 +10,29 @@ import CoreData
 
 class TodayViewModel: ObservableObject {
 
-    let container: NSPersistentContainer
+    let dataManager = PersistenceController.shared
     
-    init() {
-        container = NSPersistentContainer(name: "FocusOn")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            } else {
-                print("Successfully loaded core data!")
+    func checkGoalCompletionStatus(entity: Goal) {
+        if (entity.completionStatus) {
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: false)
+            entity.tasks?.forEach { task in
+                dataManager.updateTaskCompletionStatus(entity: task as! Task, completionStatus: false)
             }
-        })
-    }
-
-    @Published var goal = Goal()
-
-    func checkGoalCompletionStatus() {
-        if (goal.completionStatus) {
-            goal.completionStatus = false
-            goal.tasks[0].completionStatus = false
-            goal.tasks[1].completionStatus = false
-            goal.tasks[2].completionStatus = false
-
-            if !(goal.tasks[0].completionStatus &&
-                 goal.tasks[1].completionStatus &&
-                 goal.tasks[2].completionStatus) {
-                goal.completionStatus = false
+            if ((entity.tasks?.contains(false))!) {
+                dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: false)
             }
         } else {
-            goal.completionStatus = true
-            goal.tasks[0].completionStatus = true
-            goal.tasks[1].completionStatus = true
-            goal.tasks[2].completionStatus = true
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: true)
+            entity.tasks?.forEach { task in
+                dataManager.updateTaskCompletionStatus(entity: task as! Task, completionStatus: true)
+            }
         }
     }
 
-    func checkAllTasksCompletionStatus() {
-        goal.completionStatus = (goal.tasks[0].completionStatus &&
-                                 goal.tasks[1].completionStatus &&
-                                 goal.tasks[2].completionStatus)
+    func checkAllTasksCompletionStatus(entity: Goal) {
+        if !((entity.tasks?.contains(false))!) {
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: true)
+        }
     }
 }
 
