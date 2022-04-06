@@ -9,12 +9,17 @@ import SwiftUI
 import CoreData
 
 struct TodayView: View {
-//    @Environment(\.managedObjectContext) var moc: NSManagedObjectContext
+    //    @Environment(\.managedObjectContext) var moc: NSManagedObjectContext
 
     @StateObject private var viewModel = TodayViewModel()
     @State private var text = ""
-    private var currentGoal = Goal()
-//    .init(entity: NSEntityDescription, insertInto: NSManagedObjectContext?)
+    private var currentGoal = Goal(
+        id: UUID(),
+        name: "",
+        createdAt: Date(),
+        isCompleted: false,
+        tasks: Set<Task>())
+    //    .init(entity: NSEntityDescription, insertInto: NSManagedObjectContext?)
 
     var body: some View {
         Form {
@@ -24,11 +29,11 @@ struct TodayView: View {
                     TextField("My goal is to ...", text: $text)
                     Button(
                         action: {
-                            viewModel.dataManager.updateGoalName(entity: currentGoal, text: text)
-                            viewModel.checkGoalCompletionStatus(entity: currentGoal)
+                            currentGoal.updateName(name: text)
+                            viewModel.checkGoal(goal: currentGoal)
                         }) {
-                            Image(systemName: (currentGoal.completionStatus ? "checkmark.circle.fill" : "circle"))
-                                .foregroundColor(currentGoal.completionStatus ? Color("SuccessColor") : .black)
+                            Image(systemName: (currentGoal.isCompleted ? "checkmark.circle.fill" : "circle"))
+                                .foregroundColor(currentGoal.isCompleted ? Color("SuccessColor") : .black)
                         }
                 }
             } header: {
@@ -36,16 +41,16 @@ struct TodayView: View {
             }
 
             Section {
-                ForEach(Array(currentGoal.tasks as! Set<Task>), id: \.self) { task in
+                ForEach(Array(currentGoal.tasks!), id: \.self) { task in
                     HStack {
                         TextField("My task is to ...", text: $text)
                         Button(
                             action: {
-                                task.completionStatus = (currentGoal.completionStatus ? false : true)
-                                viewModel.checkAllTasksCompletionStatus(entity: currentGoal)
+                                task.changeCompletionStatus()
+                                viewModel.checkTasks(goal: currentGoal)
                             }) {
-                                Image(systemName: (task.completionStatus ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(task.completionStatus ? Color("SuccessColor") : .black)
+                                Image(systemName: (task.isCompleted ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(task.isCompleted ? Color("SuccessColor") : .black)
                             }
                     }
                 }

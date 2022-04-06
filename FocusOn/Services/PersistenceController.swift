@@ -15,11 +15,11 @@ class PersistenceController {
     let container: NSPersistentContainer
     
     private let containerName: String = "FocusOn"
-    private let goalEntityName: String = "Goal"
-    private let taskEntityName: String = "Task"
+    private let goalEntityName: String = "GoalMO"
+    private let taskEntityName: String = "TaskMO"
 
-    @Published var goals: [Goal] = []
-    @Published var tasks: [Task] = []
+    @Published var goals: [GoalMO] = []
+    @Published var tasks: [TaskMO] = []
 
     init() {
         container = NSPersistentContainer(name: containerName)
@@ -35,7 +35,7 @@ class PersistenceController {
     }
 
     func fetchGoals() {
-        let request = NSFetchRequest<Goal>(entityName: goalEntityName)
+        let request = NSFetchRequest<GoalMO>(entityName: goalEntityName)
         do {
             goals = try container.viewContext.fetch(request)
         } catch let error {
@@ -44,29 +44,29 @@ class PersistenceController {
     }
 
     func addGoal(text: String) {
-        let newGoal = Goal(context: container.viewContext)
+        let newGoal = GoalMO(context: container.viewContext)
         newGoal.id = UUID()
         newGoal.name = text
         newGoal.createdAt = Date()
-        newGoal.completionStatus = false
-        newGoal.tasks = [Task(), Task(), Task()]
+        newGoal.isCompleted = false
+        newGoal.tasks = Set<Task>() as NSSet?
         saveData()
     }
 
-    func updateGoalName(entity: Goal, text: String) {
+    func updateGoalName(entity: GoalMO, text: String) {
         let newGoalName = text
         entity.name = newGoalName
         saveData()
     }
 
-    func updateGoalCompletionStatus(entity: Goal, completionStatus: Bool) {
+    func updateGoalCompletionStatus(entity: GoalMO, completionStatus: Bool) {
         let newGoalCompletionStatus = completionStatus
-        entity.completionStatus = newGoalCompletionStatus
+        entity.isCompleted = newGoalCompletionStatus
         saveData()
     }
 
     func fetchTasks() {
-        let request = NSFetchRequest<Task>(entityName: taskEntityName)
+        let request = NSFetchRequest<TaskMO>(entityName: taskEntityName)
         do {
             tasks = try container.viewContext.fetch(request)
         } catch let error {
@@ -75,22 +75,22 @@ class PersistenceController {
     }
 
     func addTask(text: String) {
-        let newTask = Task(context: container.viewContext)
+        let newTask = TaskMO(context: container.viewContext)
         newTask.id = UUID()
         newTask.name = text
-        newTask.completionStatus = false
+        newTask.isCompleted = false
         saveData()
     }
 
-    func updateTaskName(entity: Task, text: String) {
+    func updateTaskName(entity: TaskMO, text: String) {
         let newTaskName = text
         entity.name = newTaskName
         saveData()
     }
 
-    func updateTaskCompletionStatus(entity: Task, completionStatus: Bool) {
+    func updateTaskCompletionStatus(entity: TaskMO, completionStatus: Bool) {
         let newTaskCompletionStatus = completionStatus
-        entity.completionStatus = newTaskCompletionStatus
+        entity.isCompleted = newTaskCompletionStatus
         saveData()
     }
 
