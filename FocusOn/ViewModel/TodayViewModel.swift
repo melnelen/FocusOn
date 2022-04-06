@@ -6,34 +6,33 @@
 //
 
 import Foundation
+import CoreData
 
 class TodayViewModel: ObservableObject {
-    @Published var goal = Goal()
 
-    func checkGoalCompletionStatus() {
-        if (goal.completionStatus) {
-            goal.completionStatus = false
-            goal.tasks[0].completionStatus = false
-            goal.tasks[1].completionStatus = false
-            goal.tasks[2].completionStatus = false
-
-            if !(goal.tasks[0].completionStatus &&
-                 goal.tasks[1].completionStatus &&
-                 goal.tasks[2].completionStatus) {
-                goal.completionStatus = false
+    let dataManager = PersistenceController.shared
+    
+    func checkGoalCompletionStatus(entity: Goal) {
+        if (entity.completionStatus) {
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: false)
+            entity.tasks?.forEach { task in
+                dataManager.updateTaskCompletionStatus(entity: task as! Task, completionStatus: false)
+            }
+            if ((entity.tasks?.contains(false))!) {
+                dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: false)
             }
         } else {
-            goal.completionStatus = true
-            goal.tasks[0].completionStatus = true
-            goal.tasks[1].completionStatus = true
-            goal.tasks[2].completionStatus = true
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: true)
+            entity.tasks?.forEach { task in
+                dataManager.updateTaskCompletionStatus(entity: task as! Task, completionStatus: true)
+            }
         }
     }
 
-    func checkAllTasksCompletionStatus() {
-        goal.completionStatus = (goal.tasks[0].completionStatus &&
-                                 goal.tasks[1].completionStatus &&
-                                 goal.tasks[2].completionStatus)
+    func checkAllTasksCompletionStatus(entity: Goal) {
+        if !((entity.tasks?.contains(false))!) {
+            dataManager.updateGoalCompletionStatus(entity: entity, completionStatus: true)
+        }
     }
 }
 

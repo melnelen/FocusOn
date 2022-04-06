@@ -6,22 +6,29 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TodayView: View {
+//    @Environment(\.managedObjectContext) var moc: NSManagedObjectContext
+
     @StateObject private var viewModel = TodayViewModel()
+    @State private var text = ""
+    private var currentGoal = Goal()
+//    .init(entity: NSEntityDescription, insertInto: NSManagedObjectContext?)
 
     var body: some View {
         Form {
 
             Section {
                 HStack {
-                    TextField("My goal is to ...", text: $viewModel.goal.name)
+                    TextField("My goal is to ...", text: $text)
                     Button(
                         action: {
-                            viewModel.checkGoalCompletionStatus()
+                            viewModel.dataManager.updateGoalName(entity: currentGoal, text: text)
+                            viewModel.checkGoalCompletionStatus(entity: currentGoal)
                         }) {
-                            Image(systemName: (viewModel.goal.completionStatus ? "checkmark.circle.fill" : "circle"))
-                                .foregroundColor(viewModel.goal.completionStatus ? Color("SuccessColor") : .black)
+                            Image(systemName: (currentGoal.completionStatus ? "checkmark.circle.fill" : "circle"))
+                                .foregroundColor(currentGoal.completionStatus ? Color("SuccessColor") : .black)
                         }
                 }
             } header: {
@@ -29,16 +36,16 @@ struct TodayView: View {
             }
 
             Section {
-                ForEach(viewModel.goal.tasks.indices) { i in
+                ForEach(Array(currentGoal.tasks as! Set<Task>), id: \.self) { task in
                     HStack {
-                        TextField("My task is to ...", text: $viewModel.goal.tasks[i].name)
+                        TextField("My task is to ...", text: $text)
                         Button(
                             action: {
-                                viewModel.goal.tasks[i].completionStatus = (viewModel.goal.tasks[i].completionStatus ? false : true)
-                                viewModel.checkAllTasksCompletionStatus()
+                                task.completionStatus = (currentGoal.completionStatus ? false : true)
+                                viewModel.checkAllTasksCompletionStatus(entity: currentGoal)
                             }) {
-                                Image(systemName: (viewModel.goal.tasks[i].completionStatus ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(viewModel.goal.tasks[i].completionStatus ? Color("SuccessColor") : .black)
+                                Image(systemName: (task.completionStatus ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(task.completionStatus ? Color("SuccessColor") : .black)
                             }
                     }
                 }
