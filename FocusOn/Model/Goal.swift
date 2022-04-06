@@ -10,6 +10,7 @@ import SwiftUI
 struct Goal: Identifiable {
     let id = UUID()
     var name: String = ""
+    var createdAt = Date()
     var completionStatus: Bool = false
     var tasks = [Task(), Task(), Task()]
 }

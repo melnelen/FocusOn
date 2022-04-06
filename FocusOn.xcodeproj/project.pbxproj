@@ -8,19 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6902774BA6A001DB74C /* FocusOnApp.swift */; };
-		D01FD6932774BA6A001DB74C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* ContentView.swift */; };
+		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
 		D01FD6952774BA6C001DB74C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6942774BA6C001DB74C /* Assets.xcassets */; };
 		D01FD6982774BA6C001DB74C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6972774BA6C001DB74C /* Preview Assets.xcassets */; };
 		D01FD69A2774BA6C001DB74C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6992774BA6C001DB74C /* Persistence.swift */; };
-		D01FD69D2774BA6C001DB74C /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D01FD69B2774BA6C001DB74C /* FocusOn.xcdatamodeld */; };
-		D01FD6A72774BA6D001DB74C /* FocusOnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6A62774BA6D001DB74C /* FocusOnTests.swift */; };
 		D01FD6B12774BA6D001DB74C /* FocusOnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */; };
 		D01FD6B32774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */; };
+		D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */; };
 		D0763F3D27B13B0C00C9F07A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0763F3C27B13B0B00C9F07A /* Task.swift */; };
 		D0763F3F27B18F1C00C9F07A /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0763F3E27B18F1C00C9F07A /* Goal.swift */; };
 		D09D99FC27B0562D004A283C /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D99FB27B0562C004A283C /* TodayView.swift */; };
 		D09D99FE27B05642004A283C /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D99FD27B05640004A283C /* ProgressView.swift */; };
 		D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D99FF27B0564E004A283C /* HistoryView.swift */; };
+		D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */; };
+		D0DD67AD27EE40BC0051DBCD /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0DD67AB27EE40BC0051DBCD /* FocusOn.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,13 +44,11 @@
 /* Begin PBXFileReference section */
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6902774BA6A001DB74C /* FocusOnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnApp.swift; sourceTree = "<group>"; };
-		D01FD6922774BA6A001DB74C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D01FD6922774BA6A001DB74C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D01FD6942774BA6C001DB74C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D01FD6972774BA6C001DB74C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D01FD6992774BA6C001DB74C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		D01FD69C2774BA6C001DB74C /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 		D01FD6A22774BA6D001DB74C /* FocusOnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D01FD6A62774BA6D001DB74C /* FocusOnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnTests.swift; sourceTree = "<group>"; };
 		D01FD6AC2774BA6D001DB74C /* FocusOnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnUITests.swift; sourceTree = "<group>"; };
 		D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -57,11 +56,14 @@
 		D01FD6C02774EA0D001DB74C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D01FD6C12774EA1B001DB74C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D01FD6C42774EA84001DB74C /* swift.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swift.yml; sourceTree = "<group>"; };
+		D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModelTests.swift; sourceTree = "<group>"; };
 		D0763F3C27B13B0B00C9F07A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D0763F3E27B18F1C00C9F07A /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		D09D99FB27B0562C004A283C /* TodayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		D09D99FD27B05640004A283C /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		D09D99FF27B0564E004A283C /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		D0DD67AC27EE40BC0051DBCD /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,16 +118,13 @@
 		D01FD68F2774BA6A001DB74C /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
+				D0A6FE8B27EDC4D200B06218 /* Model */,
+				D0A6FE8C27EDC4DD00B06218 /* View */,
+				D0A6FE8D27EDC4E900B06218 /* ViewModel */,
 				D01FD6902774BA6A001DB74C /* FocusOnApp.swift */,
-				D01FD6922774BA6A001DB74C /* ContentView.swift */,
 				D01FD6992774BA6C001DB74C /* Persistence.swift */,
 				D01FD6942774BA6C001DB74C /* Assets.xcassets */,
-				D09D99FF27B0564E004A283C /* HistoryView.swift */,
-				D09D99FB27B0562C004A283C /* TodayView.swift */,
-				D09D99FD27B05640004A283C /* ProgressView.swift */,
-				D01FD69B2774BA6C001DB74C /* FocusOn.xcdatamodeld */,
-				D0763F3E27B18F1C00C9F07A /* Goal.swift */,
-				D0763F3C27B13B0B00C9F07A /* Task.swift */,
+				D0DD67AB27EE40BC0051DBCD /* FocusOn.xcdatamodeld */,
 				D01FD6962774BA6C001DB74C /* Preview Content */,
 			);
 			path = FocusOn;
@@ -142,7 +141,7 @@
 		D01FD6A52774BA6D001DB74C /* FocusOnTests */ = {
 			isa = PBXGroup;
 			children = (
-				D01FD6A62774BA6D001DB74C /* FocusOnTests.swift */,
+				D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */,
 			);
 			path = FocusOnTests;
 			sourceTree = "<group>";
@@ -170,6 +169,34 @@
 				D01FD6C42774EA84001DB74C /* swift.yml */,
 			);
 			path = workflows;
+			sourceTree = "<group>";
+		};
+		D0A6FE8B27EDC4D200B06218 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D0763F3E27B18F1C00C9F07A /* Goal.swift */,
+				D0763F3C27B13B0B00C9F07A /* Task.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D0A6FE8C27EDC4DD00B06218 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D01FD6922774BA6A001DB74C /* MainView.swift */,
+				D09D99FF27B0564E004A283C /* HistoryView.swift */,
+				D09D99FB27B0562C004A283C /* TodayView.swift */,
+				D09D99FD27B05640004A283C /* ProgressView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D0A6FE8D27EDC4E900B06218 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,14 +330,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0763F3D27B13B0C00C9F07A /* Task.swift in Sources */,
+				D0DD67AD27EE40BC0051DBCD /* FocusOn.xcdatamodeld in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D01FD69A2774BA6C001DB74C /* Persistence.swift in Sources */,
-				D01FD69D2774BA6C001DB74C /* FocusOn.xcdatamodeld in Sources */,
-				D01FD6932774BA6A001DB74C /* ContentView.swift in Sources */,
+				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
 				D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */,
 				D0763F3F27B18F1C00C9F07A /* Goal.swift in Sources */,
 				D09D99FE27B05642004A283C /* ProgressView.swift in Sources */,
+				D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D01FD6A72774BA6D001DB74C /* FocusOnTests.swift in Sources */,
+				D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +505,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -490,6 +519,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -507,6 +537,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -520,6 +551,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -661,13 +693,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D01FD69B2774BA6C001DB74C /* FocusOn.xcdatamodeld */ = {
+		D0DD67AB27EE40BC0051DBCD /* FocusOn.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D01FD69C2774BA6C001DB74C /* FocusOn.xcdatamodel */,
+				D0DD67AC27EE40BC0051DBCD /* FocusOn.xcdatamodel */,
 			);
-			currentVersion = D01FD69C2774BA6C001DB74C /* FocusOn.xcdatamodel */;
-			path = FocusOn.xcdatamodeld;
+			currentVersion = D0DD67AC27EE40BC0051DBCD /* FocusOn.xcdatamodel */;
+			name = FocusOn.xcdatamodeld;
+			path = "../../../Downloads/FocusOn-master/FocusOn/FocusOn.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
