@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct MainView: View {
     @State private var selection = 2
