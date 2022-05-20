@@ -9,9 +9,6 @@ import SwiftUI
 import CoreData
 
 struct MainView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-
     @State private var selection = 2
 
     var body: some View {

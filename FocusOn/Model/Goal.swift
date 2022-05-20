@@ -7,30 +7,18 @@
 
 import Foundation
 
-struct Goal: Identifiable {
-    let id: UUID
-    let name: String
+class Goal: Identifiable, ObservableObject {
+    let id: UUID 
+    var name: String
     let createdAt: Date
-    let isCompleted: Bool
-    let tasks: Set<Task>?
+    var isCompleted: Bool
+    var tasks: Set<Task>
 
-//    init(id: UUID, name: String, createdAt: Date, isCompleted: Bool, tasks: Set<Task>) {
-//        self.id = id
-//        self.name = name
-//        self.createdAt = createdAt
-//        self.isCompleted = isCompleted
-//        self.tasks = tasks
-//    }
-
-    func updateGoal(id: UUID, name: String, createdAt: Date, isCompleted: Bool, tasks: Set<Task>) -> Goal {
-        return Goal(id: id , name: name, createdAt: createdAt, isCompleted: isCompleted, tasks: tasks)
-    }
-
-    func updateName(name: String) -> Goal {
-        return Goal(id: id, name: name, createdAt: createdAt, isCompleted: isCompleted, tasks: tasks)
-    }
-
-    func updateCompletionStatus(status: Bool) -> Goal {
-        return Goal(id: id, name: name, createdAt: createdAt, isCompleted: status, tasks: tasks)
+    init() {
+        self.id = UUID()
+        self.name = ""
+        self.createdAt = Date()
+        self.isCompleted = false
+        self.tasks = [Task(), Task(), Task()]
     }
 }

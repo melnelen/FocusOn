@@ -7,22 +7,22 @@
 
 import Foundation
 
-struct Task: Identifiable, Hashable {
-    let id: UUID
-    let name: String
-    let isCompleted: Bool
-
-//    init(id: UUID, name: String, isCompleted: Bool) {
-//        self.id = id
-//        self.name = name
-//        self.isCompleted = isCompleted
-//    }
-
-    func changeCompletionStatus() -> Task {
-        return Task(id: id, name: name, isCompleted: !isCompleted)
+class Task: Identifiable, Hashable, Equatable {
+    static func == (lhs: Task, rhs: Task) -> Bool {
+        return lhs.id == rhs.id
     }
 
-    func updateCompletionStatus(status: Bool) -> Task {
-        return Task(id: id, name: name, isCompleted: status)
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    let id: UUID
+    var name: String
+    var isCompleted: Bool
+
+    init() {
+        self.id = UUID()
+        self.name = ""
+        self.isCompleted = false
     }
 }

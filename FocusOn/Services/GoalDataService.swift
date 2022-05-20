@@ -5,15 +5,16 @@
 //  Created by Alexandra Ivanova on 06/04/2022.
 //
 
+import Foundation
 import CoreData
 
-class GoalDataService {
+class GoalDataService: DataServiceProtocol {
 
     // Singleton
-    static let shared = GoalDataService()
+    //    static let shared = GoalDataService()
 
     let container: NSPersistentContainer
-
+    
     private let containerName: String = "FocusOn"
     private let goalEntityName: String = "GoalMO"
 
@@ -26,18 +27,18 @@ class GoalDataService {
                 fatalError("Error loading Core Data! \(error)")
             } else {
                 print("Successfully loaded core data!")
-                self.fetchGoals()
+//                self.fetchGoals()
             }
         })
     }
 
     // MARK: PUBLIC
 
-    func updateGoals(goal: Goal, name: String) {
+    func upsertGoals(goal: Goal, name: String, isCompleted: Bool) {
         // check if gaol already exists
         if let entity = savedGoals.first(where: { $0.id == goal.id }) {
             if name != "" {
-                update(goal: goal, name: name)
+                update(entity: entity, name: name, isCompleted: isCompleted)
             } else {
                 delete(entity: entity)
             }
@@ -46,14 +47,19 @@ class GoalDataService {
         }
     }
 
-    func fetchGoals() {
+    // MARK: TOFIX
+    func fetchGoals() -> [Goal]{
         let request = NSFetchRequest<GoalMO>(entityName: goalEntityName)
         do {
             savedGoals = try container.viewContext.fetch(request)
         } catch let error {
             print("Error fetching! \(error)")
         }
+        return []
     }
+
+    func insertGoal(goal:Goal) { }
+    func updateGoal(goal: Goal, name: String, isCompleted: Bool) { }
 
     // MARK: PRIVATE
 
@@ -67,9 +73,9 @@ class GoalDataService {
         applyChanges()
     }
 
-    private func update(goal: Goal, name: String) {
-        let entity = GoalMO(context: container.viewContext)
+    private func update(entity: GoalMO, name: String, isCompleted: Bool) {
         entity.name = name
+        entity.isCompleted = isCompleted
         applyChanges()
     }
 
@@ -88,6 +94,6 @@ class GoalDataService {
 
     private func applyChanges() {
         save()
-        fetchGoals()
+//        fetchGoals()
     }
 }

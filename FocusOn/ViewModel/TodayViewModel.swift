@@ -6,78 +6,127 @@
 //
 
 import Foundation
-import CoreData
+import Combine
 
 class TodayViewModel: ObservableObject {
 
-    let goalDataService = GoalDataService.shared
+    @Published var allGoals = [Goal]()
+    @Published var todayGoal = Goal()
+    private let dataService = MockDataService()
+    private var cancellables = Set<AnyCancellable>()
 
-    @Published var goals: [Goal] = []
+    init() {
+        updateAllGoals()
+    }
 
-    func checkGoal(goal: Goal) -> Goal {
-        var updatedGoal = Goal(
-            id: goal.id,
-            name: goal.name,
-            createdAt: goal.createdAt,
-            isCompleted: goal.isCompleted,
-            tasks: goal.tasks)
 
+    // MARK: TODO
+    func updateAllGoals() {
+        //        $allGoals
+        //            .combineLatest(dataService.$savedGoals)
+        //            .map { (allGoals, goalsMO) -> [Goal] in
+        //                allGoals.compactMap { (goal) -> Goal? in
+        //                    guard let entity = goalsMO.first(where: { $0.id == goal.id }) else {
+        //                        return nil
+        //                    }
+        //                    return goal.updateGoal(name: entity.name!, isCompleted: entity.isCompleted)
+        //                }
+        //            }
+        //            .sink { [weak self] (returnedGoals) in
+        //                self?.allGoals =  returnedGoals
+        //            }
+        //            .store(in: &cancellables)
+    }
+
+    func addGoal(name: String) {
+        dataService.insertGoal(goal: todayGoal)
+    }
+
+    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false){
+        dataService.updateGoal(goal: goal, name: name, isCompleted: isCompleted)
+    }
+
+    func updateTask(task: Task, name: String, isCompleted: Bool = false){
+        dataService.updateTask(task: task, name: name, isCompleted: isCompleted)
+    }
+
+    func checkGoalIsCompleted(goal: Goal) {
         if (goal.isCompleted) {
-            updatedGoal = goal.updateCompletionStatus(status: false)
-            goal.tasks?.forEach { task in
-                var updatedTask = task.updateCompletionStatus(status: false)
-            }
-            goal.tasks?.forEach { task in
-                if (!task.isCompleted) {
-                    updatedGoal = goal.updateCompletionStatus(status: false)
-                }
+            goal.isCompleted = false
+            goal.tasks.forEach { task in
+                task.isCompleted = false
             }
         } else {
-            updatedGoal = goal.updateCompletionStatus(status: true)
-            goal.tasks?.forEach { task in
-                var updatedTask = task.updateCompletionStatus(status: false)
+            goal.isCompleted = true
+            goal.tasks.forEach { task in
+                task.isCompleted = true
             }
         }
-        return updatedGoal
     }
 
-    func checkTasks(goal: Goal) -> Goal {
-        var updatedGoal = Goal(
-            id: goal.id,
-            name: goal.name,
-            createdAt: goal.createdAt,
-            isCompleted: true,
-            tasks: goal.tasks)
-        
-        goal.tasks?.forEach { task in
+    func checkTaskIsCompleted(goal: Goal, task: Task) {
+        task.isCompleted = !task.isCompleted
+        goal.isCompleted = true
+        goal.tasks.forEach { task in
             if (!task.isCompleted) {
-                updatedGoal = goal.updateCompletionStatus(status: false)
-            }
+                goal.isCompleted = false
+            } 
         }
-        return updatedGoal
     }
-//
-//    func checkGoalCompletionStatus(entity: Goal) {
-//        if (entity.isCompleted) {
-//            goalDataService.updateGoalCompletionStatus(entity: entity, completionStatus: false)
-//            entity.tasks?.forEach { task in
-//                goalDataService.updateTaskCompletionStatus(entity: task as! Task, completionStatus: false)
-//            }
-//            if ((goal.tasks?.contains(false))!) {
-//                goalDataService.updateGoalCompletionStatus(entity: goal, completionStatus: false)
-//            }
-//        } else {
-//            dataManager.updateGoalCompletionStatus(entity: goal, completionStatus: true)
-//            goal.tasks?.forEach { task in
-//                goalDataService.updateTaskCompletionStatus(entity: task as! Task, completionStatus: true)
-//            }
-//        }
-//    }
-//
-//    func checkAllTasksCompletionStatus(entity: Goal) {
-//        if !((entity.tasks?.contains(false))!) {
-//            goalDataService.updateGoalCompletionStatus(entity: entity, completionStatus: true)
-//        }
-//    }
 }
+
+// MARK: TRASH
+
+//    func currentGoal() -> Goal? {
+//        dataService.fetchGoals().first
+//    }
+
+//        let goal = Goal()
+//                name: name,
+//                isCompleted: false,
+//                tasks: [Task(), Task(), Task()])
+//        todayGoal.tasks =  [Task(), Task(), Task()]
+
+// @State private var tasksText = ["", "", ""]
+// @State private var tasksAreCompleted: [Bool] = [false, false, false]
+// @State private var index = 0
+
+//                    ForEach(Array(goal.tasks), id: \.self) { task in
+//                        HStack {
+//                            TextField("My task is to ...", text: $tasksText[Array(goal.tasks).firstIndex(of: task)])
+//                            Button(
+//                                action: {
+//                                    let index = Array(goal.tasks).firstIndex(of: task)
+//                                    viewModel.checkTaskIsCompleted(goal: goal, task: task)
+//                                    tasksAreCompleted[index] = task.isCompleted
+//                                    viewModel.updateTask(task: task, name: tasksText[index], isCompleted: tasksAreCompleted[index])
+//                                    goalIsCompleted = goal.isCompleted
+//                                }) {
+//                                    Image(systemName: (tasksAreCompleted[Array(goal.tasks).firstIndex(of: task)] ? "checkmark.circle.fill" : "circle"))
+//                                        .foregroundColor(tasksAreCompleted[Array(goal.tasks).firstIndex(of: task)] ? Color("SuccessColor") : .black)
+//                                }
+//                        }
+//                    }
+
+//    private mutating func updateCurrentGoal(goal: Goal) {
+//        if let goal = viewModel.allGoals.first(where: { $0.id == goal.id }) {
+//            textPlaceholder = goal.name
+//        } else {
+//            textPlaceholder = ""
+//        }
+//    }
+
+//    private func taskCheckboxPressed(goal: Goal, task: Task, text: String, status: Bool) -> Bool {
+//        // check the current completion status of the task
+//       viewModel.checkTaskIsCompleted(goal: goal, task: task)
+//        task.isCompleted = !task.isCompleted
+//
+//        // update the state of the checkbox
+//        let newStatus = task.isCompleted
+//
+//        // update the goal with the new values
+//        viewModel.updateTask(task: task, name: text, isCompleted: task.isCompleted)
+//
+//        return task.isCompleted
+//    }
 
