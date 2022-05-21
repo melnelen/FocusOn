@@ -8,7 +8,7 @@
 import Foundation
 
 class MockDataService: DataServiceProtocol {
-    @Published var savedGoals = [Goal]()
+    private var savedGoals = [Goal]()
 //    var savedGoals: [Goal] = [Goal(name: "test", isCompleted: false, tasks: [Task(), Task(), Task()])]
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }

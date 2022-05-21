@@ -9,32 +9,129 @@ import XCTest
 @testable import FocusOn
 
 class TodayViewModelTests: XCTestCase {
-    func test_TodayView_ViewModel_goal_addValues() {
+    func test_TodayViewModel_addGoal() {
         // Given
         let todayVM = TodayViewModel()
         // When
-        todayVM.savedGoal.name = "Create FocusOn app"
-        todayVM.savedGoal.createdAt = Date()
-        todayVM.savedGoal.completionStatus = false
+        todayVM.addGoal(name: "Create FocusOn app")
+        let goal = todayVM.fetchGoals().first!
         // Then
-        XCTAssert(todayVM.savedGoal.name == "Create FocusOn app", "Failed to add a goal name")
-        XCTAssert(Calendar.current.startOfDay(for: todayVM.savedGoal.createdAt) == Calendar.current.startOfDay(for: Date()), "Failed to add a goal date")
-        XCTAssert(todayVM.savedGoal.completionStatus == false, "Failed to add a goal completion status")
+        XCTAssert(goal.name == "Create FocusOn app", "Failed to add a goal")
     }
 
-    func test_TodayView_ViewModel_goal_addThreeTasks() {
+    func test_TodayViewModel_updateGoal() {
         // Given
         let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Create FocusOn app")
+        let goal = todayVM.fetchGoals().first!
         // When
-        todayVM.savedGoal.tasks[0] = Task(name: "Create a project using SwiftUI", completionStatus: true)
-        todayVM.savedGoal.tasks[1] = Task(name: "Implement MVVM structure to the project", completionStatus: true)
-        todayVM.savedGoal.tasks[2] = Task(name: "Add Unit and UI tests", completionStatus: false)
+        todayVM.updateGoal(goal: goal, name: "Test FocusOn app", isCompleted: true)
         // Then
-        XCTAssert(todayVM.savedGoal.tasks[0].name == "Create a project using SwiftUI", "Failed to add first task name")
-        XCTAssert(todayVM.savedGoal.tasks[0].completionStatus == true, "Failed to add first task completion status")
-        XCTAssert(todayVM.savedGoal.tasks[1].name == "Implement MVVM structure to the project", "Failed to add second task name")
-        XCTAssert(todayVM.savedGoal.tasks[1].completionStatus == true, "Failed to add second task completion status")
-        XCTAssert(todayVM.savedGoal.tasks[2].name == "Add Unit and UI tests", "Failed to add second task name")
-        XCTAssert(todayVM.savedGoal.tasks[2].completionStatus == false, "Failed to add third task completion status")
+        XCTAssert(goal.name == "Test FocusOn app", "Failed to update a goal name")
+        XCTAssert(goal.isCompleted == true, "Failed to update a goal completion status")
+    }
+
+    func test_TodayViewModel_updateTask() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Test FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task = Array(goal.tasks)[0]
+        // When
+        todayVM.updateTask(task: task, name: "Create unit tests", isCompleted: true)
+        // Then
+        XCTAssert(task.name == "Create unit tests", "Failed to update a task name")
+        XCTAssert(task.isCompleted == true, "Failed to update a task completion status")
+    }
+
+    func test_TodayViewModel_checkGoalIsCompleted_True() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Complete FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task1 = Array(goal.tasks)[0]
+        let task2 = Array(goal.tasks)[1]
+        let task3 = Array(goal.tasks)[2]
+        goal.isCompleted = true
+        // When
+        todayVM.checkGoalIsCompleted(goal: goal)
+        // Then
+        XCTAssert(goal.isCompleted == false, "Failed to change a goal completion status")
+        XCTAssert(task1.isCompleted == false, "Failed to change a task completion status for a goal")
+        XCTAssert(task2.isCompleted == false, "Failed to change a task completion status for a goal")
+        XCTAssert(task3.isCompleted == false, "Failed to change a task completion status for a goal")
+    }
+
+    func test_TodayViewModel_checkGoalIsCompleted_False() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Complete FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task1 = Array(goal.tasks)[0]
+        let task2 = Array(goal.tasks)[1]
+        let task3 = Array(goal.tasks)[2]
+        // When
+        todayVM.checkGoalIsCompleted(goal: goal)
+        // Then
+        XCTAssert(goal.isCompleted == true, "Failed to change a goal completion status")
+        XCTAssert(task1.isCompleted == true, "Failed to change a task completion status for a goal")
+        XCTAssert(task2.isCompleted == true, "Failed to change a task completion status for a goal")
+        XCTAssert(task3.isCompleted == true, "Failed to change a task completion status for a goal")
+    }
+
+    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalFalse() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Complete FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task1 = Array(goal.tasks)[0]
+        let task2 = Array(goal.tasks)[1]
+        let task3 = Array(goal.tasks)[2]
+        // When
+        todayVM.checkTaskIsCompleted(goal: goal, task: task1)
+        // Then
+        XCTAssert(goal.isCompleted == false, "Failed to change a goal completion status when changing task status")
+        XCTAssert(task1.isCompleted == true, "Failed to change a task completion status")
+        XCTAssert(task2.isCompleted == false, "Failed to change a task completion status")
+        XCTAssert(task3.isCompleted == false, "Failed to change a task completion status")
+    }
+
+    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalTrue() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Complete FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task1 = Array(goal.tasks)[0]
+        let task2 = Array(goal.tasks)[1]
+        let task3 = Array(goal.tasks)[2]
+        // When
+        todayVM.checkTaskIsCompleted(goal: goal, task: task1)
+        todayVM.checkTaskIsCompleted(goal: goal, task: task2)
+        todayVM.checkTaskIsCompleted(goal: goal, task: task3)
+        // Then
+        XCTAssert(goal.isCompleted == true, "Failed to change a goal completion status when changing task status")
+        XCTAssert(task1.isCompleted == true, "Failed to change a task completion status")
+        XCTAssert(task2.isCompleted == true, "Failed to change a task completion status")
+        XCTAssert(task3.isCompleted == true, "Failed to change a task completion status")
+    }
+
+    func test_TodayViewModel_checkTaskIsCompleted_TaskFalse_GoalFalse() {
+        // Given
+        let todayVM = TodayViewModel()
+        todayVM.addGoal(name: "Complete FocusOn app")
+        let goal = todayVM.fetchGoals().first!
+        let task1 = Array(goal.tasks)[0]
+        let task2 = Array(goal.tasks)[1]
+        let task3 = Array(goal.tasks)[2]
+        task1.isCompleted = true
+        task2.isCompleted = true
+        task3.isCompleted = true
+        // When
+        todayVM.checkTaskIsCompleted(goal: goal, task: task1)
+        // Then
+        XCTAssert(goal.isCompleted == false, "Failed to change a goal completion status when changing task status")
+        XCTAssert(task1.isCompleted == false, "Failed to change a task completion status")
+        XCTAssert(task2.isCompleted == true, "Failed to change a task completion status")
+        XCTAssert(task3.isCompleted == true, "Failed to change a task completion status")
     }
 }
