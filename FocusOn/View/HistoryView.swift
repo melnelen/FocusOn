@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HistoryView: View {
+//    @EnvironmentObject private var viewModel: TodayViewModel
+    
     var body: some View {
         Text("History View")
     }

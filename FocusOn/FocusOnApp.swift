@@ -9,12 +9,18 @@ import SwiftUI
 
 @main
 struct FocusOnApp: App {
-    let persistenceController = PersistenceController.shared
+    let dataService = GoalDataService()
 
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, dataService.container.viewContext)
         }
+    }
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

@@ -6,46 +6,76 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct TodayView: View {
-//    @Environment(\.managedObjectContext) var moc: NSManagedObjectContext
+    @StateObject var viewModel = TodayViewModel()
 
-    @StateObject private var viewModel = TodayViewModel()
-    @State private var text = ""
-    private var currentGoal = Goal()
-//    .init(entity: NSEntityDescription, insertInto: NSManagedObjectContext?)
+    @State private var todayGoal: Goal?
+    @State private var goalText = ""
+    @State private var tasksText = ["", "", ""]
+    @State private var goalIsCompleted = false
+    @State private var tasksAreCompleted = [false, false, false]
 
     var body: some View {
         Form {
 
             Section {
                 HStack {
-                    TextField("My goal is to ...", text: $text)
-                    Button(
-                        action: {
-                            viewModel.dataManager.updateGoalName(entity: currentGoal, text: text)
-                            viewModel.checkGoalCompletionStatus(entity: currentGoal)
-                        }) {
-                            Image(systemName: (currentGoal.completionStatus ? "checkmark.circle.fill" : "circle"))
-                                .foregroundColor(currentGoal.completionStatus ? Color("SuccessColor") : .black)
-                        }
+                    TextField("My goal is to ...", text: $goalText)
+                    if let goal = todayGoal {
+                        Button(
+                            action: {
+                                goalCheckboxPressed(goal: goal)
+                            }) {
+                                Image(systemName: (goalIsCompleted ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(goalIsCompleted ? Color("SuccessColor") : .black)
+                            }
+                    } else {
+                        Button(
+                            action: {
+                                addGoalButtonPressed()
+                            }, label: {
+                                Text("Add")
+                            })
+                    }
                 }
             } header: {
                 Text("What is your goal for today?")
             }
 
             Section {
-                ForEach(Array(currentGoal.tasks as! Set<Task>), id: \.self) { task in
+                if let goal = todayGoal {
                     HStack {
-                        TextField("My task is to ...", text: $text)
+                        TextField("My first task is to ...", text: $tasksText[0])
                         Button(
                             action: {
-                                task.completionStatus = (currentGoal.completionStatus ? false : true)
-                                viewModel.checkAllTasksCompletionStatus(entity: currentGoal)
+                                let task = Array(goal.tasks)[0]
+                                taskCheckboxPressed(goal: goal, task: task)
                             }) {
-                                Image(systemName: (task.completionStatus ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(task.completionStatus ? Color("SuccessColor") : .black)
+                                Image(systemName: (tasksAreCompleted[0] ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(tasksAreCompleted[0] ? Color("SuccessColor") : .black)
+                            }
+                    }
+                    HStack {
+                        TextField("My second task is to ...", text: $tasksText[1])
+                        Button(
+                            action: {
+                                let task = Array(goal.tasks)[1]
+                                taskCheckboxPressed(goal: goal, task: task)
+                            }) {
+                                Image(systemName: (tasksAreCompleted[1] ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(tasksAreCompleted[1] ? Color("SuccessColor") : .black)
+                            }
+                    }
+                    HStack {
+                        TextField("My third task is to ...", text: $tasksText[2])
+                        Button(
+                            action: {
+                                let task = Array(goal.tasks)[2]
+                                taskCheckboxPressed(goal: goal, task: task)
+                            }) {
+                                Image(systemName: (tasksAreCompleted[2] ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(tasksAreCompleted[2] ? Color("SuccessColor") : .black)
                             }
                     }
                 }
@@ -54,11 +84,61 @@ struct TodayView: View {
             }
         }
         .navigationTitle("FocusOn")
+        .environmentObject(viewModel)
+//      .onAppear { currentGoal = viewModel.todayGoal }
+        
+    }
+}
+
+extension TodayView {
+    private func addGoalButtonPressed() {
+        // link view goal to the viewModel goal
+        todayGoal = viewModel.todayGoal
+
+        // add the goal to the list of goals
+        viewModel.addGoal(name: goalText)
+
+        // hide keyboard
+        UIApplication.shared.endEditing()
+    }
+
+    private func goalCheckboxPressed(goal: Goal) {
+        // check the current completion status of the goal
+        viewModel.checkGoalIsCompleted(goal: goal)
+
+        // update the state of the checkbox
+        goalIsCompleted = goal.isCompleted
+
+        // update the goal with the new values
+        viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
+
+        // update the tasks checkboxes with the new values
+        tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
+        tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
+        tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+    }
+
+    private func taskCheckboxPressed(goal: Goal, task: Task) {
+        // get the index of the task at hand
+        let index = Array(goal.tasks).firstIndex(of: task)
+
+        // check the current completion status of the task
+        viewModel.checkTaskIsCompleted(goal: goal, task: task)
+
+        // update the state of the checkbox
+        tasksAreCompleted[index!] = task.isCompleted
+
+        // update the task with the new values
+        viewModel.updateTask(task: task, name: tasksText[index!], isCompleted: tasksAreCompleted[index!])
+
+        // update the goal checkbox
+        goalIsCompleted = goal.isCompleted
     }
 }
 
 struct TodayView_Previews: PreviewProvider {
     static var previews: some View {
         TodayView()
+            .environmentObject(TodayViewModel())
     }
 }
