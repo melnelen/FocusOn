@@ -59,7 +59,8 @@ class GoalDataService: DataServiceProtocol {
     }
 
     func insertGoal(goal:Goal) { }
-    func updateGoal(goal: Goal, name: String, isCompleted: Bool) { }
+    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false) { }
+    func updateTask(task: Task, name: String, isCompleted: Bool = false) { }
 
     // MARK: PRIVATE
 

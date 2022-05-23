@@ -12,13 +12,16 @@ class TodayViewModel: ObservableObject {
 
     @Published var todayGoal = Goal()
     private var allGoals = [Goal]()
-    private let dataService = MockDataService()
+    private let dataService: DataServiceProtocol
 //    private var cancellables = Set<AnyCancellable>()
 
-    init() {
-        updateAllGoals()
-    }
+//    init() {
+//        updateAllGoals()
+//    }
 
+    init( dataService: DataServiceProtocol = MockDataService()) {
+            self.dataService = dataService
+        }
 
     // MARK: TODO
     func updateAllGoals() {
