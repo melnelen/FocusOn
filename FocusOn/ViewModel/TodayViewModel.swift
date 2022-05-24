@@ -20,8 +20,8 @@ class TodayViewModel: ObservableObject {
 //    }
 
     init( dataService: DataServiceProtocol = MockDataService()) {
-            self.dataService = dataService
-        }
+        self.dataService = dataService
+    }
 
     // MARK: TODO
     func updateAllGoals() {

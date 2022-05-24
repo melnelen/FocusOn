@@ -15,6 +15,8 @@ struct TodayView: View {
     @State private var tasksText = ["", "", ""]
     @State private var goalIsCompleted = false
     @State private var tasksAreCompleted = [false, false, false]
+    @State private var nameIsLongEnough = false
+    @State private var showAlert = false
 
     var body: some View {
         Form {
@@ -39,6 +41,11 @@ struct TodayView: View {
                             })
                     }
                 }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Oops 🙊"),
+                          message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
+                          dismissButton: .default(Text("OK")))
+                }
             } header: {
                 Text("What is your goal for today?")
             }
@@ -56,6 +63,11 @@ struct TodayView: View {
                                     .foregroundColor(tasksAreCompleted[0] ? Color("SuccessColor") : .black)
                             }
                     }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Oops 🙊"),
+                              message: Text("Please, make sure that the name of your first task is at least 3 characters long"),
+                              dismissButton: .default(Text("OK")))
+                    }
                     HStack {
                         TextField("My second task is to ...", text: $tasksText[1])
                         Button(
@@ -66,6 +78,11 @@ struct TodayView: View {
                                 Image(systemName: (tasksAreCompleted[1] ? "checkmark.circle.fill" : "circle"))
                                     .foregroundColor(tasksAreCompleted[1] ? Color("SuccessColor") : .black)
                             }
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Oops 🙊"),
+                              message: Text("Please, make sure that the name of your second task is at least 3 characters long"),
+                              dismissButton: .default(Text("OK")))
                     }
                     HStack {
                         TextField("My third task is to ...", text: $tasksText[2])
@@ -78,6 +95,11 @@ struct TodayView: View {
                                     .foregroundColor(tasksAreCompleted[2] ? Color("SuccessColor") : .black)
                             }
                     }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Oops 🙊"),
+                              message: Text("Please, make sure that the name of your third task is at least 3 characters long"),
+                              dismissButton: .default(Text("OK")))
+                    }
                 }
             } header: {
                 Text("What are the three tasks to achieve it?")
@@ -85,54 +107,81 @@ struct TodayView: View {
         }
         .navigationTitle("FocusOn")
         .environmentObject(viewModel)
-//      .onAppear { currentGoal = viewModel.todayGoal }
+        //      .onAppear { currentGoal = viewModel.todayGoal }
         
     }
 }
 
 extension TodayView {
     private func addGoalButtonPressed() {
-        // link view goal to the viewModel goal
-        todayGoal = viewModel.todayGoal
+        // check that the name of the goal is at least 3 characters long
+        nameIsLongEnough = checkLength(of: goalText)
+        if nameIsLongEnough {
+            // link view goal to the viewModel goal
+            todayGoal = viewModel.todayGoal
 
-        // add the goal to the list of goals
-        viewModel.addGoal(name: goalText)
+            // add the goal to the list of goals
+            viewModel.addGoal(name: goalText)
 
-        // hide keyboard
-        UIApplication.shared.endEditing()
+            // update the text for the goal name
+            goalText = viewModel.todayGoal.name
+
+            // hide keyboard
+            UIApplication.shared.endEditing()
+        } else {
+            showAlert.toggle()
+        }
     }
 
     private func goalCheckboxPressed(goal: Goal) {
-        // check the current completion status of the goal
-        viewModel.checkGoalIsCompleted(goal: goal)
+        // check that the name of the goal is at least 3 characters long
+        nameIsLongEnough = (checkLength(of: goalText) &&
+                            checkLength(of: tasksText[0]) &&
+                            checkLength(of: tasksText[1]) &&
+                            checkLength(of: tasksText[2]))
+        if nameIsLongEnough {
+            // check the current completion status of the goal
+            viewModel.checkGoalIsCompleted(goal: goal)
 
-        // update the state of the checkbox
-        goalIsCompleted = goal.isCompleted
+            // update the state of the checkbox
+            goalIsCompleted = goal.isCompleted
 
-        // update the goal with the new values
-        viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
+            // update the goal with the new values
+            viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
 
-        // update the tasks checkboxes with the new values
-        tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
-        tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
-        tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+            // update the tasks checkboxes with the new values
+            tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
+            tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
+            tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+        } else {
+            showAlert.toggle()
+        }
     }
 
     private func taskCheckboxPressed(goal: Goal, task: Task) {
         // get the index of the task at hand
         let index = Array(goal.tasks).firstIndex(of: task)
+        // check that the name of the goal is at least 3 characters long
+        nameIsLongEnough = checkLength(of: tasksText[index!])
+        if nameIsLongEnough {
+            // check the current completion status of the task
+            viewModel.checkTaskIsCompleted(goal: goal, task: task)
 
-        // check the current completion status of the task
-        viewModel.checkTaskIsCompleted(goal: goal, task: task)
+            // update the state of the checkbox
+            tasksAreCompleted[index!] = task.isCompleted
 
-        // update the state of the checkbox
-        tasksAreCompleted[index!] = task.isCompleted
+            // update the task with the new values
+            viewModel.updateTask(task: task, name: tasksText[index!], isCompleted: tasksAreCompleted[index!])
 
-        // update the task with the new values
-        viewModel.updateTask(task: task, name: tasksText[index!], isCompleted: tasksAreCompleted[index!])
+            // update the goal checkbox
+            goalIsCompleted = goal.isCompleted
+        } else {
+            showAlert.toggle()
+        }
+    }
 
-        // update the goal checkbox
-        goalIsCompleted = goal.isCompleted
+    private func checkLength(of text: String) -> Bool {
+        return text.count > 2 ? true : false
     }
 }
 
