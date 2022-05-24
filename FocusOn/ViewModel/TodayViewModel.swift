@@ -10,15 +10,18 @@ import Combine
 
 class TodayViewModel: ObservableObject {
 
-    @Published var allGoals = [Goal]()
     @Published var todayGoal = Goal()
-    private let dataService = MockDataService()
-    private var cancellables = Set<AnyCancellable>()
+    private var allGoals = [Goal]()
+    private let dataService: DataServiceProtocol
+//    private var cancellables = Set<AnyCancellable>()
 
-    init() {
-        updateAllGoals()
-    }
+//    init() {
+//        updateAllGoals()
+//    }
 
+    init( dataService: DataServiceProtocol = MockDataService()) {
+            self.dataService = dataService
+        }
 
     // MARK: TODO
     func updateAllGoals() {
@@ -38,15 +41,25 @@ class TodayViewModel: ObservableObject {
         //            .store(in: &cancellables)
     }
 
+    func fetchGoals() -> [Goal] {
+        allGoals = dataService.fetchGoals()
+        return allGoals
+    }
+
     func addGoal(name: String) {
+        todayGoal.name = name
         dataService.insertGoal(goal: todayGoal)
     }
 
     func updateGoal(goal: Goal, name: String, isCompleted: Bool = false){
+        goal.name = name
+        goal.isCompleted = isCompleted
         dataService.updateGoal(goal: goal, name: name, isCompleted: isCompleted)
     }
 
     func updateTask(task: Task, name: String, isCompleted: Bool = false){
+        task.name = name
+        task.isCompleted = isCompleted
         dataService.updateTask(task: task, name: name, isCompleted: isCompleted)
     }
 
@@ -70,7 +83,7 @@ class TodayViewModel: ObservableObject {
         goal.tasks.forEach { task in
             if (!task.isCompleted) {
                 goal.isCompleted = false
-            } 
+            }
         }
     }
 }

@@ -12,4 +12,5 @@ protocol DataServiceProtocol {
     func fetchGoals() -> [Goal]
     func insertGoal(goal: Goal)
     func updateGoal(goal: Goal, name: String, isCompleted: Bool)
+    func updateTask(task: Task, name: String, isCompleted: Bool)
 }
