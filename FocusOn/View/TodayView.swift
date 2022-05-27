@@ -41,11 +41,7 @@ struct TodayView: View {
                             })
                     }
                 }
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Oops 🙊"),
-                          message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
-                          dismissButton: .default(Text("OK")))
-                }
+                .alert(isPresented: $showAlert) { showNameLengthAlert() }
             } header: {
                 Text("What is your goal for today?")
             }
@@ -63,11 +59,7 @@ struct TodayView: View {
                                     .foregroundColor(tasksAreCompleted[0] ? Color("SuccessColor") : .black)
                             }
                     }
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Oops 🙊"),
-                              message: Text("Please, make sure that the name of your first task is at least 3 characters long"),
-                              dismissButton: .default(Text("OK")))
-                    }
+                    .alert(isPresented: $showAlert) { showNameLengthAlert() }
                     HStack {
                         TextField("My second task is to ...", text: $tasksText[1])
                         Button(
@@ -79,11 +71,7 @@ struct TodayView: View {
                                     .foregroundColor(tasksAreCompleted[1] ? Color("SuccessColor") : .black)
                             }
                     }
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Oops 🙊"),
-                              message: Text("Please, make sure that the name of your second task is at least 3 characters long"),
-                              dismissButton: .default(Text("OK")))
-                    }
+                    .alert(isPresented: $showAlert) { showNameLengthAlert() }
                     HStack {
                         TextField("My third task is to ...", text: $tasksText[2])
                         Button(
@@ -95,11 +83,7 @@ struct TodayView: View {
                                     .foregroundColor(tasksAreCompleted[2] ? Color("SuccessColor") : .black)
                             }
                     }
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Oops 🙊"),
-                              message: Text("Please, make sure that the name of your third task is at least 3 characters long"),
-                              dismissButton: .default(Text("OK")))
-                    }
+                    .alert(isPresented: $showAlert) { showNameLengthAlert() }
                 }
             } header: {
                 Text("What are the three tasks to achieve it?")
@@ -115,7 +99,7 @@ struct TodayView: View {
 extension TodayView {
     private func addGoalButtonPressed() {
         // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = checkLength(of: goalText)
+        nameIsLongEnough = viewModel.checkLength(of: goalText)
         if nameIsLongEnough {
             // link view goal to the viewModel goal
             todayGoal = viewModel.todayGoal
@@ -135,10 +119,10 @@ extension TodayView {
 
     private func goalCheckboxPressed(goal: Goal) {
         // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = (checkLength(of: goalText) &&
-                            checkLength(of: tasksText[0]) &&
-                            checkLength(of: tasksText[1]) &&
-                            checkLength(of: tasksText[2]))
+        nameIsLongEnough = (viewModel.checkLength(of: goalText) &&
+                            viewModel.checkLength(of: tasksText[0]) &&
+                            viewModel.checkLength(of: tasksText[1]) &&
+                            viewModel.checkLength(of: tasksText[2]))
         if nameIsLongEnough {
             // check the current completion status of the goal
             viewModel.checkGoalIsCompleted(goal: goal)
@@ -162,7 +146,7 @@ extension TodayView {
         // get the index of the task at hand
         let index = Array(goal.tasks).firstIndex(of: task)
         // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = checkLength(of: tasksText[index!])
+        nameIsLongEnough = viewModel.checkLength(of: tasksText[index!])
         if nameIsLongEnough {
             // check the current completion status of the task
             viewModel.checkTaskIsCompleted(goal: goal, task: task)
@@ -180,8 +164,10 @@ extension TodayView {
         }
     }
 
-    private func checkLength(of text: String) -> Bool {
-        return text.count > 2 ? true : false
+    private func showNameLengthAlert() -> Alert{
+        Alert(title: Text("Oops 🙊"),
+              message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
+              dismissButton: .default(Text("OK")))
     }
 }
 
