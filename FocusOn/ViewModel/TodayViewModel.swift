@@ -86,10 +86,6 @@ class TodayViewModel: ObservableObject {
             }
         }
     }
-
-    func checkLength(of text: String) -> Bool {
-        return text.count > 2 ? true : false
-    }
 }
 
 // MARK: TRASH
