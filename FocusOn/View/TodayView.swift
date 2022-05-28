@@ -15,7 +15,6 @@ struct TodayView: View {
     @State private var tasksText = ["", "", ""]
     @State private var goalIsCompleted = false
     @State private var tasksAreCompleted = [false, false, false]
-    @State private var nameIsLongEnough = false
     @State private var showAlert = false
 
     var body: some View {
