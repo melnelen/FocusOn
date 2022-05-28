@@ -98,69 +98,69 @@ struct TodayView: View {
 
 extension TodayView {
     private func addGoalButtonPressed() {
-        // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = viewModel.checkLength(of: goalText)
-        if nameIsLongEnough {
+        do {
+            // add the goal to the list of goals
+            try viewModel.addGoal(name: goalText)
+
             // link view goal to the viewModel goal
             todayGoal = viewModel.todayGoal
 
-            // add the goal to the list of goals
-            viewModel.addGoal(name: goalText)
-
             // update the text for the goal name
             goalText = viewModel.todayGoal.name
-
-            // hide keyboard
-            UIApplication.shared.endEditing()
-        } else {
+        } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
+        } catch {
+            print("Something went wrong!")
         }
+
+        // hide keyboard
+        UIApplication.shared.endEditing()
     }
 
     private func goalCheckboxPressed(goal: Goal) {
-        // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = (viewModel.checkLength(of: goalText) &&
-                            viewModel.checkLength(of: tasksText[0]) &&
-                            viewModel.checkLength(of: tasksText[1]) &&
-                            viewModel.checkLength(of: tasksText[2]))
-        if nameIsLongEnough {
+        do {
+            // update the goal and the tasks with the new values
+            try viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
+            try viewModel.updateTask(task: Array(goal.tasks)[0], name: tasksText[0], isCompleted: tasksAreCompleted[0])
+            try viewModel.updateTask(task: Array(goal.tasks)[1], name: tasksText[1], isCompleted: tasksAreCompleted[1])
+            try viewModel.updateTask(task: Array(goal.tasks)[2], name: tasksText[2], isCompleted: tasksAreCompleted[2])
+
             // check the current completion status of the goal
             viewModel.checkGoalIsCompleted(goal: goal)
 
             // update the state of the checkbox
             goalIsCompleted = goal.isCompleted
 
-            // update the goal with the new values
-            viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
-
             // update the tasks checkboxes with the new values
             tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
             tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
             tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
-        } else {
+        } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
+        } catch {
+            print("Something went wrong!")
         }
     }
 
     private func taskCheckboxPressed(goal: Goal, task: Task) {
         // get the index of the task at hand
         let index = Array(goal.tasks).firstIndex(of: task)
-        // check that the name of the goal is at least 3 characters long
-        nameIsLongEnough = viewModel.checkLength(of: tasksText[index!])
-        if nameIsLongEnough {
+        do {
+            // update the task with the new values
+            try viewModel.updateTask(task: task, name: tasksText[index!], isCompleted: tasksAreCompleted[index!])
+
             // check the current completion status of the task
             viewModel.checkTaskIsCompleted(goal: goal, task: task)
 
             // update the state of the checkbox
             tasksAreCompleted[index!] = task.isCompleted
 
-            // update the task with the new values
-            viewModel.updateTask(task: task, name: tasksText[index!], isCompleted: tasksAreCompleted[index!])
-
             // update the goal checkbox
             goalIsCompleted = goal.isCompleted
-        } else {
+        } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
+        } catch {
+            print("Something went wrong!")
         }
     }
 

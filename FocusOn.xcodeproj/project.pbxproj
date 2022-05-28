@@ -24,6 +24,7 @@
 		D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */; };
 		D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */; };
 		D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD1B9828087BFE00058C21 /* MockDataService.swift */; };
+		D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA10042841145A000FDE98 /* NameLengthError.swift */; };
 		D0DD67AD27EE40BC0051DBCD /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0DD67AB27EE40BC0051DBCD /* FocusOn.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServiceProtocol.swift; sourceTree = "<group>"; };
 		D0BD1B9828087BFE00058C21 /* MockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataService.swift; sourceTree = "<group>"; };
+		D0DA10042841145A000FDE98 /* NameLengthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameLengthError.swift; sourceTree = "<group>"; };
 		D0DD67AC27EE40BC0051DBCD /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 			children = (
 				D07B0C0827FD930000245BA0 /* Goal.swift */,
 				D07B0C0A27FD931400245BA0 /* Task.swift */,
+				D0DA10042841145A000FDE98 /* NameLengthError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0DD67AD27EE40BC0051DBCD /* FocusOn.xcdatamodeld in Sources */,
+				D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D07B0C0B27FD931400245BA0 /* Task.swift in Sources */,
 				D01FD69A2774BA6C001DB74C /* PersistenceController.swift in Sources */,
