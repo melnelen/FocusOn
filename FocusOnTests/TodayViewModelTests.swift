@@ -24,41 +24,153 @@ class TodayViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_TodayViewModel_addGoal() {
+    func test_TodayViewModel_addGoal_WithEmptyName() {
+        // Given
+        var error = "No error!"
+        // When
+        do {
+            try sut.addGoal(name: "")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is empty!", "Could not catch the error for an empty name when adding a goal")
+    }
+
+    func test_TodayViewModel_addGoal_WithShortName() {
+        // Given
+        var error = "No error!"
+        // When
+        do {
+            try sut.addGoal(name: "G")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is too short!", "Could not catch the error for a name that is too short when adding a goal")
+    }
+
+    func test_TodayViewModel_addGoal() throws {
         // Given
         // When
-        sut.addGoal(name: "Create FocusOn app")
+        try sut.addGoal(name: "Create FocusOn app")
         let goal = sut.fetchGoals().first!
         // Then
         XCTAssert(goal.name == "Create FocusOn app", "Failed to add a goal")
     }
 
-    func test_TodayViewModel_updateGoal() {
+    func test_TodayViewModel_updateGoal_WithEmptyName() {
         // Given
-        sut.addGoal(name: "Create FocusOn app")
+        var error = "No error!"
+        do { try sut.addGoal(name: "Create FocusOn app") } catch { }
         let goal = sut.fetchGoals().first!
         // When
-        sut.updateGoal(goal: goal, name: "Test FocusOn app", isCompleted: true)
+        do {
+            try sut.updateGoal(goal: goal, name: "")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is empty!", "Could not catch the error for an empty name when updating a goal")
+    }
+
+    func test_TodayViewModel_updateGoal_WithShortName() throws {
+        // Given
+        var error = "No error!"
+        try sut.addGoal(name: "Create FocusOn app")
+        let goal = sut.fetchGoals().first!
+        // When
+        do {
+            try sut.updateGoal(goal: goal, name: "UG")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is too short!", "Could not catch the error for a name that is too short when updating a goal")
+    }
+
+    func test_TodayViewModel_updateGoal() throws {
+        // Given
+        try sut.addGoal(name: "Create FocusOn app")
+        let goal = sut.fetchGoals().first!
+        // When
+        try sut.updateGoal(goal: goal, name: "Test FocusOn app", isCompleted: true)
         // Then
         XCTAssert(goal.name == "Test FocusOn app", "Failed to update a goal name")
         XCTAssert(goal.isCompleted == true, "Failed to update a goal completion status")
     }
 
-    func test_TodayViewModel_updateTask() {
+    func test_TodayViewModel_updateTask_WithEmptyName() throws {
         // Given
-        sut.addGoal(name: "Test FocusOn app")
+        var error = "No error!"
+        try sut.addGoal(name: "Test FocusOn app")
         let goal = sut.fetchGoals().first!
         let task = Array(goal.tasks)[0]
         // When
-        sut.updateTask(task: task, name: "Create unit tests", isCompleted: true)
+        do {
+            try sut.updateTask(task: task, name: "")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is empty!", "Could not catch the error for an empty name when updating a task")
+    }
+
+    func test_TodayViewModel_updateTask_WithShortName() throws {
+        // Given
+        var error = "No error!"
+        try sut.addGoal(name: "Test FocusOn app")
+        let goal = sut.fetchGoals().first!
+        let task = Array(goal.tasks)[0]
+        // When
+        do {
+            try sut.updateTask(task: task, name: "UT")
+        } catch NameLengthError.empty {
+            error = "The name is empty!"
+        } catch NameLengthError.short {
+            error = "The name is too short!"
+        } catch {
+            print("Something went wrong!")
+        }
+        // Then
+        XCTAssert(error == "The name is too short!", "Could not catch the error for a name that is too short when updating a task")
+    }
+
+    func test_TodayViewModel_updateTask() throws {
+        // Given
+        try sut.addGoal(name: "Test FocusOn app")
+        let goal = sut.fetchGoals().first!
+        let task = Array(goal.tasks)[0]
+        // When
+        try sut.updateTask(task: task, name: "Create unit tests", isCompleted: true)
         // Then
         XCTAssert(task.name == "Create unit tests", "Failed to update a task name")
         XCTAssert(task.isCompleted == true, "Failed to update a task completion status")
     }
 
-    func test_TodayViewModel_checkGoalIsCompleted_True() {
+    func test_TodayViewModel_checkGoalIsCompleted_True() throws {
         // Given
-        sut.addGoal(name: "Complete FocusOn app")
+        try sut.addGoal(name: "Complete FocusOn app")
         let goal = sut.fetchGoals().first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
@@ -73,9 +185,9 @@ class TodayViewModelTests: XCTestCase {
         XCTAssert(task3.isCompleted == false, "Failed to change a task completion status for a goal")
     }
 
-    func test_TodayViewModel_checkGoalIsCompleted_False() {
+    func test_TodayViewModel_checkGoalIsCompleted_False() throws {
         // Given
-        sut.addGoal(name: "Complete FocusOn app")
+        try sut.addGoal(name: "Complete FocusOn app")
         let goal = sut.fetchGoals().first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
@@ -89,10 +201,10 @@ class TodayViewModelTests: XCTestCase {
         XCTAssert(task3.isCompleted == true, "Failed to change a task completion status for a goal")
     }
 
-    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalFalse() {
+    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalFalse() throws {
         // Given
         let todayVM = TodayViewModel()
-        sut.addGoal(name: "Complete FocusOn app")
+        try sut.addGoal(name: "Complete FocusOn app")
         let goal = sut.fetchGoals().first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
@@ -106,9 +218,9 @@ class TodayViewModelTests: XCTestCase {
         XCTAssert(task3.isCompleted == false, "Failed to change a task completion status")
     }
 
-    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalTrue() {
+    func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalTrue() throws {
         // Given
-        sut.addGoal(name: "Complete FocusOn app")
+        try sut.addGoal(name: "Complete FocusOn app")
         let goal = sut.fetchGoals().first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
@@ -124,9 +236,9 @@ class TodayViewModelTests: XCTestCase {
         XCTAssert(task3.isCompleted == true, "Failed to change a task completion status")
     }
 
-    func test_TodayViewModel_checkTaskIsCompleted_TaskFalse_GoalFalse() {
+    func test_TodayViewModel_checkTaskIsCompleted_TaskFalse_GoalFalse() throws {
         // Given
-        sut.addGoal(name: "Complete FocusOn app")
+        try sut.addGoal(name: "Complete FocusOn app")
         let goal = sut.fetchGoals().first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]

@@ -13,15 +13,15 @@ class TodayViewModel: ObservableObject {
     @Published var todayGoal = Goal()
     private var allGoals = [Goal]()
     private let dataService: DataServiceProtocol
-//    private var cancellables = Set<AnyCancellable>()
+    //    private var cancellables = Set<AnyCancellable>()
 
-//    init() {
-//        updateAllGoals()
-//    }
+    //    init() {
+    //        updateAllGoals()
+    //    }
 
     init( dataService: DataServiceProtocol = MockDataService()) {
-            self.dataService = dataService
-        }
+        self.dataService = dataService
+    }
 
     // MARK: TODO
     func updateAllGoals() {
@@ -46,21 +46,21 @@ class TodayViewModel: ObservableObject {
         return allGoals
     }
 
-    func addGoal(name: String) {
+    func addGoal(name: String) throws {
         todayGoal.name = name
-        dataService.insertGoal(goal: todayGoal)
+        try dataService.insertGoal(goal: todayGoal)
     }
 
-    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false){
+    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false) throws {
         goal.name = name
         goal.isCompleted = isCompleted
-        dataService.updateGoal(goal: goal, name: name, isCompleted: isCompleted)
+        try dataService.updateGoal(goal: goal, name: name, isCompleted: isCompleted)
     }
 
-    func updateTask(task: Task, name: String, isCompleted: Bool = false){
+    func updateTask(task: Task, name: String, isCompleted: Bool = false) throws {
         task.name = name
         task.isCompleted = isCompleted
-        dataService.updateTask(task: task, name: name, isCompleted: isCompleted)
+        try dataService.updateTask(task: task, name: name, isCompleted: isCompleted)
     }
 
     func checkGoalIsCompleted(goal: Goal) {
