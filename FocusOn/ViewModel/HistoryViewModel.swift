@@ -13,6 +13,7 @@ class HistoryViewModel: ObservableObject {
 
     init( dataService: DataServiceProtocol = MockDataService()) {
         self.dataService = dataService
+        self.allGoals = dataService.allGoals
     }
 
     func fetchGoals() -> [Goal]? {

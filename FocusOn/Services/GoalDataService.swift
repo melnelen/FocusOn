@@ -9,6 +9,8 @@ import Foundation
 import CoreData
 
 class GoalDataService: DataServiceProtocol {
+    var allGoals: [Goal]?
+
 
     // Singleton
     //    static let shared = GoalDataService()

@@ -8,21 +8,40 @@
 import Foundation
 
 class MockDataService: DataServiceProtocol {
-    private var savedGoals: [Goal]?
-//    private var savedGoals: [Goal] = [Goal(name: "test", isCompleted: false, tasks: [Task(), Task(), Task()])]
+    //    @Published var allGoals: [Goal]?
+    @Published var allGoals: [Goal]? = [Goal(name: "Test goal 1", isCompleted: false,
+                                             tasks: [Task(name: "Test task 1.1", isCompleted: false),
+                                                     Task(name: "Test task 1.2", isCompleted: false),
+                                                     Task(name: "Test task 1.3", isCompleted: false)]),
+                                        Goal(name: "Test goal 2", isCompleted: false,
+                                             tasks: [Task(name: "Test task 2.1", isCompleted: true),
+                                                     Task(name: "Test task 2.2", isCompleted: true),
+                                                     Task(name: "Test task 2.3", isCompleted: false)]),
+                                        Goal(name: "Test goal 3", isCompleted: true,
+                                             tasks: [Task(name: "Test task 3.1", isCompleted: true),
+                                                     Task(name: "Test task 3.2", isCompleted: true),
+                                                     Task(name: "Test task 3.3", isCompleted: true)]),
+                                        Goal(name: "Test goal 4", isCompleted: false,
+                                             tasks: [Task(name: "Test task 4.1", isCompleted: true),
+                                                     Task(name: "Test task 4.2", isCompleted: false),
+                                                     Task(name: "Test task 4.3", isCompleted: true)]),
+                                        Goal(name: "Test goal 5", isCompleted: true,
+                                             tasks: [Task(name: "Test task 5.1", isCompleted: true),
+                                                     Task(name: "Test task 5.2", isCompleted: true),
+                                                     Task(name: "Test task 5.3", isCompleted: true)])]
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
     func fetchGoals() -> [Goal]? {
-        return savedGoals
+        return allGoals
     }
 
     func insertGoal(goal: Goal) throws {
         try checkLength(of: goal.name)
-        if savedGoals != nil {
-            savedGoals?.append(goal)
+        if allGoals != nil {
+            allGoals?.append(goal)
         } else {
-            savedGoals = [goal]
+            allGoals = [goal]
         }
     }
 

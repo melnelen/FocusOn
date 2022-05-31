@@ -7,7 +7,15 @@
 
 import Foundation
 
-class Goal: Identifiable, ObservableObject {
+class Goal: Identifiable, Hashable, ObservableObject {
+    static func == (lhs: Goal, rhs: Goal) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     let id: UUID 
     var name: String
     let createdAt: Date
@@ -20,5 +28,13 @@ class Goal: Identifiable, ObservableObject {
         self.createdAt = Date()
         self.isCompleted = false
         self.tasks = [Task(), Task(), Task()]
+    }
+
+    init(name: String, isCompleted: Bool, tasks: Set<Task>) {
+        self.id = UUID()
+        self.name = name
+        self.createdAt = Date()
+        self.isCompleted = isCompleted
+        self.tasks = tasks
     }
 }
