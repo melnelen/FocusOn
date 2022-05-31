@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-//    @EnvironmentObject private var viewModel: HistoryViewModel
+    //    @EnvironmentObject private var viewModel: HistoryViewModel
     @StateObject var viewModel = HistoryViewModel()
     
     @State private var completedGoals: [Goal]?
@@ -18,7 +18,13 @@ struct HistoryView: View {
             if let goals = completedGoals {
                 Text("Goals you have completed.")
             } else {
-                Text("Currently, you do not have goals to show.")
+                VStack {
+                    Image(systemName: "text.badge.xmark")
+                        .foregroundColor(Color("FailColor"))
+                        .font(.system(size: 50, weight: .bold))
+                        .padding(.bottom)
+                    Text("Currently, you have not completed any goals.")
+                }
             }
         }
         .onAppear { completedGoals = viewModel.allGoals }
@@ -26,9 +32,9 @@ struct HistoryView: View {
 }
 
 extension HistoryView {
-//    private func fetchCompletedGoals() {
-//        completedGoals = viewModel.fetchGoals()
-//    }
+    //    private func fetchCompletedGoals() {
+    //        completedGoals = viewModel.fetchGoals()
+    //    }
 }
 
 struct HistoryView_Previews: PreviewProvider {
