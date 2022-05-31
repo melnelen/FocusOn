@@ -48,7 +48,7 @@ class GoalDataService: DataServiceProtocol {
     }
 
     // MARK: TOFIX
-    func fetchGoals() -> [Goal]{
+    func fetchGoals() -> [Goal]? {
         let request = NSFetchRequest<GoalMO>(entityName: goalEntityName)
         do {
             savedGoals = try container.viewContext.fetch(request)

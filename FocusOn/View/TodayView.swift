@@ -163,7 +163,7 @@ extension TodayView {
         }
     }
 
-    private func showNameLengthAlert() -> Alert{
+    private func showNameLengthAlert() -> Alert {
         Alert(title: Text("Oops 🙊"),
               message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
               dismissButton: .default(Text("OK")))

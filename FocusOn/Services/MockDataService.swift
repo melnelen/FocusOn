@@ -8,18 +8,22 @@
 import Foundation
 
 class MockDataService: DataServiceProtocol {
-    private var savedGoals = [Goal]()
-    //    var savedGoals: [Goal] = [Goal(name: "test", isCompleted: false, tasks: [Task(), Task(), Task()])]
+    private var savedGoals: [Goal]?
+//    private var savedGoals: [Goal] = [Goal(name: "test", isCompleted: false, tasks: [Task(), Task(), Task()])]
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
-    func fetchGoals() -> [Goal] {
+    func fetchGoals() -> [Goal]? {
         return savedGoals
     }
 
     func insertGoal(goal: Goal) throws {
         try checkLength(of: goal.name)
-        savedGoals.append(goal)
+        if savedGoals != nil {
+            savedGoals?.append(goal)
+        } else {
+            savedGoals = [goal]
+        }
     }
 
     func updateGoal(goal: Goal, name: String, isCompleted: Bool) throws {
