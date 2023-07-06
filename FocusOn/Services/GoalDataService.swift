@@ -16,9 +16,9 @@ class GoalDataService: DataServiceProtocol {
     let container: NSPersistentContainer
     
     private let containerName: String = "FocusOn"
-    private let goalEntityName: String = "GoalMO"
+    private let goalEntityName: String = "GoalEntity"
 
-    @Published var savedGoals: [GoalMO] = []
+    @Published var savedGoals: [GoalEntity] = []
 
     init() {
         container = NSPersistentContainer(name: containerName)
@@ -49,7 +49,7 @@ class GoalDataService: DataServiceProtocol {
 
     // MARK: TOFIX
     func fetchGoals() -> [Goal]{
-        let request = NSFetchRequest<GoalMO>(entityName: goalEntityName)
+        let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         do {
             savedGoals = try container.viewContext.fetch(request)
         } catch let error {
@@ -65,22 +65,22 @@ class GoalDataService: DataServiceProtocol {
     // MARK: PRIVATE
 
     private func add(goal: Goal, name: String) {
-        let entity = GoalMO(context: container.viewContext)
+        let entity = GoalEntity(context: container.viewContext)
         entity.id = goal.id
         entity.name = name
         entity.createdAt = goal.createdAt
-        entity.isCompleted = goal.isCompleted
+        entity.completionStatus = goal.isCompleted
         entity.tasks = goal.tasks as NSSet?
         applyChanges()
     }
 
-    private func update(entity: GoalMO, name: String, isCompleted: Bool) {
+    private func update(entity: GoalEntity, name: String, isCompleted: Bool) {
         entity.name = name
-        entity.isCompleted = isCompleted
+        entity.completionStatus = isCompleted
         applyChanges()
     }
 
-    private func delete(entity: GoalMO) {
+    private func delete(entity: GoalEntity) {
         container.viewContext.delete(entity)
         applyChanges()
     }
