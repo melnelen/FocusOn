@@ -50,7 +50,7 @@ class GoalDataService: DataServiceProtocol {
     }
 
     // MARK: TOFIX
-    func fetchGoals() -> [Goal]{
+    func fetchGoals() -> [Goal]?{
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         do {
             savedGoals = try container.viewContext.fetch(request)
@@ -73,18 +73,18 @@ class GoalDataService: DataServiceProtocol {
         entity.createdAt = goal.createdAt
         entity.completionStatus = goal.isCompleted
         entity.tasks = goal.tasks as NSSet?
-        applyChanges()
+        save()
     }
 
     private func update(entity: GoalEntity, name: String, isCompleted: Bool) {
         entity.name = name
         entity.completionStatus = isCompleted
-        applyChanges()
+        save()
     }
 
     private func delete(entity: GoalEntity) {
         container.viewContext.delete(entity)
-        applyChanges()
+        save()
     }
 
     private func save() {
@@ -93,10 +93,5 @@ class GoalDataService: DataServiceProtocol {
         } catch let error {
             print("Error saving to Core Data. \(error)")
         }
-    }
-
-    private func applyChanges() {
-        save()
-//        fetchGoals()
     }
 }
