@@ -38,11 +38,8 @@ class MockDataService: DataServiceProtocol {
 
     func insertGoal(goal: Goal) throws {
         try checkLength(of: goal.name)
-        if allGoals != nil {
-            allGoals?.append(goal)
-        } else {
-            allGoals = [goal]
-        }
+        allGoals = allGoals ?? [] 
+        allGoals?.append(goal)
     }
 
     func updateGoal(goal: Goal, name: String, isCompleted: Bool) throws {
