@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		19ACCBA72A58458D00C08E93 /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBA52A58458D00C08E93 /* FocusOn.xcdatamodeld */; };
+		19EB49D62A577B1300AFDB90 /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19EB49D42A577B1300AFDB90 /* FocusOn.xcdatamodeld */; };
 		D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6902774BA6A001DB74C /* FocusOnApp.swift */; };
 		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
 		D01FD6952774BA6C001DB74C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6942774BA6C001DB74C /* Assets.xcassets */; };
@@ -47,7 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		19ACCBA62A58458D00C08E93 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
+		19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6902774BA6A001DB74C /* FocusOnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnApp.swift; sourceTree = "<group>"; };
 		D01FD6922774BA6A001DB74C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 				D050584E27EE5B6700244F3D /* Services */,
 				D01FD6902774BA6A001DB74C /* FocusOnApp.swift */,
 				D01FD6942774BA6C001DB74C /* Assets.xcassets */,
-				19ACCBA52A58458D00C08E93 /* FocusOn.xcdatamodeld */,
+				19EB49D42A577B1300AFDB90 /* FocusOn.xcdatamodeld */,
 				D01FD6962774BA6C001DB74C /* Preview Content */,
 			);
 			path = FocusOn;
@@ -364,6 +364,7 @@
 				D09D99FE27B05642004A283C /* ProgressView.swift in Sources */,
 				D06A4CF527FDC3D4003F7C72 /* GoalDataService.swift in Sources */,
 				D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */,
+				19EB49D62A577B1300AFDB90 /* FocusOn.xcdatamodeld in Sources */,
 				D07B0C0927FD930000245BA0 /* Goal.swift in Sources */,
 				D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */,
 				19ACCBA72A58458D00C08E93 /* FocusOn.xcdatamodeld in Sources */,
@@ -721,12 +722,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		19ACCBA52A58458D00C08E93 /* FocusOn.xcdatamodeld */ = {
+		19EB49D42A577B1300AFDB90 /* FocusOn.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				19ACCBA62A58458D00C08E93 /* FocusOn.xcdatamodel */,
+				19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */,
 			);
-			currentVersion = 19ACCBA62A58458D00C08E93 /* FocusOn.xcdatamodel */;
+			currentVersion = 19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */;
 			path = FocusOn.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

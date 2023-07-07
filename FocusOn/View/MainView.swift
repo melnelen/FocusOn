@@ -27,7 +27,6 @@ struct MainView: View {
                     }.tag(3)
             }
             .foregroundColor(.black)
-            .accentColor(Color("SuccessColor"))
             .onAppear() {
                 UITabBar.appearance().backgroundColor = UIColor(named: "AlternateColor")
             }
