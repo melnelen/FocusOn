@@ -32,8 +32,8 @@ class MockDataService: DataServiceProtocol {
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
-    func fetchGoals() -> [Goal]? {
-        return allGoals
+    func fetchGoals() -> [Goal] {
+        return allGoals ?? []
     }
 
     func insertGoal(goal: Goal) throws {
