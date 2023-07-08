@@ -28,7 +28,7 @@ struct TodayView: View {
                             action: {
                                 goalCheckboxPressed(goal: goal)
                             }) {
-                                Image(systemName: (goalIsCompleted ? "checkmark.circle.fill" : "circle"))
+                                Image(systemName: (goalIsCompleted ? "checkmark.seal.fill" : "circle"))
                                     .foregroundColor(goalIsCompleted ? Color("SuccessColor") : .black)
                             }
                     } else {
@@ -40,6 +40,7 @@ struct TodayView: View {
                             })
                     }
                 }
+                .font(.system(size: 25))
                 .alert(isPresented: $showAlert) { showNameLengthAlert() }
             } header: {
                 Text("What is your goal for today?")
@@ -163,7 +164,7 @@ extension TodayView {
         }
     }
 
-    private func showNameLengthAlert() -> Alert{
+    private func showNameLengthAlert() -> Alert {
         Alert(title: Text("Oops 🙊"),
               message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
               dismissButton: .default(Text("OK")))
