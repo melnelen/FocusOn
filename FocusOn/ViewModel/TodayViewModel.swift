@@ -9,9 +9,8 @@ import Foundation
 import Combine
 
 class TodayViewModel: ObservableObject {
-
     @Published var todayGoal = Goal()
-    private var allGoals = [Goal]()
+    @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
     //    private var cancellables = Set<AnyCancellable>()
 
@@ -41,8 +40,8 @@ class TodayViewModel: ObservableObject {
         //            .store(in: &cancellables)
     }
 
-    func fetchGoals() -> [Goal] {
-        allGoals = dataService.fetchGoals()
+    func fetchGoals() -> [Goal]? {
+        allGoals = dataService.allGoals
         return allGoals
     }
 

@@ -9,6 +9,8 @@ import Foundation
 import CoreData
 
 class GoalDataService: DataServiceProtocol {
+    var allGoals: [Goal]?
+
 
     // Singleton
     //    static let shared = GoalDataService()
@@ -71,18 +73,18 @@ class GoalDataService: DataServiceProtocol {
         entity.createdAt = goal.createdAt
         entity.completionStatus = goal.isCompleted
         entity.tasks = goal.tasks as NSSet?
-        applyChanges()
+        save()
     }
 
     private func update(entity: GoalEntity, name: String, isCompleted: Bool) {
         entity.name = name
         entity.completionStatus = isCompleted
-        applyChanges()
+        save()
     }
 
     private func delete(entity: GoalEntity) {
         container.viewContext.delete(entity)
-        applyChanges()
+        save()
     }
 
     private func save() {
@@ -91,10 +93,5 @@ class GoalDataService: DataServiceProtocol {
         } catch let error {
             print("Error saving to Core Data. \(error)")
         }
-    }
-
-    private func applyChanges() {
-        save()
-//        fetchGoals()
     }
 }

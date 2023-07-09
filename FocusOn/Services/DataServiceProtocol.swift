@@ -8,6 +8,7 @@
 import Foundation
 
 protocol DataServiceProtocol {
+    var allGoals: [Goal]? { get }
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool)
     func fetchGoals() -> [Goal]
     func insertGoal(goal: Goal) throws

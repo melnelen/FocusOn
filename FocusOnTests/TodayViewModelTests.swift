@@ -62,7 +62,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         // When
         try sut.addGoal(name: "Create FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         // Then
         XCTAssert(goal.name == "Create FocusOn app", "Failed to add a goal")
     }
@@ -71,7 +71,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         var error = "No error!"
         do { try sut.addGoal(name: "Create FocusOn app") } catch { }
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         // When
         do {
             try sut.updateGoal(goal: goal, name: "")
@@ -90,7 +90,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         var error = "No error!"
         try sut.addGoal(name: "Create FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         // When
         do {
             try sut.updateGoal(goal: goal, name: "UG")
@@ -108,7 +108,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_updateGoal() throws {
         // Given
         try sut.addGoal(name: "Create FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         // When
         try sut.updateGoal(goal: goal, name: "Test FocusOn app", isCompleted: true)
         // Then
@@ -120,7 +120,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         var error = "No error!"
         try sut.addGoal(name: "Test FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task = Array(goal.tasks)[0]
         // When
         do {
@@ -140,7 +140,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         var error = "No error!"
         try sut.addGoal(name: "Test FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task = Array(goal.tasks)[0]
         // When
         do {
@@ -159,7 +159,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_updateTask() throws {
         // Given
         try sut.addGoal(name: "Test FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task = Array(goal.tasks)[0]
         // When
         try sut.updateTask(task: task, name: "Create unit tests", isCompleted: true)
@@ -171,7 +171,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_checkGoalIsCompleted_True() throws {
         // Given
         try sut.addGoal(name: "Complete FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
@@ -188,7 +188,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_checkGoalIsCompleted_False() throws {
         // Given
         try sut.addGoal(name: "Complete FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
@@ -205,7 +205,7 @@ class TodayViewModelTests: XCTestCase {
         // Given
         let todayVM = TodayViewModel()
         try sut.addGoal(name: "Complete FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
@@ -221,7 +221,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_checkTaskIsCompleted_TaskTrue_GoalTrue() throws {
         // Given
         try sut.addGoal(name: "Complete FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
@@ -239,7 +239,7 @@ class TodayViewModelTests: XCTestCase {
     func test_TodayViewModel_checkTaskIsCompleted_TaskFalse_GoalFalse() throws {
         // Given
         try sut.addGoal(name: "Complete FocusOn app")
-        let goal = sut.fetchGoals().first!
+        let goal = sut.fetchGoals()!.first!
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
