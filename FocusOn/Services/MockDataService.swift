@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import SwiftUICharts
 
 class MockDataService: DataServiceProtocol {
-    //    @Published var allGoals: [Goal]?
     @Published var allGoals: [Goal]? = [Goal(name: "Test goal 1", isCompleted: false,
                                              tasks: [Task(name: "Test task 1.1", isCompleted: false),
                                                      Task(name: "Test task 1.2", isCompleted: false),
@@ -29,6 +29,12 @@ class MockDataService: DataServiceProtocol {
                                              tasks: [Task(name: "Test task 5.1", isCompleted: true),
                                                      Task(name: "Test task 5.2", isCompleted: true),
                                                      Task(name: "Test task 5.3", isCompleted: true)])]
+    
+    @Published var chartData: [DataPoint]? = [DataPoint(value: 70, label: "1", legend: Legend(color: .gray, label: "Low", order: 1)),
+                                        DataPoint(value: 90, label: "1", legend: Legend(color: .blue, label: "Warm Up", order: 2)),
+                                        DataPoint(value: 130, label: "1", legend: Legend(color: .green, label: "Fat Burning", order: 3)),
+                                        DataPoint(value: 150, label: "1", legend: Legend(color: .yellow, label: "Build Fitness", order: 4)),
+                                        DataPoint(value: 160, label: "1", legend: Legend(color: .orange, label: "High Intensity", order: 5))]
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
@@ -38,7 +44,7 @@ class MockDataService: DataServiceProtocol {
 
     func insertGoal(goal: Goal) throws {
         try checkLength(of: goal.name)
-        allGoals = allGoals ?? [] 
+        allGoals = allGoals ?? []
         allGoals?.append(goal)
     }
 

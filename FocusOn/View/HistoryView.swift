@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HistoryView: View {
-    //    @EnvironmentObject private var viewModel: HistoryViewModel
     @StateObject var viewModel = HistoryViewModel()
     
     @State private var allGoals: [Goal]?

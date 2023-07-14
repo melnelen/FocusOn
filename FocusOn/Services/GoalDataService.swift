@@ -7,9 +7,11 @@
 
 import Foundation
 import CoreData
+import SwiftUICharts
 
 class GoalDataService: DataServiceProtocol {
     var allGoals: [Goal]?
+    var chartData: [DataPoint]?
 
 
     // Singleton

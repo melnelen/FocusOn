@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
+		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19EB49D62A577B1300AFDB90 /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19EB49D42A577B1300AFDB90 /* FocusOn.xcdatamodeld */; };
 		D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6902774BA6A001DB74C /* FocusOnApp.swift */; };
 		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6902774BA6A001DB74C /* FocusOnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnApp.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */,
 				D0DA100628452C1B000FDE98 /* HistoryViewModel.swift */,
+				19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D07B0C0B27FD931400245BA0 /* Task.swift in Sources */,
+				19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */,
 				D01FD69A2774BA6C001DB74C /* PersistenceController.swift in Sources */,
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
