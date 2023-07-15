@@ -19,7 +19,7 @@ struct ProgressView: View {
                 .chartStyle(
                     BarChartStyle(
                         barMinHeight: 10,
-                        showAxis: true,
+                        showAxis: false,
                         showLegends: true
                     )
                 )

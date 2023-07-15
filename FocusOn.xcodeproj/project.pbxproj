@@ -220,8 +220,8 @@
 		D0A6FE8D27EDC4E900B06218 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */,
 				D0DA100628452C1B000FDE98 /* HistoryViewModel.swift */,
+				D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */,
 				19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */,
 			);
 			path = ViewModel;
