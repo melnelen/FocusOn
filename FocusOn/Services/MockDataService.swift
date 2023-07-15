@@ -9,41 +9,66 @@ import Foundation
 import SwiftUICharts
 
 class MockDataService: DataServiceProtocol {
-    @Published var allGoals: [Goal]? = [Goal(name: "Test goal 1", isCompleted: false,
+    @Published var allGoals: [Goal]? = [Goal(name: "Test goal 1",
+                                             createdAt: Calendar.current.date(byAdding: .day, value: -5, to: Date())!,
+                                              isCompleted: false,
                                              tasks: [Task(name: "Test task 1.1", isCompleted: false),
                                                      Task(name: "Test task 1.2", isCompleted: false),
                                                      Task(name: "Test task 1.3", isCompleted: false)]),
-                                        Goal(name: "Test goal 2", isCompleted: false,
+                                        Goal(name: "Test goal 2",
+                                             createdAt: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
+                                             isCompleted: false,
                                              tasks: [Task(name: "Test task 2.1", isCompleted: true),
                                                      Task(name: "Test task 2.2", isCompleted: true),
                                                      Task(name: "Test task 2.3", isCompleted: false)]),
-                                        Goal(name: "Test goal 3", isCompleted: true,
+                                        Goal(name: "Test goal 3",
+                                             createdAt: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+                                             isCompleted: true,
                                              tasks: [Task(name: "Test task 3.1", isCompleted: true),
                                                      Task(name: "Test task 3.2", isCompleted: true),
                                                      Task(name: "Test task 3.3", isCompleted: true)]),
-                                        Goal(name: "Test goal 4", isCompleted: false,
+                                        Goal(name: "Test goal 4",
+                                             createdAt: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
+                                             isCompleted: false,
                                              tasks: [Task(name: "Test task 4.1", isCompleted: true),
                                                      Task(name: "Test task 4.2", isCompleted: false),
                                                      Task(name: "Test task 4.3", isCompleted: true)]),
-                                        Goal(name: "Test goal 5", isCompleted: true,
+                                        Goal(name: "Test goal 5",
+                                             createdAt: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+                                             isCompleted: true,
                                              tasks: [Task(name: "Test task 5.1", isCompleted: true),
                                                      Task(name: "Test task 5.2", isCompleted: true),
                                                      Task(name: "Test task 5.3", isCompleted: true)])]
     
-    @Published var chartData: [DataPoint]? = [DataPoint(value: 0, label: "1", legend: Legend(color: .red, label: "Fail", order: 1)),
-                                        DataPoint(value: 1, label: "2", legend: Legend(color: .red, label: "Fail", order: 2)),
-                                        DataPoint(value: 2, label: "3", legend: Legend(color: .red, label: "Fail", order: 3)),
-                                        DataPoint(value: 3, label: "4", legend: Legend(color: .green, label: "Success", order: 4)),
-                                        DataPoint(value: 3, label: "5", legend: Legend(color: .green, label: "Success", order: 5)),
-                                        DataPoint(value: 1, label: "6", legend: Legend(color: .red, label: "Fail", order: 6)),
-                                        DataPoint(value: 2, label: "7", legend: Legend(color: .red, label: "Fail", order: 7)),
-                                        DataPoint(value: 1, label: "8", legend: Legend(color: .red, label: "Fail", order: 8)),
-                                        DataPoint(value: 0, label: "9", legend: Legend(color: .red, label: "Fail", order: 9)),
-                                        DataPoint(value: 3, label: "10", legend: Legend(color: .green, label: "Success", order: 10)),
-                                        DataPoint(value: 3, label: "11", legend: Legend(color: .green, label: "Success", order: 11)),
-                                        DataPoint(value: 3, label: "12", legend: Legend(color: .green, label: "Success", order: 12)),
-                                        DataPoint(value: 1, label: "13", legend: Legend(color: .red, label: "Fail", order: 13)),
-                                        DataPoint(value: 3, label: "14", legend: Legend(color: .green, label: "Success", order: 14))]
+    @Published var chartData: [DataPoint]? = [DataPoint(value: 1, label: "1", legend: Legend(color: .red, label: "Fail", order: 2)),
+                                        DataPoint(value: 2, label: "2", legend: Legend(color: .orange, label: "Small Progress", order: 3)),
+                                        DataPoint(value: 3, label: "3", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
+                                        DataPoint(value: 4, label: "4", legend: Legend(color: .green, label: "Success", order: 5)),
+                                        DataPoint(value: 4, label: "5", legend: Legend(color: .green, label: "Success", order: 5)),
+                                        DataPoint(value: 0, label: "6", legend: Legend(color: .gray, label: "No goal", order: 1)),
+                                        DataPoint(value: 3, label: "7", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
+                                        DataPoint(value: 3, label: "8", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
+                                        DataPoint(value: 1, label: "9", legend: Legend(color: .red, label: "Fail", order: 2)),
+                                        DataPoint(value: 4, label: "10", legend: Legend(color: .green, label: "Success", order: 5)),
+                                        DataPoint(value: 4, label: "11", legend: Legend(color: .green, label: "Success", order: 5)),
+                                        DataPoint(value: 3, label: "12", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
+                                        DataPoint(value: 2, label: "13", legend: Legend(color: .orange, label: "Small Progress", order: 3)),
+                                        DataPoint(value: 4, label: "14", legend: Legend(color: .green, label: "Success", order: 5))]
+    var chartGoals: [DataPoint]?
+    /*
+     DataPoint(value: 0,  // the nuber of tasks completed for this goal, determines the hight of the bar
+     label: "1",          // the date the goal was created
+     legend: Legend(color: .red,    // the color of the label and the bar
+                    label: "Fail",  // the name of the label in the legend
+                    order: 1)       // the order of the label in the legend
+     //
+     let date = Goal.createdAt
+
+     let calendar = Calendar.current
+     let dayComponent = calendar.component(.day, from: date)
+     //
+     
+     */
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
