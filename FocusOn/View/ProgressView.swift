@@ -18,11 +18,8 @@ struct ProgressView: View {
             BarChartView(dataPoints: chartData ?? [])
                 .chartStyle(
                     BarChartStyle(
-                        barMinHeight: 100,
+                        barMinHeight: 10,
                         showAxis: true,
-                        axisLeadingPadding: 0,
-                        showLabels: true,
-                        labelCount: 2,
                         showLegends: true
                     )
                 )
