@@ -54,21 +54,6 @@ class MockDataService: DataServiceProtocol {
                                         DataPoint(value: 3, label: "12", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
                                         DataPoint(value: 2, label: "13", legend: Legend(color: .orange, label: "Small Progress", order: 3)),
                                         DataPoint(value: 4, label: "14", legend: Legend(color: .green, label: "Success", order: 5))]
-    var chartGoals: [DataPoint]?
-    /*
-     DataPoint(value: 0,  // the nuber of tasks completed for this goal, determines the hight of the bar
-     label: "1",          // the date the goal was created
-     legend: Legend(color: .red,    // the color of the label and the bar
-                    label: "Fail",  // the name of the label in the legend
-                    order: 1)       // the order of the label in the legend
-     //
-     let date = Goal.createdAt
-
-     let calendar = Calendar.current
-     let dayComponent = calendar.component(.day, from: date)
-     //
-     
-     */
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
