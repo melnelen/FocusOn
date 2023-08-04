@@ -11,17 +11,9 @@ import SwiftUICharts
 
 class GoalDataService: DataServiceProtocol {
     var allGoals: [Goal]?
-    var chartData: [DataPoint]?
-
-
-    // Singleton
-    //    static let shared = GoalDataService()
-
     let container: NSPersistentContainer
-    
     private let containerName: String = "FocusOn"
     private let goalEntityName: String = "GoalEntity"
-
     @Published var savedGoals: [GoalEntity] = []
 
     init() {

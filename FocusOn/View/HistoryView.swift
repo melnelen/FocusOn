@@ -51,7 +51,7 @@ struct HistoryView: View {
 
 extension HistoryView {
     private func fetchCompletedGoals() {
-        allGoals = viewModel.allGoals
+        allGoals = viewModel.fetchGoals()
     }
 }
 

@@ -10,7 +10,6 @@ import SwiftUICharts
 
 protocol DataServiceProtocol {
     var allGoals: [Goal]? { get }
-    var chartData: [DataPoint]? { get }
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool)
     func fetchGoals() -> [Goal]
     func insertGoal(goal: Goal) throws

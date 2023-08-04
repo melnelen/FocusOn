@@ -26,7 +26,6 @@ struct MainView: View {
                         Label("Progress", systemImage: "chart.bar.xaxis")
                     }.tag(3)
             }
-            .foregroundColor(.black)
             .onAppear() {
                 UITabBar.appearance().backgroundColor = UIColor(named: "AlternateColor")
             }

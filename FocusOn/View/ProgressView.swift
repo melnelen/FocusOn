@@ -30,7 +30,7 @@ struct ProgressView: View {
 
 extension ProgressView {
     private func fetchChartData() {
-        chartData = viewModel.chartData
+        chartData = viewModel.fillChartData()
     }
 }
 

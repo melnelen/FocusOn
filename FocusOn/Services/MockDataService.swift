@@ -39,21 +39,6 @@ class MockDataService: DataServiceProtocol {
                                              tasks: [Task(name: "Test task 5.1", isCompleted: true),
                                                      Task(name: "Test task 5.2", isCompleted: true),
                                                      Task(name: "Test task 5.3", isCompleted: true)])]
-    
-    @Published var chartData: [DataPoint]? = [DataPoint(value: 1, label: "1", legend: Legend(color: .red, label: "Fail", order: 2)),
-                                        DataPoint(value: 2, label: "2", legend: Legend(color: .orange, label: "Small Progress", order: 3)),
-                                        DataPoint(value: 3, label: "3", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
-                                        DataPoint(value: 4, label: "4", legend: Legend(color: .green, label: "Success", order: 5)),
-                                        DataPoint(value: 4, label: "5", legend: Legend(color: .green, label: "Success", order: 5)),
-                                        DataPoint(value: 0, label: "6", legend: Legend(color: .gray, label: "No goal", order: 1)),
-                                        DataPoint(value: 3, label: "7", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
-                                        DataPoint(value: 3, label: "8", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
-                                        DataPoint(value: 1, label: "9", legend: Legend(color: .red, label: "Fail", order: 2)),
-                                        DataPoint(value: 4, label: "10", legend: Legend(color: .green, label: "Success", order: 5)),
-                                        DataPoint(value: 4, label: "11", legend: Legend(color: .green, label: "Success", order: 5)),
-                                        DataPoint(value: 3, label: "12", legend: Legend(color: .yellow, label: "Big Progress", order: 4)),
-                                        DataPoint(value: 2, label: "13", legend: Legend(color: .orange, label: "Small Progress", order: 3)),
-                                        DataPoint(value: 4, label: "14", legend: Legend(color: .green, label: "Success", order: 5))]
 
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
 
