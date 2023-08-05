@@ -14,15 +14,19 @@ struct ProgressView: View {
     @State private var chartData: [DataPoint]?
     
     var body: some View {
-        HStack(spacing: 0) {
-            BarChartView(dataPoints: chartData ?? [])
-                .chartStyle(
-                    BarChartStyle(
-                        barMinHeight: 10,
-                        showAxis: false,
-                        showLegends: true
+        VStack {
+            Text("Here is your progres")
+            HStack(spacing: 0) {
+                BarChartView(dataPoints: chartData ?? [])
+                    .chartStyle(
+                        BarChartStyle(
+                            barMinHeight: 10,
+                            showAxis: false,
+                            showLegends: true
+                        )
                     )
-                )
+            }
+            .padding(20)
         }
         .onAppear { fetchChartData() }
     }

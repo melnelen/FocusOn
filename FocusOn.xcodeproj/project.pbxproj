@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
+		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
 		19EB49D62A577B1300AFDB90 /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19EB49D42A577B1300AFDB90 /* FocusOn.xcdatamodeld */; };
 		D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6902774BA6A001DB74C /* FocusOnApp.swift */; };
 		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
+		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6902774BA6A001DB74C /* FocusOnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnApp.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */,
+				19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */,
 			);
 			path = FocusOnTests;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */,
+				19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

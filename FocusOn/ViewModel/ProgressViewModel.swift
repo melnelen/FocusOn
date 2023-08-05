@@ -32,19 +32,18 @@ class ProgressViewModel: ObservableObject {
             return nil
         }
         var chartData: [DataPoint] = []
-
+        
         for goal in unwrappedGoals {
-            let completedTasksCount = Double(calculateNumberOfCompletedTasks(goal: goal))
+            let barHight = Double(calculateNumberOfCompletedTasks(goal: goal) + 1)
             let dayComponent = Calendar.current.component(.day, from: goal.createdAt)
             let label = LocalizedStringKey(String(dayComponent))
             let legend = calculateGoalProgress(goal: goal)
             
-            let dataPoint = DataPoint(value: completedTasksCount, label: label, legend: legend)
+            let dataPoint = DataPoint(value: barHight, label: label, legend: legend)
             chartData.append(dataPoint)
         }
         return chartData.isEmpty ? nil : chartData
     }
-
     
     func calculateNumberOfCompletedTasks(goal: Goal) -> Int {
         var numberOfCompletedTasks = 0
@@ -72,26 +71,5 @@ class ProgressViewModel: ObservableObject {
         }
         return legendSignature
     }
-        
-    /*
-     for each goal take
-     1. the number of tasks completed
-     2. the day of the date the goal was created
-     then generate the info for the legend:
-     1. the color/label/order - depends of the -> 1. the number of tasks completed
-     */
-    /*
-     DataPoint(value: 0,  // the nuber of tasks completed for this goal, determines the hight of the bar
-     label: "1",          // the day of the date the goal was created
-     legend: Legend(color: .red,    // the color of the label and the bar
-     label: "Fail",  // the name of the label in the legend
-     order: 1)       // the order of the label in the legend
-     //
-     let date = Goal.createdAt
-     
-     let calendar = Calendar.current
-     let dayComponent = calendar.component(.day, from: date)
-     //
-     
-     */
+    
 }
