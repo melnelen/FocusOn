@@ -16,7 +16,42 @@ struct ProgressView: View {
     var body: some View {
         VStack {
             Text("Here is your progres")
-            HStack(spacing: 0) {
+                .foregroundColor(.accentColor)
+                .font(.largeTitle)
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 20) {
+                    let chunkedChartData = chartData?.chunked(into: 7)
+                    /*
+                     ForEach(chartData) { data in
+                        BarChartView(dataPoints: data ?? [])
+                        .chartStyle(
+                            BarChartStyle(
+                                barMinHeight: 10,
+                                showAxis: false,
+                                showLegends: false
+                            )
+                        )
+                     }
+                     */
+                    ForEach(0..<(chunkedChartData?.count)!, id: \.self) {
+                        Text("Item \($0)")
+                            .foregroundColor(.accentColor)
+                            .font(.largeTitle)
+                        HStack {
+                            BarChartView(dataPoints: chartData ?? [])
+                                .chartStyle(
+                                    BarChartStyle(
+                                        barMinHeight: 10,
+                                        showAxis: false,
+                                        showLegends: false
+                                    )
+                                )
+                        }
+                        .padding(20)
+                    }
+                }
+            }
+            HStack(spacing: 20) {
                 BarChartView(dataPoints: chartData ?? [])
                     .chartStyle(
                         BarChartStyle(
@@ -38,6 +73,13 @@ extension ProgressView {
     }
 }
 
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
 
 struct ProgressView_Previews: PreviewProvider {
     static var previews: some View {
