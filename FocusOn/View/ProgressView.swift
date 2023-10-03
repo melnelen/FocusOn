@@ -16,19 +16,25 @@ struct ProgressView: View {
     var body: some View {
         VStack {
             Text("Here is your progres")
-            HStack(spacing: 0) {
-                BarChartView(dataPoints: chartData ?? [])
-                    .chartStyle(
-                        BarChartStyle(
-                            barMinHeight: 10,
-                            showAxis: false,
-                            showLegends: true
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    BarChartView(dataPoints: chartData ?? [])
+                        .chartStyle(
+                            BarChartStyle(
+                                barMinHeight: 10,
+                                showAxis: false,
+                                showLegends: true
+                            )
                         )
-                    )
+                }
+                .padding(20)
+                .flipsForRightToLeftLayoutDirection(true)
+                .environment(\.layoutDirection, .rightToLeft)
             }
-            .padding(20)
+            .onAppear { fetchChartData() }
+            .flipsForRightToLeftLayoutDirection(true)
+            .environment(\.layoutDirection, .rightToLeft)
         }
-        .onAppear { fetchChartData() }
     }
 }
 
