@@ -122,6 +122,4 @@ class ProgressViewModel: ObservableObject {
         return dataPointChunks
     }
 
-
-    
 }
