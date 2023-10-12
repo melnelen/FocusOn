@@ -63,12 +63,12 @@ class ProgressViewModel: ObservableObject {
     }
     
     private func generateDataPointForGoal(goal: Goal) -> DataPoint {
-        let barHight = Double(calculateNumberOfCompletedTasks(goal: goal) + 1)
+        let barHeight = Double(calculateNumberOfCompletedTasks(goal: goal) + 1)
         let dayComponent = Calendar.current.component(.day, from: goal.createdAt)
         let label = LocalizedStringKey(String(dayComponent))
         let legend = calculateGoalProgress(goal: goal)
         
-        return DataPoint(value: barHight, label: label, legend: legend)
+        return DataPoint(value: barHeight, label: label, legend: legend)
     }
     
     private func splitGoalsIntoWeeklyChunks(goals: [Goal]) -> [[Goal]] {
