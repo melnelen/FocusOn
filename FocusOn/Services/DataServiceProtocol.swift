@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUICharts
 
 protocol DataServiceProtocol {
     var allGoals: [Goal]? { get }
