@@ -89,26 +89,26 @@ class ProgressViewModel: ObservableObject {
     private func generateDataPointsForWeeklyChunksOf(goals: [Goal]) -> [[DataPoint]] {
         let goalChunks = splitGoalsIntoWeeklyChunks(goals: goals)
         var dataPointChunks: [[DataPoint]] = []
-
+        
         for weeklyGoals in goalChunks {
             var dataPointsForWeek: [DataPoint] = []
-
+            
             guard let earliestDate = weeklyGoals.map({ $0.createdAt }).min() else {
                 continue
             }
-
+            
             // Find the first Monday in the week
             let calendar = Calendar.current
             var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear, .weekday], from: earliestDate)
             components.weekday = firstWeekday // Monday
-
+            
             guard let firstMonday = calendar.date(from: components) else {
                 continue
             }
-
+            
             for i in 0..<7 {
                 let currentDate = calendar.date(byAdding: .day, value: i, to: firstMonday) ?? Date()
-
+                
                 if let goal = weeklyGoals.first(where: { calendar.isDate($0.createdAt, inSameDayAs: currentDate) }) {
                     let dataPoint = generateDataPointForGoal(goal: goal)
                     dataPointsForWeek.append(dataPoint)
@@ -121,5 +121,5 @@ class ProgressViewModel: ObservableObject {
         }
         return dataPointChunks
     }
-
+    
 }
