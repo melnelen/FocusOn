@@ -30,10 +30,10 @@ class Goal: Identifiable, Hashable, ObservableObject {
         self.tasks = [Task(), Task(), Task()]
     }
 
-    init(name: String, isCompleted: Bool, tasks: Set<Task>) {
+    init(name: String, createdAt: Date, isCompleted: Bool, tasks: Set<Task>) {
         self.id = UUID()
         self.name = name
-        self.createdAt = Date()
+        self.createdAt = createdAt
         self.isCompleted = isCompleted
         self.tasks = tasks
     }

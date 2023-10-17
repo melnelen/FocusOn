@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selection = 2
-
+    
     var body: some View {
         NavigationView {
             TabView(selection: $selection) {
@@ -26,7 +26,6 @@ struct MainView: View {
                         Label("Progress", systemImage: "chart.bar.xaxis")
                     }.tag(3)
             }
-            .foregroundColor(.black)
             .onAppear() {
                 UITabBar.appearance().backgroundColor = UIColor(named: "AlternateColor")
             }
