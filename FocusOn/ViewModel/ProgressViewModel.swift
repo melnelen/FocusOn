@@ -13,7 +13,7 @@ class ProgressViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
     let calendar = Calendar.current
-    let firstWeekday = 2
+    let firstWeekday = Calendar.current.firstWeekday
     
     let noGoal = Legend(color: .gray, label: "No goal", order: 1)
     let fail = Legend(color: .red, label: "Fail", order: 2)
@@ -97,17 +97,15 @@ class ProgressViewModel: ObservableObject {
                 continue
             }
             
-            // Find the first Monday in the week
-            let calendar = Calendar.current
             var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear, .weekday], from: earliestDate)
-            components.weekday = firstWeekday // Monday
+            components.weekday = firstWeekday
             
-            guard let firstMonday = calendar.date(from: components) else {
+            guard let firstDay = calendar.date(from: components) else {
                 continue
             }
             
             for i in 0..<7 {
-                let currentDate = calendar.date(byAdding: .day, value: i, to: firstMonday) ?? Date()
+                let currentDate = calendar.date(byAdding: .day, value: i, to: firstDay) ?? Date()
                 
                 if let goal = weeklyGoals.first(where: { calendar.isDate($0.createdAt, inSameDayAs: currentDate) }) {
                     let dataPoint = generateDataPointForGoal(goal: goal)
