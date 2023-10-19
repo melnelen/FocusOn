@@ -10,6 +10,7 @@ import SwiftUI
 struct TodayView: View {
     @StateObject var viewModel = TodayViewModel()
     
+    @State private var lastGoal: Goal?
     @State private var todayGoal: Goal?
     @State private var goalText = ""
     @State private var tasksText = ["", "", ""]
@@ -19,7 +20,6 @@ struct TodayView: View {
     
     var body: some View {
         Form {
-            
             Section {
                 HStack {
                     TextField("My goal is to ...", text: $goalText)
@@ -90,9 +90,12 @@ struct TodayView: View {
             }
         }
         .navigationTitle("FocusOn")
-        .environmentObject(viewModel)
-        //      .onAppear { currentGoal = viewModel.todayGoal }
-        
+        //        .environmentObject(viewModel)
+        .onAppear {
+            fetchLastGoal()
+            checkForDailySetup()
+        }
+        .alert(isPresented: $showAlert) { showLastGoalNotCompletedAlert() }
     }
 }
 
@@ -168,6 +171,48 @@ extension TodayView {
         Alert(title: Text("Oops 🙊"),
               message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
               dismissButton: .default(Text("OK")))
+    }
+    
+    private func checkForDailySetup() {
+        let calendar = Calendar.current
+        
+        if let lastGoal = lastGoal,
+           !calendar.isDateInToday(lastGoal.createdAt) &&
+            lastGoal.isCompleted == false {
+            showAlert = true
+        }
+    }
+    
+    private func showLastGoalNotCompletedAlert() -> Alert {
+        Alert(
+            title: Text("Set up your goal for the day"),
+            message: Text("Do you want to set up a new goal or continue working on the previous one?"),
+            primaryButton: .default(Text("Set up new goal")) {
+                // Set up a new goal
+            },
+            secondaryButton: .default(Text("Continue previous goal")) {
+                // Continue the previous goal
+                let goal = lastGoal!
+                todayGoal = goal
+                goalText = goal.name
+                goalIsCompleted = goal.isCompleted
+                tasksText =
+                [Array(goal.tasks)[0].name,
+                 Array(goal.tasks)[1].name,
+                 Array(goal.tasks)[2].name]
+                tasksAreCompleted =
+                [Array(goal.tasks)[0].isCompleted,
+                 Array(goal.tasks)[1].isCompleted,
+                 Array(goal.tasks)[2].isCompleted]
+            }
+        )
+    }
+    
+}
+
+extension TodayView {
+    private func fetchLastGoal() {
+        lastGoal = viewModel.fetchGoals()?.last
     }
 }
 
