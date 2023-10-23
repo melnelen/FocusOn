@@ -90,7 +90,6 @@ struct TodayView: View {
             }
         }
         .navigationTitle("FocusOn")
-        //        .environmentObject(viewModel)
         .onAppear {
             fetchLastGoal()
             checkForDailySetup()
@@ -183,27 +182,32 @@ extension TodayView {
         }
     }
     
+    private func continueLastGoalButtonPressed() {
+        let goal = lastGoal!
+        todayGoal = goal
+        goalText = goal.name
+        goalIsCompleted = goal.isCompleted
+        tasksText =
+        [Array(goal.tasks)[0].name,
+         Array(goal.tasks)[1].name,
+         Array(goal.tasks)[2].name]
+        tasksAreCompleted =
+        [Array(goal.tasks)[0].isCompleted,
+         Array(goal.tasks)[1].isCompleted,
+         Array(goal.tasks)[2].isCompleted]
+    }
+    
     private func showLastGoalNotCompletedAlert() -> Alert {
         Alert(
             title: Text("Set up your goal for the day"),
             message: Text("Do you want to set up a new goal or continue working on the previous one?"),
             primaryButton: .default(Text("Set up new goal")) {
                 // Set up a new goal
+                addGoalButtonPressed()
             },
             secondaryButton: .default(Text("Continue previous goal")) {
                 // Continue the previous goal
-                let goal = lastGoal!
-                todayGoal = goal
-                goalText = goal.name
-                goalIsCompleted = goal.isCompleted
-                tasksText =
-                [Array(goal.tasks)[0].name,
-                 Array(goal.tasks)[1].name,
-                 Array(goal.tasks)[2].name]
-                tasksAreCompleted =
-                [Array(goal.tasks)[0].isCompleted,
-                 Array(goal.tasks)[1].isCompleted,
-                 Array(goal.tasks)[2].isCompleted]
+                continueLastGoalButtonPressed()
             }
         )
     }
