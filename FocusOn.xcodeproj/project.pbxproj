@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1908539B2AE2C739005C20EE /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539A2AE2C739005C20EE /* NotificationManager.swift */; };
+		1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539C2AE6A558005C20EE /* TaskCompletionView.swift */; };
+		1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539E2AE6BE87005C20EE /* ConfettiView.swift */; };
+		190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190853A02AE86D18005C20EE /* GoalCompletionView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -51,6 +54,9 @@
 
 /* Begin PBXFileReference section */
 		1908539A2AE2C739005C20EE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		1908539C2AE6A558005C20EE /* TaskCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionView.swift; sourceTree = "<group>"; };
+		1908539E2AE6BE87005C20EE /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		190853A02AE86D18005C20EE /* GoalCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCompletionView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
@@ -216,6 +222,9 @@
 				D09D99FF27B0564E004A283C /* HistoryView.swift */,
 				D09D99FB27B0562C004A283C /* TodayView.swift */,
 				D09D99FD27B05640004A283C /* ProgressView.swift */,
+				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
+				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
+				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -370,8 +379,11 @@
 				1908539B2AE2C739005C20EE /* NotificationManager.swift in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D07B0C0B27FD931400245BA0 /* Task.swift in Sources */,
+				190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */,
 				19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */,
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
+				1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */,
+				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
 				D0DA100728452C1B000FDE98 /* HistoryViewModel.swift in Sources */,
 				D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */,

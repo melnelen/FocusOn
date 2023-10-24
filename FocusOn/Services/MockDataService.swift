@@ -125,16 +125,16 @@ class MockDataService: DataServiceProtocol {
                                                      Task(name: "Test task 3.3", isCompleted: false)]),
                                         Goal(name: "Test goal 2",
                                              createdAt: Date(timeIntervalSince1970: 1697018400), // Wed 11 Oct 2023
-                                             isCompleted: true,
+                                             isCompleted: false,
                                              tasks: [Task(name: "Test task 2.1", isCompleted: true),
                                                      Task(name: "Test task 2.2", isCompleted: true),
-                                                     Task(name: "Test task 2.3", isCompleted: true)]),
+                                                     Task(name: "Test task 2.3", isCompleted: false)]),
                                         Goal(name: "Test goal 0",
                                              createdAt: Date(timeIntervalSince1970: 1697191200), // Fri 13 Oct 2023
-                                             isCompleted: false,
+                                             isCompleted: true,
                                              tasks: [Task(name: "Test task 0.1", isCompleted: true),
                                                      Task(name: "Test task 0.2", isCompleted: true),
-                                                     Task(name: "Test task 0.3", isCompleted: false)])]
+                                                     Task(name: "Test task 0.3", isCompleted: true)])]
     
     func upsertGoals(goal: Goal, name: String, isCompleted: Bool) { }
     

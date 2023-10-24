@@ -17,6 +17,8 @@ struct TodayView: View {
     @State private var goalIsCompleted = false
     @State private var tasksAreCompleted = [false, false, false]
     @State private var showAlert = false
+    @State private var isShowingTaskCompletionAnimation = false
+    @State private var isShowingGoalCompletionAnimation = false
     
     var body: some View {
         Form {
@@ -95,6 +97,21 @@ struct TodayView: View {
             checkForDailySetup()
         }
         .alert(isPresented: $showAlert) { showLastGoalNotCompletedAlert() }
+        .overlay(
+            TaskCompletionView()
+                    .opacity(isShowingTaskCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.0))
+            )
+        .overlay(
+            GoalCompletionView()
+                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.0))
+            )
+        .overlay(
+            ConfettiView()
+                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.5))
+            )
     }
 }
 
@@ -137,6 +154,16 @@ extension TodayView {
             tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
             tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
             tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+            
+            // Show the goal completion animation
+            if goal.isCompleted {
+                isShowingGoalCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingGoalCompletionAnimation = false
+            }
         } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
         } catch {
@@ -157,8 +184,28 @@ extension TodayView {
             // update the state of the checkbox
             tasksAreCompleted[index!] = task.isCompleted
             
+            // Show the task completion animation
+            if task.isCompleted && !goal.isCompleted {
+                isShowingTaskCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingTaskCompletionAnimation = false
+            }
+            
             // update the goal checkbox
             goalIsCompleted = goal.isCompleted
+            
+            // Show the goal completion animation
+            if goal.isCompleted {
+                isShowingGoalCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingGoalCompletionAnimation = false
+            }
         } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
         } catch {

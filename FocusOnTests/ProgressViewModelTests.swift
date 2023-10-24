@@ -124,7 +124,7 @@ class ProgressViewModelTests: XCTestCase {
         let testDataPiont = chartData![3][4] // data point for last goal
         let legend = testDataPiont.legend
         // Then
-        XCTAssertEqual(legend, Legend(color: .green, label: "Success", order: 5))
+        XCTAssertEqual(legend, Legend(color: Color("SuccessColor"), label: "Success", order: 5))
     }
     
     override func tearDown() {
