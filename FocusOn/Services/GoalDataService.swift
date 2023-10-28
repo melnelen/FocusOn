@@ -65,7 +65,7 @@ class GoalDataService: DataServiceProtocol {
         entity.name = name
         entity.createdAt = goal.createdAt
         entity.completionStatus = goal.isCompleted
-        entity.tasks = goal.tasks as NSSet?
+        entity.tasks = NSSet(array: goal.tasks) as NSSet?
         save()
     }
 

@@ -20,7 +20,7 @@ class Goal: Identifiable, Hashable, ObservableObject {
     var name: String
     let createdAt: Date
     var isCompleted: Bool
-    var tasks: Set<Task>
+    var tasks: [Task]
 
     init() {
         self.id = UUID()
@@ -30,7 +30,7 @@ class Goal: Identifiable, Hashable, ObservableObject {
         self.tasks = [Task(), Task(), Task()]
     }
 
-    init(name: String, createdAt: Date, isCompleted: Bool, tasks: Set<Task>) {
+    init(name: String, createdAt: Date, isCompleted: Bool, tasks: Array<Task>) {
         self.id = UUID()
         self.name = name
         self.createdAt = createdAt
