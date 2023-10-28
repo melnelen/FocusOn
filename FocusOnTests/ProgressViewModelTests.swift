@@ -6,14 +6,16 @@
 //
 
 import XCTest
+import SwiftUI
 import SwiftUICharts
 @testable import FocusOn
-import SwiftUI
 
 class ProgressViewModelTests: XCTestCase {
     private var sut: ProgressViewModel!
     private var mockDataService: DataServiceProtocol!
     private var chunkedChartDataByWeek: [[DataPoint]]?
+    private let calendar = Calendar.current
+    private let firstWeekday = 4
     
     override func setUp() {
         super.setUp()
@@ -113,7 +115,19 @@ class ProgressViewModelTests: XCTestCase {
         let dayComponent = LocalizedStringKey(String(Calendar.current.component(.day, from: mockGoal.createdAt)))
         let label = testDataPiont.label.self
         // Then
-        XCTAssertEqual(label, dayComponent, "Label should be the date of the first goal.")
+        XCTAssertEqual(label, dayComponent, "Label should be the date of the last goal.")
+    }
+    
+    func test_ProgressViewModel_ChartLabel_NoGoalDay() {
+        // Given
+        sut.allGoals = mockDataService.allGoals
+        // When
+        let chartData = sut.fillChartData()
+        let testDataPiont = chartData![3][3] // data point for a day with no goal set up
+        let noGoalDay = LocalizedStringKey("12")
+        let label = testDataPiont.label.self
+        // Then
+        XCTAssertEqual(label, noGoalDay, "Label should be the date of the day with no goal.")
     }
     
     func test_ProgressViewModel_ChartLegend() {
