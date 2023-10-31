@@ -20,7 +20,7 @@ class ProgressViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockDataService = MockDataService()
-        sut = ProgressViewModel(dataService: mockDataService)
+        sut = ProgressViewModel(dataService: mockDataService, calendar: Calendar.current)
     }
     
     func test_ProgressViewModel_FillChartData_WithNoGoals() {
@@ -139,6 +139,20 @@ class ProgressViewModelTests: XCTestCase {
         let legend = testDataPiont.legend
         // Then
         XCTAssertEqual(legend, Legend(color: Color("SuccessColor"), label: "Success", order: 5))
+    }
+    
+    func test_ProgressViewModel_WeekStartsOnWednesday() {
+        // Given
+        var customCalendar = Calendar.current
+        customCalendar.firstWeekday = 4 // Wednesday
+        sut = ProgressViewModel(dataService: mockDataService, calendar: customCalendar)
+        
+        // When
+        let chartData = sut.fillChartData()
+        let testDataPiont = chartData![3][0] // data point for last goal
+        let legend = testDataPiont.legend
+        // Then
+        XCTAssertEqual(legend, Legend(color: Color("AccentColor"), label: "Big Progress", order: 4))
     }
     
     override func tearDown() {

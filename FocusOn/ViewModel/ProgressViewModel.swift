@@ -12,7 +12,7 @@ import SwiftUI
 class ProgressViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
-    let calendar = Calendar.current
+    private let calendar: Calendar
     let firstWeekday = Calendar.current.firstWeekday
     
     let noGoal = Legend(color: .gray, label: "No goal", order: 1)
@@ -21,9 +21,10 @@ class ProgressViewModel: ObservableObject {
     let bigProgress = Legend(color: Color("AccentColor"), label: "Big Progress", order: 4)
     let success = Legend(color: Color("SuccessColor"), label: "Success", order: 5)
     
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    init( dataService: DataServiceProtocol = MockDataService(), calendar: Calendar = Calendar.current) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
+        self.calendar = calendar
     }
     
     func fillChartData() -> [[DataPoint]]? {
