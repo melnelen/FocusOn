@@ -29,11 +29,11 @@ class GoalDataService: DataServiceProtocol {
 
     // MARK: PUBLIC
 
-    func upsertGoals(goal: Goal, name: String, isCompleted: Bool) {
+    func upsertGoals(goal: Goal, name: String) {
         // check if gaol already exists
         if let entity = savedGoals.first(where: { $0.id == goal.id }) {
             if name != "" {
-                update(entity: entity, name: name, isCompleted: isCompleted)
+                update(entity: entity, name: name)
             } else {
                 delete(entity: entity)
             }
@@ -54,7 +54,7 @@ class GoalDataService: DataServiceProtocol {
     }
 
     func insertGoal(goal:Goal) { }
-    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false) { }
+    func updateGoal(goal: Goal, name: String) { }
     func updateTask(task: Task, name: String, isCompleted: Bool = false) { }
 
     // MARK: PRIVATE
@@ -69,9 +69,8 @@ class GoalDataService: DataServiceProtocol {
         save()
     }
 
-    private func update(entity: GoalEntity, name: String, isCompleted: Bool) {
+    private func update(entity: GoalEntity, name: String) {
         entity.name = name
-        entity.completionStatus = isCompleted
         save()
     }
 

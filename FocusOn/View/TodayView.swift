@@ -139,7 +139,7 @@ extension TodayView {
     private func goalCheckboxPressed(goal: Goal) {
         do {
             // update the goal and the tasks with the new values
-            try viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
+            try viewModel.updateGoal(goal: goal, name: goalText)
             try viewModel.updateTask(task: Array(goal.tasks)[0], name: tasksText[0], isCompleted: tasksAreCompleted[0])
             try viewModel.updateTask(task: Array(goal.tasks)[1], name: tasksText[1], isCompleted: tasksAreCompleted[1])
             try viewModel.updateTask(task: Array(goal.tasks)[2], name: tasksText[2], isCompleted: tasksAreCompleted[2])

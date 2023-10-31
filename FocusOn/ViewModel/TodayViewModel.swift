@@ -45,10 +45,9 @@ class TodayViewModel: ObservableObject {
         try dataService.insertGoal(goal: todayGoal)
     }
     
-    func updateGoal(goal: Goal, name: String, isCompleted: Bool = false) throws {
+    func updateGoal(goal: Goal, name: String) throws {
         goal.name = name
-        goal.isCompleted = isCompleted
-        try dataService.updateGoal(goal: goal, name: name, isCompleted: isCompleted)
+        try dataService.updateGoal(goal: goal, name: name)
     }
     
     func updateTask(task: Task, name: String, isCompleted: Bool = false) throws {
@@ -59,12 +58,10 @@ class TodayViewModel: ObservableObject {
     
     func checkGoalIsCompleted(goal: Goal) {
         if (goal.isCompleted) {
-            goal.isCompleted = false
             goal.tasks.forEach { task in
                 task.isCompleted = false
             }
         } else {
-            goal.isCompleted = true
             goal.tasks.forEach { task in
                 task.isCompleted = true
             }
@@ -73,11 +70,5 @@ class TodayViewModel: ObservableObject {
     
     func checkTaskIsCompleted(goal: Goal, task: Task) {
         task.isCompleted = !task.isCompleted
-        goal.isCompleted = true
-        goal.tasks.forEach { task in
-            if (!task.isCompleted) {
-                goal.isCompleted = false
-            }
-        }
     }
 }
