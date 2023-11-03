@@ -28,6 +28,7 @@ struct MainView: View {
             }
             .onAppear() {
                 UITabBar.appearance().backgroundColor = UIColor(named: "AlternateColor")
+                NotificationManager.shared.requestAuthorization()
             }
         }
     }

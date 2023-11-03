@@ -12,18 +12,19 @@ import SwiftUI
 class ProgressViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
-    let calendar = Calendar.current
+    private let calendar: Calendar
     let firstWeekday = Calendar.current.firstWeekday
     
     let noGoal = Legend(color: .gray, label: "No goal", order: 1)
-    let fail = Legend(color: .red, label: "Fail", order: 2)
-    let smallProgress = Legend(color: .orange, label: "Small Progress", order: 3)
-    let bigProgress = Legend(color: .yellow, label: "Big Progress", order: 4)
-    let success = Legend(color: .green, label: "Success", order: 5)
+    let fail = Legend(color: Color("FailColor"), label: "Fail", order: 2)
+    let smallProgress = Legend(color: Color("ProgressColor"), label: "Small Progress", order: 3)
+    let bigProgress = Legend(color: Color("AccentColor"), label: "Big Progress", order: 4)
+    let success = Legend(color: Color("SuccessColor"), label: "Success", order: 5)
     
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    init( dataService: DataServiceProtocol = MockDataService(), calendar: Calendar = Calendar.current) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
+        self.calendar = calendar
     }
     
     func fillChartData() -> [[DataPoint]]? {
@@ -111,7 +112,8 @@ class ProgressViewModel: ObservableObject {
                     let dataPoint = generateDataPointForGoal(goal: goal)
                     dataPointsForWeek.append(dataPoint)
                 } else {
-                    let noGoalDataPoint = DataPoint(value: 0, label: "", legend: noGoal)
+                    let components = calendar.dateComponents([.day], from: currentDate)
+                    let noGoalDataPoint = DataPoint(value: 0, label: LocalizedStringKey(String(components.day!)), legend: noGoal)
                     dataPointsForWeek.append(noGoalDataPoint)
                 }
             }

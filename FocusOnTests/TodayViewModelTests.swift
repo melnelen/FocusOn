@@ -110,7 +110,7 @@ class TodayViewModelTests: XCTestCase {
         try sut.addGoal(name: "Create FocusOn app")
         let goal = sut.fetchGoals()!.last!
         // When
-        try sut.updateGoal(goal: goal, name: "Test FocusOn app", isCompleted: true)
+        try sut.updateGoal(goal: goal, name: "Test FocusOn app")
         // Then
         XCTAssert(goal.name == "Test FocusOn app", "Failed to update a goal name")
         XCTAssert(goal.isCompleted == true, "Failed to update a goal completion status")
@@ -175,7 +175,7 @@ class TodayViewModelTests: XCTestCase {
         let task1 = Array(goal.tasks)[0]
         let task2 = Array(goal.tasks)[1]
         let task3 = Array(goal.tasks)[2]
-        goal.isCompleted = true
+//        goal.isCompleted = true
         // When
         sut.checkGoalIsCompleted(goal: goal)
         // Then

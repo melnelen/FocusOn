@@ -69,13 +69,13 @@ private struct LegendView: View {
                 }
                 HStack {
                     Circle()
-                        .fill(.red)
+                        .fill(Color("FailColor"))
                         .frame(width: 16, height: 16)
                     Text("Fail")
                 }
                 HStack {
                     Circle()
-                        .fill(.orange)
+                        .fill(Color("ProgressColor"))
                         .frame(width: 16, height: 16)
                     Text("Small Progress")
                 }
@@ -84,13 +84,13 @@ private struct LegendView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Circle()
-                        .fill(.yellow)
+                        .fill(Color("AccentColor"))
                         .frame(width: 16, height: 16)
                     Text("Big Progress")
                 }
                 HStack {
                     Circle()
-                        .fill(.green)
+                        .fill(Color("SuccessColor"))
                         .frame(width: 16, height: 16)
                     Text("Success")
                 }

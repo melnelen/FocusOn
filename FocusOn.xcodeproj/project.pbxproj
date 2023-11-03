@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1908539B2AE2C739005C20EE /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539A2AE2C739005C20EE /* NotificationManager.swift */; };
+		1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539C2AE6A558005C20EE /* TaskCompletionView.swift */; };
+		1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539E2AE6BE87005C20EE /* ConfettiView.swift */; };
+		190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190853A02AE86D18005C20EE /* GoalCompletionView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -15,7 +19,6 @@
 		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
 		D01FD6952774BA6C001DB74C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6942774BA6C001DB74C /* Assets.xcassets */; };
 		D01FD6982774BA6C001DB74C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6972774BA6C001DB74C /* Preview Assets.xcassets */; };
-		D01FD69A2774BA6C001DB74C /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6992774BA6C001DB74C /* PersistenceController.swift */; };
 		D01FD6B12774BA6D001DB74C /* FocusOnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */; };
 		D01FD6B32774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */; };
 		D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */; };
@@ -50,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1908539A2AE2C739005C20EE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		1908539C2AE6A558005C20EE /* TaskCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionView.swift; sourceTree = "<group>"; };
+		1908539E2AE6BE87005C20EE /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		190853A02AE86D18005C20EE /* GoalCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCompletionView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19EB49D52A577B1300AFDB90 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
@@ -58,7 +65,6 @@
 		D01FD6922774BA6A001DB74C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D01FD6942774BA6C001DB74C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D01FD6972774BA6C001DB74C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D01FD6992774BA6C001DB74C /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		D01FD6A22774BA6D001DB74C /* FocusOnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6AC2774BA6D001DB74C /* FocusOnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnUITests.swift; sourceTree = "<group>"; };
@@ -194,7 +200,7 @@
 				D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */,
 				D06A4CF427FDC3D4003F7C72 /* GoalDataService.swift */,
 				D0BD1B9828087BFE00058C21 /* MockDataService.swift */,
-				D01FD6992774BA6C001DB74C /* PersistenceController.swift */,
+				1908539A2AE2C739005C20EE /* NotificationManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -216,6 +222,9 @@
 				D09D99FF27B0564E004A283C /* HistoryView.swift */,
 				D09D99FB27B0562C004A283C /* TodayView.swift */,
 				D09D99FD27B05640004A283C /* ProgressView.swift */,
+				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
+				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
+				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,11 +376,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */,
+				1908539B2AE2C739005C20EE /* NotificationManager.swift in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D07B0C0B27FD931400245BA0 /* Task.swift in Sources */,
+				190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */,
 				19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */,
-				D01FD69A2774BA6C001DB74C /* PersistenceController.swift in Sources */,
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
+				1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */,
+				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
 				D0DA100728452C1B000FDE98 /* HistoryViewModel.swift in Sources */,
 				D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */,

@@ -10,16 +10,18 @@ import SwiftUI
 struct TodayView: View {
     @StateObject var viewModel = TodayViewModel()
     
+    @State private var lastGoal: Goal?
     @State private var todayGoal: Goal?
     @State private var goalText = ""
     @State private var tasksText = ["", "", ""]
     @State private var goalIsCompleted = false
     @State private var tasksAreCompleted = [false, false, false]
     @State private var showAlert = false
+    @State private var isShowingTaskCompletionAnimation = false
+    @State private var isShowingGoalCompletionAnimation = false
     
     var body: some View {
         Form {
-            
             Section {
                 HStack {
                     TextField("My goal is to ...", text: $goalText)
@@ -90,9 +92,26 @@ struct TodayView: View {
             }
         }
         .navigationTitle("FocusOn")
-        .environmentObject(viewModel)
-        //      .onAppear { currentGoal = viewModel.todayGoal }
-        
+        .onAppear {
+            fetchLastGoal()
+            checkForDailySetup()
+        }
+        .alert(isPresented: $showAlert) { showLastGoalNotCompletedAlert() }
+        .overlay(
+            TaskCompletionView()
+                    .opacity(isShowingTaskCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.0))
+            )
+        .overlay(
+            GoalCompletionView()
+                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.0))
+            )
+        .overlay(
+            ConfettiView()
+                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.5))
+            )
     }
 }
 
@@ -120,7 +139,7 @@ extension TodayView {
     private func goalCheckboxPressed(goal: Goal) {
         do {
             // update the goal and the tasks with the new values
-            try viewModel.updateGoal(goal: goal, name: goalText, isCompleted: goalIsCompleted)
+            try viewModel.updateGoal(goal: goal, name: goalText)
             try viewModel.updateTask(task: Array(goal.tasks)[0], name: tasksText[0], isCompleted: tasksAreCompleted[0])
             try viewModel.updateTask(task: Array(goal.tasks)[1], name: tasksText[1], isCompleted: tasksAreCompleted[1])
             try viewModel.updateTask(task: Array(goal.tasks)[2], name: tasksText[2], isCompleted: tasksAreCompleted[2])
@@ -135,6 +154,16 @@ extension TodayView {
             tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
             tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
             tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+            
+            // Show the goal completion animation
+            if goal.isCompleted {
+                isShowingGoalCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingGoalCompletionAnimation = false
+            }
         } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
         } catch {
@@ -155,8 +184,28 @@ extension TodayView {
             // update the state of the checkbox
             tasksAreCompleted[index!] = task.isCompleted
             
+            // Show the task completion animation
+            if task.isCompleted && !goal.isCompleted {
+                isShowingTaskCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingTaskCompletionAnimation = false
+            }
+            
             // update the goal checkbox
             goalIsCompleted = goal.isCompleted
+            
+            // Show the goal completion animation
+            if goal.isCompleted {
+                isShowingGoalCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingGoalCompletionAnimation = false
+            }
         } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
         } catch {
@@ -168,6 +217,53 @@ extension TodayView {
         Alert(title: Text("Oops 🙊"),
               message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
               dismissButton: .default(Text("OK")))
+    }
+    
+    private func checkForDailySetup() {
+        let calendar = Calendar.current
+        
+        if let lastGoal = lastGoal,
+           !calendar.isDateInToday(lastGoal.createdAt) &&
+            lastGoal.isCompleted == false {
+            showAlert = true
+        }
+    }
+    
+    private func continueLastGoalButtonPressed() {
+        let goal = lastGoal!
+        todayGoal = goal
+        goalText = goal.name
+        goalIsCompleted = goal.isCompleted
+        tasksText =
+        [Array(goal.tasks)[0].name,
+         Array(goal.tasks)[1].name,
+         Array(goal.tasks)[2].name]
+        tasksAreCompleted =
+        [Array(goal.tasks)[0].isCompleted,
+         Array(goal.tasks)[1].isCompleted,
+         Array(goal.tasks)[2].isCompleted]
+    }
+    
+    private func showLastGoalNotCompletedAlert() -> Alert {
+        Alert(
+            title: Text("Set up your goal for the day"),
+            message: Text("Do you want to set up a new goal or continue working on the previous one?"),
+            primaryButton: .default(Text("Set up new goal")) {
+                // Set up a new goal
+                addGoalButtonPressed()
+            },
+            secondaryButton: .default(Text("Continue previous goal")) {
+                // Continue the previous goal
+                continueLastGoalButtonPressed()
+            }
+        )
+    }
+    
+}
+
+extension TodayView {
+    private func fetchLastGoal() {
+        lastGoal = viewModel.fetchGoals()?.last
     }
 }
 
