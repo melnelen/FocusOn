@@ -13,41 +13,22 @@ class TodayViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
     
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
-    }
-    
-    // MARK: TODO
-    func updateAllGoals() {
-        //        $allGoals
-        //            .combineLatest(dataService.$savedGoals)
-        //            .map { (allGoals, goalsMO) -> [Goal] in
-        //                allGoals.compactMap { (goal) -> Goal? in
-        //                    guard let entity = goalsMO.first(where: { $0.id == goal.id }) else {
-        //                        return nil
-        //                    }
-        //                    return goal.updateGoal(name: entity.name!, isCompleted: entity.isCompleted)
-        //                }
-        //            }
-        //            .sink { [weak self] (returnedGoals) in
-        //                self?.allGoals =  returnedGoals
-        //            }
-        //            .store(in: &cancellables)
+        self.allGoals = dataService.allGoals
     }
     
     func fetchGoals() -> [Goal]? {
-        allGoals = dataService.allGoals
+        allGoals = dataService.fetchGoals()
         return allGoals
     }
     
     func addGoal(name: String) throws {
-        todayGoal.name = name
-        try dataService.insertGoal(goal: todayGoal)
+        try dataService.upsertGoal(goal: todayGoal, name: name)
     }
     
     func updateGoal(goal: Goal, name: String) throws {
-        goal.name = name
-        try dataService.updateGoal(goal: goal, name: name)
+        try dataService.upsertGoal(goal: goal, name: name)
     }
     
     func updateTask(task: Task, name: String, isCompleted: Bool = false) throws {

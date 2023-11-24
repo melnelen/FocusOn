@@ -115,21 +115,26 @@ class MockDataService: DataServiceProtocol {
                                                      Task(name: "Test task 0.2", isCompleted: true),
                                                      Task(name: "Test task 0.3", isCompleted: true)])]
     
-    func upsertGoals(goal: Goal, name: String) { }
-    
     func fetchGoals() -> [Goal] {
         return allGoals ?? []
     }
     
-    func insertGoal(goal: Goal) throws {
+    func upsertGoal(goal: Goal, name: String) throws {
         try checkLength(of: goal.name)
-        allGoals = allGoals ?? []
-        allGoals?.append(goal)
-    }
-    
-    func updateGoal(goal: Goal, name: String) throws {
-        try checkLength(of: goal.name)
-        goal.name = name
+        // check if gaol already exists
+        if (allGoals?.first(where: { $0.id == goal.id })) != nil {
+            // update goal name
+            if name != "" {
+                goal.name = name
+            // delete goal
+            } else {
+                // delete goal
+            }
+        // if not, create new goal
+        } else {
+            allGoals = allGoals ?? []
+            allGoals?.append(goal)
+        }
     }
     
     func updateTask(task: Task, name: String, isCompleted: Bool) throws {

@@ -11,9 +11,8 @@ class HistoryViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     private let dataService: DataServiceProtocol
     
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
-        self.allGoals = dataService.allGoals
     }
     
     func fetchGoals() -> [Goal]? {

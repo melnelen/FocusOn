@@ -22,7 +22,7 @@
 		D01FD6B12774BA6D001DB74C /* FocusOnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B02774BA6D001DB74C /* FocusOnUITests.swift */; };
 		D01FD6B32774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6B22774BA6D001DB74C /* FocusOnUITestsLaunchTests.swift */; };
 		D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */; };
-		D06A4CF527FDC3D4003F7C72 /* GoalDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A4CF427FDC3D4003F7C72 /* GoalDataService.swift */; };
+		D06A4CF527FDC3D4003F7C72 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A4CF427FDC3D4003F7C72 /* DataService.swift */; };
 		D07B0C0927FD930000245BA0 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07B0C0827FD930000245BA0 /* Goal.swift */; };
 		D07B0C0B27FD931400245BA0 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07B0C0A27FD931400245BA0 /* Task.swift */; };
 		D09D99FC27B0562D004A283C /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D99FB27B0562C004A283C /* TodayView.swift */; };
@@ -74,7 +74,7 @@
 		D01FD6C12774EA1B001DB74C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D01FD6C42774EA84001DB74C /* swift.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swift.yml; sourceTree = "<group>"; };
 		D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModelTests.swift; sourceTree = "<group>"; };
-		D06A4CF427FDC3D4003F7C72 /* GoalDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDataService.swift; sourceTree = "<group>"; };
+		D06A4CF427FDC3D4003F7C72 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		D07B0C0827FD930000245BA0 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		D07B0C0A27FD931400245BA0 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D09D99FB27B0562C004A283C /* TodayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
@@ -198,7 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */,
-				D06A4CF427FDC3D4003F7C72 /* GoalDataService.swift */,
+				D06A4CF427FDC3D4003F7C72 /* DataService.swift */,
 				D0BD1B9828087BFE00058C21 /* MockDataService.swift */,
 				1908539A2AE2C739005C20EE /* NotificationManager.swift */,
 			);
@@ -389,7 +389,7 @@
 				D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */,
 				D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */,
 				D09D99FE27B05642004A283C /* ProgressView.swift in Sources */,
-				D06A4CF527FDC3D4003F7C72 /* GoalDataService.swift in Sources */,
+				D06A4CF527FDC3D4003F7C72 /* DataService.swift in Sources */,
 				D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */,
 				19EB49D62A577B1300AFDB90 /* FocusOn.xcdatamodeld in Sources */,
 				D07B0C0927FD930000245BA0 /* Goal.swift in Sources */,

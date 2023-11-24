@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct FocusOnApp: App {
-    let dataService = GoalDataService()
+    let dataService = DataService()
 
     var body: some Scene {
         WindowGroup {
