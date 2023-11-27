@@ -14,22 +14,16 @@ struct HistoryView: View {
     
     var body: some View {
         Section {
-            if let goals = allGoals { // [Goal(), Goal(), Goal()]
-                VStack {
-                    //                    Image(systemName: "text.badge.checkmark")
-                    //                        .font(.system(size: 50, weight: .bold))
-                    //                        .foregroundColor(Color("SuccessColor"))
-                    //                        .padding(.bottom)
-                    //                    Text("You have completed \(goals.filter { $0.isCompleted }.count) out of \(goals.count) goals.")
-                    //                }
+            if allGoals != nil { // [Goal(), Goal(), Goal()]
+                List {
                     
-                    // Display monthly summaries and goals
-                    ForEach(viewModel.monthlySummaries.sorted(by: { $0.key > $1.key }), id: \.key) { (month, summary) in
-                        // Monthly Summary
+                    // Monthly Summary
+                    ForEach(viewModel.monthlySummaries.sorted(by: { $0.key < $1.key }), id: \.key) { (month, summary) in
                         VStack {
                             Text("\(month)")
                                 .font(.title)
                                 .foregroundColor(Color("AccentColor"))
+                                .frame(maxWidth: .infinity, alignment: .center)
                                 .padding(.vertical, 10)
                             Text("\(summary)")
                                 .font(.headline)
@@ -37,27 +31,27 @@ struct HistoryView: View {
                                 .padding(.vertical, 5)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
-                        
+        
                         // Goals for the month
-                        ForEach(viewModel.allGoals?.filter { goal in
+                        ForEach((viewModel.allGoals?.filter { goal in
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "MMMM yyyy"
                             return dateFormatter.string(from: goal.createdAt) == month
-                        } ?? [], id: \.self) { goal in
+                        } ?? []).sorted(by: { $0.createdAt > $1.createdAt }), id: \.self) { goal in
                             Section {
                                 // Goal with date
-                                VStack(alignment: .leading) {
-                                    Text("\(formattedDate(from: goal.createdAt))")
-                                        .font(.caption)
-                                        .foregroundColor(Color("AccentColor"))
-                                    HStack {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("\(formattedDate(from: goal.createdAt))")
+                                            .font(.caption)
+                                            .foregroundColor(Color("AccentColor"))
                                         Text("\(goal.name)")
                                             .font(.system(size: 25))
+                                    }
                                         Spacer()
                                         Image(systemName: (goal.isCompleted ? "checkmark.seal.fill" : "xmark.octagon.fill"))
                                             .foregroundColor(goal.isCompleted ? Color("SuccessColor") : Color("FailColor"))
-                                    }
-                                }
+                                    }.font(.system(size: 30))
                                 
                                 // Tasks
                                 ForEach(Array(goal.tasks), id: \.self) { task in
