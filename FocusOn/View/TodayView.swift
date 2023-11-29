@@ -99,19 +99,19 @@ struct TodayView: View {
         .alert(isPresented: $showAlert) { showLastGoalNotCompletedAlert() }
         .overlay(
             TaskCompletionView()
-                    .opacity(isShowingTaskCompletionAnimation ? 1.0 : 0.0)
-                    .animation(.easeInOut(duration: 1.0))
-            )
+                .opacity(isShowingTaskCompletionAnimation ? 1.0 : 0.0)
+                .animation(.easeInOut(duration: 1.0))
+        )
         .overlay(
             GoalCompletionView()
-                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
-                    .animation(.easeInOut(duration: 1.0))
-            )
+                .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                .animation(.easeInOut(duration: 1.0))
+        )
         .overlay(
             ConfettiView()
-                    .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
-                    .animation(.easeInOut(duration: 1.5))
-            )
+                .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                .animation(.easeInOut(duration: 1.5))
+        )
     }
 }
 
@@ -125,7 +125,7 @@ extension TodayView {
             todayGoal = viewModel.todayGoal
             
             // update the text for the goal name
-            goalText = viewModel.todayGoal.name
+            goalText = todayGoal?.name ?? ""
         } catch NameLengthError.empty, NameLengthError.short {
             showAlert.toggle()
         } catch {
@@ -222,26 +222,29 @@ extension TodayView {
     private func checkForDailySetup() {
         let calendar = Calendar.current
         
-        if let lastGoal = lastGoal,
-           !calendar.isDateInToday(lastGoal.createdAt) &&
-            lastGoal.isCompleted == false {
-            showAlert = true
+        if let lastGoal = lastGoal {
+            if !calendar.isDateInToday(lastGoal.createdAt) &&
+                lastGoal.isCompleted == false {
+                showAlert = true
+            }
         }
     }
     
     private func continueLastGoalButtonPressed() {
-        let goal = lastGoal!
-        todayGoal = goal
-        goalText = goal.name
-        goalIsCompleted = goal.isCompleted
+        guard let lastGoal = lastGoal else {
+            print("There a no goals!")
+            return
+        }
+        todayGoal = lastGoal
+        goalText = todayGoal!.name
         tasksText =
-        [Array(goal.tasks)[0].name,
-         Array(goal.tasks)[1].name,
-         Array(goal.tasks)[2].name]
+        [Array(todayGoal!.tasks)[0].name,
+         Array(todayGoal!.tasks)[1].name,
+         Array(todayGoal!.tasks)[2].name]
         tasksAreCompleted =
-        [Array(goal.tasks)[0].isCompleted,
-         Array(goal.tasks)[1].isCompleted,
-         Array(goal.tasks)[2].isCompleted]
+        [Array(todayGoal!.tasks)[0].isCompleted,
+         Array(todayGoal!.tasks)[1].isCompleted,
+         Array(todayGoal!.tasks)[2].isCompleted]
     }
     
     private func showLastGoalNotCompletedAlert() -> Alert {
@@ -263,7 +266,14 @@ extension TodayView {
 
 extension TodayView {
     private func fetchLastGoal() {
+        let calendar = Calendar.current
+        
         lastGoal = viewModel.fetchGoals()?.last
+        if let lastGoal = lastGoal {
+            if calendar.isDateInToday(lastGoal.createdAt) {
+                continueLastGoalButtonPressed()
+            }
+        }
     }
 }
 

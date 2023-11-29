@@ -31,4 +31,9 @@ class Task: Identifiable, Hashable, Equatable {
         self.name = name
         self.isCompleted = isCompleted
     }
+    init(id: UUID, name: String, isCompleted: Bool) {
+        self.id = UUID()
+        self.name = name
+        self.isCompleted = isCompleted
+    }
 }

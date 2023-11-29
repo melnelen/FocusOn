@@ -25,6 +25,7 @@ class TodayViewModel: ObservableObject {
     
     func addGoal(name: String) throws {
         try dataService.upsertGoal(goal: todayGoal, name: name)
+        todayGoal = allGoals?.last ?? Goal()
     }
     
     func updateGoal(goal: Goal, name: String) throws {
