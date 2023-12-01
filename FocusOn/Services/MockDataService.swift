@@ -119,17 +119,11 @@ class MockDataService: DataServiceProtocol {
         return allGoals ?? []
     }
     
-    func upsertGoal(goal: Goal, name: String) throws {
-        try checkLength(of: goal.name)
+    func upsertGoal(goal: Goal) throws {
         // check if gaol already exists
-        if (allGoals?.first(where: { $0.id == goal.id })) != nil {
-            // update goal name
-            if name != "" {
-                goal.name = name
-            // delete goal
-            } else {
-                // delete goal
-            }
+        if let updatedGoal = allGoals?.first(where: { $0.id == goal.id }) {
+            // update goal
+            updatedGoal.name = goal.name
         // if not, create new goal
         } else {
             allGoals = allGoals ?? []
@@ -137,15 +131,23 @@ class MockDataService: DataServiceProtocol {
         }
     }
     
-    func updateTask(task: Task, name: String, isCompleted: Bool) throws {
-        try checkLength(of: task.name)
-        task.name = name
-        task.isCompleted = isCompleted
+    func updateTask(task: Task) throws {
+        // check if task already exists
+        let allTasks = extractTasks(from: allGoals ?? [])
+        if let updatedTask = allTasks.first(where: { $0.id == task.id }) {
+            // update task
+            updatedTask.name = task.name
+            updatedTask.isCompleted = task.isCompleted
+        }
     }
     
-    func checkLength(of text: String) throws {
-        // check that the text is at least 3 characters long
-        guard text.count > 0 else { throw NameLengthError.empty }
-        guard text.count >= 3 else { throw NameLengthError.short }
+    func extractTasks(from goals: [Goal]) -> [Task] {
+        return goals.flatMap { $0.tasks }
     }
+    
+//    func checkLength(of text: String) throws {
+//        // check that the text is at least 3 characters long
+//        guard text.count > 0 else { throw NameLengthError.empty }
+//        guard text.count >= 3 else { throw NameLengthError.short }
+//    }
 }
