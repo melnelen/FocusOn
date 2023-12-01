@@ -165,6 +165,7 @@
 			children = (
 				D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */,
 				19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */,
+				19AB32D62B14EB1200E8782B /* HistoryViewModelTests.swift */,
 			);
 			path = FocusOnTests;
 			sourceTree = "<group>";
@@ -402,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */,
+				19AB32D72B14EB1200E8782B /* HistoryViewModelTests.swift in Sources */,
 				19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
