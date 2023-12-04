@@ -51,40 +51,17 @@ struct TodayView: View {
             
             Section {
                 if let goal = todayGoal {
-                    HStack {
-                        TextField("My first task is to ...", text: $tasksText[0])
-                        Button(
-                            action: {
-                                let task = Array(goal.tasks)[0]
+                    ForEach(Array(goal.tasks.enumerated()), id: \.element) { index, task in
+                        HStack {
+                            TextField("My task is to ...", text: $tasksText[index])
+                            Button(action: {
+                                let task = goal.tasks[index]
                                 taskCheckboxPressed(goal: goal, task: task)
                             }) {
-                                Image(systemName: (tasksAreCompleted[0] ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(tasksAreCompleted[0] ? Color("SuccessColor") : .black)
+                                Image(systemName: (tasksAreCompleted[index] ? "checkmark.circle.fill" : "circle"))
+                                    .foregroundColor(tasksAreCompleted[index] ? Color("SuccessColor") : .black)
                             }
-                    }
-                    .alert(isPresented: $showAlert) { showNameLengthAlert() }
-                    HStack {
-                        TextField("My second task is to ...", text: $tasksText[1])
-                        Button(
-                            action: {
-                                let task = Array(goal.tasks)[1]
-                                taskCheckboxPressed(goal: goal, task: task)
-                            }) {
-                                Image(systemName: (tasksAreCompleted[1] ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(tasksAreCompleted[1] ? Color("SuccessColor") : .black)
-                            }
-                    }
-                    .alert(isPresented: $showAlert) { showNameLengthAlert() }
-                    HStack {
-                        TextField("My third task is to ...", text: $tasksText[2])
-                        Button(
-                            action: {
-                                let task = Array(goal.tasks)[2]
-                                taskCheckboxPressed(goal: goal, task: task)
-                            }) {
-                                Image(systemName: (tasksAreCompleted[2] ? "checkmark.circle.fill" : "circle"))
-                                    .foregroundColor(tasksAreCompleted[2] ? Color("SuccessColor") : .black)
-                            }
+                        }
                     }
                     .alert(isPresented: $showAlert) { showNameLengthAlert() }
                 }
@@ -146,9 +123,9 @@ extension TodayView {
         do {
             // update the goal and the tasks with the new values
             try viewModel.updateGoal(goal: goal, name: goalText)
-//            try viewModel.updateTask(task: Array(goal.tasks)[0], name: tasksText[0], isCompleted: tasksAreCompleted[0])
-//            try viewModel.updateTask(task: Array(goal.tasks)[1], name: tasksText[1], isCompleted: tasksAreCompleted[1])
-//            try viewModel.updateTask(task: Array(goal.tasks)[2], name: tasksText[2], isCompleted: tasksAreCompleted[2])
+            for (index, task) in goal.tasks.enumerated() {
+                try viewModel.updateTask(task: task, name: tasksText[index], isCompleted: tasksAreCompleted[index])
+            }
             
             // check the current completion status of the goal
             viewModel.checkGoalIsCompleted(goal: goal)
@@ -157,9 +134,9 @@ extension TodayView {
             goalIsCompleted = goal.isCompleted
             
             // update the tasks checkboxes with the new values
-            tasksAreCompleted[0] = Array(goal.tasks)[0].isCompleted
-            tasksAreCompleted[1] = Array(goal.tasks)[1].isCompleted
-            tasksAreCompleted[2] = Array(goal.tasks)[2].isCompleted
+            for (index, task) in goal.tasks.enumerated() {
+                tasksAreCompleted[index] = task.isCompleted
+            }
             
             // Show the goal completion animation
             if goal.isCompleted {
@@ -250,14 +227,12 @@ extension TodayView {
         }
         todayGoal = lastGoal
         goalText = todayGoal!.name
-        tasksText =
-        [Array(todayGoal!.tasks)[0].name,
-         Array(todayGoal!.tasks)[1].name,
-         Array(todayGoal!.tasks)[2].name]
-        tasksAreCompleted =
-        [Array(todayGoal!.tasks)[0].isCompleted,
-         Array(todayGoal!.tasks)[1].isCompleted,
-         Array(todayGoal!.tasks)[2].isCompleted]
+        for task in todayGoal!.tasks {
+            tasksText.append(task.name)
+        }
+        for task in todayGoal!.tasks {
+            tasksAreCompleted.append(task.isCompleted)
+        }
     }
     
     private func showLastGoalNotCompletedAlert() -> Alert {
