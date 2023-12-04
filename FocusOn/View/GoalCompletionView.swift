@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GoalCompletionView: View {
     var body: some View {
-        Text("Amazing! Goal Completed!")
+        Text("Congrats on achieving your goal!")
             .font(.title)
             .foregroundColor(.white)
             .padding(30)

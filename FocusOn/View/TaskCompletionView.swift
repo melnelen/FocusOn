@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskCompletionView: View {
     var body: some View {
-        Text("Great! Task Completed!")
+        Text("Great job on making progress!")
             .font(.title)
             .foregroundColor(.white)
             .padding(30)

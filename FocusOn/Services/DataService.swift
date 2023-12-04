@@ -10,15 +10,15 @@ import CoreData
 
 class DataService: DataServiceProtocol {
     @Published var allGoals: [Goal]?
-    let container: NSPersistentContainer
-    private let containerName: String = "FocusOnDataModel"
+    static let container = NSPersistentContainer(name: "FocusOnDataModel")
+//    private let containerName: String = "FocusOnDataModel"
     private let goalEntityName: String = "GoalEntity"
     private let taskEntityName: String = "TaskEntity"
     private var savedGoalsEntities: [GoalEntity] = []
     
     init() {
-        container = NSPersistentContainer(name: containerName)
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+//        container = NSPersistentContainer(name: containerName)
+        DataService.container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Error loading Core Data! \(error)")
             } else {
@@ -34,7 +34,7 @@ class DataService: DataServiceProtocol {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         
         do {
-            savedGoalsEntities = try container.viewContext.fetch(request)
+            savedGoalsEntities = try DataService.container.viewContext.fetch(request)
             
         } catch let error {
             print("Error fetching! \(error)")
@@ -48,7 +48,7 @@ class DataService: DataServiceProtocol {
         request.predicate = NSPredicate(format: "id == %@", goal.id as CVarArg)
         
         do {
-            let result = try container.viewContext.fetch(request)
+            let result = try DataService.container.viewContext.fetch(request)
             // Check if goal entity already exists
             if let goalEntity = result.first {
                 update(goalEntity: goalEntity, from: goal)
@@ -67,7 +67,7 @@ class DataService: DataServiceProtocol {
         request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
         
         do {
-            let result = try container.viewContext.fetch(request)
+            let result = try DataService.container.viewContext.fetch(request)
             if let entity = result.first {
                 entity.name = task.name
                 entity.isCompleted = task.isCompleted
@@ -83,7 +83,7 @@ class DataService: DataServiceProtocol {
     
     private func createNewGoalEntity(from goal: Goal) {
         // Create new goal entity
-        let newGoalEntity = GoalEntity(context: container.viewContext)
+        let newGoalEntity = GoalEntity(context: DataService.container.viewContext)
         newGoalEntity.id = goal.id
         newGoalEntity.name = goal.name
         newGoalEntity.createdAt = goal.createdAt
@@ -102,7 +102,7 @@ class DataService: DataServiceProtocol {
     
     private func addTasksToNewGoal(goalEntity: GoalEntity, goalTasks: [Task]) {
         for task in goalTasks {
-            let newTaskEntity = TaskEntity(context: container.viewContext)
+            let newTaskEntity = TaskEntity(context: DataService.container.viewContext)
             newTaskEntity.id = task.id
             newTaskEntity.name = task.name
             newTaskEntity.isCompleted = task.isCompleted
@@ -119,7 +119,7 @@ class DataService: DataServiceProtocol {
         request.predicate = NSPredicate(format: "id == %@", goal.id as CVarArg)
         
         do {
-            let result = try container.viewContext.fetch(request)
+            let result = try DataService.container.viewContext.fetch(request)
             if let updatedGoalEntity = result.first {
                 for taskEntity in updatedGoalEntity.taskEntities?.allObjects as! [TaskEntity] {
                     for task in goal.tasks {
@@ -140,13 +140,13 @@ class DataService: DataServiceProtocol {
             print("Goal not found with ID: \(goal.id)")
             return
         }
-        container.viewContext.delete(goalEntity)
+        DataService.container.viewContext.delete(goalEntity)
         save()
     }
     
     private func save() {
         do {
-            try container.viewContext.save()
+            try DataService.container.viewContext.save()
             allGoals = fetchGoals()
             
             print("Successfully saved to Core Data!")

@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct FocusOnApp: App {
-    let dataService = DataService()
+//    let dataService = DataService()
 
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environment(\.managedObjectContext, dataService.container.viewContext)
+//                .environment(\.managedObjectContext, dataService.container.viewContext)
         }
     }
 }

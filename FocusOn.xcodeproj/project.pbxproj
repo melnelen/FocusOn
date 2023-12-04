@@ -12,6 +12,7 @@
 		1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1908539E2AE6BE87005C20EE /* ConfettiView.swift */; };
 		190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190853A02AE86D18005C20EE /* GoalCompletionView.swift */; };
 		1913E6C72B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1913E6C52B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodeld */; };
+		1939BD3E2B1B92880097340B /* TaskUncheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939BD3D2B1B92880097340B /* TaskUncheckView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -58,6 +59,7 @@
 		1908539E2AE6BE87005C20EE /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		190853A02AE86D18005C20EE /* GoalCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCompletionView.swift; sourceTree = "<group>"; };
 		1913E6C62B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOnDataModel.xcdatamodel; sourceTree = "<group>"; };
+		1939BD3D2B1B92880097340B /* TaskUncheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUncheckView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,7 +167,6 @@
 			children = (
 				D040192227EDFFEB0005CF35 /* TodayViewModelTests.swift */,
 				19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */,
-				19AB32D62B14EB1200E8782B /* HistoryViewModelTests.swift */,
 			);
 			path = FocusOnTests;
 			sourceTree = "<group>";
@@ -224,6 +225,7 @@
 				D09D99FB27B0562C004A283C /* TodayView.swift */,
 				D09D99FD27B05640004A283C /* ProgressView.swift */,
 				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
+				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
 				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
 				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
 			);
@@ -388,6 +390,7 @@
 				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
 				D0DA100728452C1B000FDE98 /* HistoryViewModel.swift in Sources */,
+				1939BD3E2B1B92880097340B /* TaskUncheckView.swift in Sources */,
 				D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */,
 				D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */,
 				D09D99FE27B05642004A283C /* ProgressView.swift in Sources */,
@@ -403,7 +406,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D040192327EDFFEB0005CF35 /* TodayViewModelTests.swift in Sources */,
-				19AB32D72B14EB1200E8782B /* HistoryViewModelTests.swift in Sources */,
 				19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,6 +18,7 @@ struct TodayView: View {
     @State private var tasksAreCompleted = [false, false, false]
     @State private var showAlert = false
     @State private var isShowingTaskCompletionAnimation = false
+    @State private var isShowingTaskUncheckAnimation = false
     @State private var isShowingGoalCompletionAnimation = false
     
     var body: some View {
@@ -100,6 +101,11 @@ struct TodayView: View {
         .overlay(
             TaskCompletionView()
                 .opacity(isShowingTaskCompletionAnimation ? 1.0 : 0.0)
+                .animation(.easeInOut(duration: 1.0))
+        )
+        .overlay(
+            TaskUncheckView()
+                .opacity(isShowingTaskUncheckAnimation ? 1.0 : 0.0)
                 .animation(.easeInOut(duration: 1.0))
         )
         .overlay(
@@ -187,11 +193,18 @@ extension TodayView {
             // Show the task completion animation
             if task.isCompleted && !goal.isCompleted {
                 isShowingTaskCompletionAnimation = true
+            } else if !task.isCompleted {
+                isShowingTaskUncheckAnimation = true
             }
             
             // Reset the animation state after a short delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                 isShowingTaskCompletionAnimation = false
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                isShowingTaskUncheckAnimation = false
             }
             
             // update the goal checkbox
