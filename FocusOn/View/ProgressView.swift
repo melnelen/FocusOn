@@ -11,7 +11,9 @@ import SwiftUICharts
 struct ProgressView: View {
     @StateObject var viewModel = ProgressViewModel()
     
+    @State var allGoals: [Goal]?
     @State private var chunkedChartDataByWeek: [[DataPoint]]?
+    @State private var weeksNumbers: [Int]?
     @State private var tabViewSelection = 0
     
     var body: some View {
@@ -20,31 +22,33 @@ struct ProgressView: View {
                 .foregroundColor(.accentColor)
                 .font(.title)
             TabView(selection: $tabViewSelection) {
-                ForEach(chunkedChartDataByWeek?.indices ?? 0..<0, id: \.self) { weekNumber in
-                    if let chartDataForWeek = chunkedChartDataByWeek?[weekNumber] {
-                        VStack {
-                            Text("Week \(weekNumber)")
-                                .foregroundColor(.accentColor)
-                                .font(.headline)
-                                .padding(20)
-                            
-                            BarChartView(dataPoints: chartDataForWeek)
-                                .chartStyle(
-                                    BarChartStyle(
-                                        barMinHeight: 100,
-                                        showAxis: false,
-                                        showLegends: false
-                                    )
+                ForEach(Array(zip(weeksNumbers ?? [], chunkedChartDataByWeek ?? [])), id: \.0) { weekNumber, chartDataForWeek in
+                    VStack {
+                        Text("Week \(weekNumber)")
+                            .foregroundColor(.accentColor)
+                            .font(.headline)
+                            .padding(20)
+
+                        BarChartView(dataPoints: chartDataForWeek)
+                            .chartStyle(
+                                BarChartStyle(
+                                    barMinHeight: 100,
+                                    showAxis: false,
+                                    showLegends: false
                                 )
-                        }
-                        .padding(20)
+                            )
                     }
+                    .padding(20)
                 }
             }
-            .onAppear { fetchChartData() }
             .tabViewStyle(.page)
             
             LegendView()
+        }
+        .onAppear {
+            fetchGoals()
+            fetchChartData()
+            fetchWeeksNumbers()
         }
     }
 }
@@ -102,9 +106,18 @@ private struct LegendView: View {
 }
 
 extension ProgressView {
+    private func fetchGoals() {
+        allGoals = viewModel.fetchGoals()
+    }
+    
     private func fetchChartData() {
         chunkedChartDataByWeek = viewModel.fillChartData()
-        tabViewSelection = (chunkedChartDataByWeek?.count ?? 1) - 1
+//        tabViewSelection = (chunkedChartDataByWeek?.count ?? 1) - 1
+    }
+    
+    private func fetchWeeksNumbers() {
+        weeksNumbers = viewModel.getWeeksNumbers(from: allGoals ?? [])
+        tabViewSelection = (weeksNumbers?.count ?? 1) - 1
     }
 }
 
