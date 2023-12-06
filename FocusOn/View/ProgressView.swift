@@ -112,12 +112,11 @@ extension ProgressView {
     
     private func fetchChartData() {
         chunkedChartDataByWeek = viewModel.fillChartData()
-//        tabViewSelection = (chunkedChartDataByWeek?.count ?? 1) - 1
     }
     
     private func fetchWeeksNumbers() {
         weeksNumbers = viewModel.getWeeksNumbers(from: allGoals ?? [])
-        tabViewSelection = (weeksNumbers?.count ?? 1) - 1
+        tabViewSelection = weeksNumbers?.last ?? 0
     }
 }
 
