@@ -17,38 +17,39 @@ struct ProgressView: View {
     @State private var tabViewSelection = 0
     
     var body: some View {
-        VStack {
-            Text("Here is your progres")
-                .foregroundColor(.accentColor)
-                .font(.title)
-            TabView(selection: $tabViewSelection) {
-                ForEach(Array(zip(weeksNumbers ?? [], chunkedChartDataByWeek ?? [])), id: \.0) { weekNumber, chartDataForWeek in
-                    VStack {
-                        Text("Week \(weekNumber)")
-                            .foregroundColor(.accentColor)
-                            .font(.headline)
-                            .padding(20)
-
-                        BarChartView(dataPoints: chartDataForWeek)
-                            .chartStyle(
-                                BarChartStyle(
-                                    barMinHeight: 100,
-                                    showAxis: false,
-                                    showLegends: false
+        NavigationView {
+            VStack {
+                TabView(selection: $tabViewSelection) {
+                    ForEach(Array(zip(weeksNumbers ?? [], chunkedChartDataByWeek ?? [])), id: \.0) { weekNumber, chartDataForWeek in
+                        LazyVStack {
+                            Text("Week \(weekNumber)")
+                                .foregroundColor(.accentColor)
+                                .font(.headline)
+                                .padding()
+                            
+                            BarChartView(dataPoints: chartDataForWeek)
+                                .chartStyle(
+                                    BarChartStyle(
+                                        barMinHeight: 200,
+                                        showAxis: false,
+                                        showLegends: false
+                                    )
                                 )
-                            )
+                                .padding()
+                        }
+                        .padding()
                     }
-                    .padding(20)
                 }
+                .tabViewStyle(.page)
+                
+                LegendView()
             }
-            .tabViewStyle(.page)
-            
-            LegendView()
-        }
-        .onAppear {
-            fetchGoals()
-            fetchChartData()
-            fetchWeeksNumbers()
+            .navigationBarTitle("Progress")
+            .onAppear {
+                fetchGoals()
+                fetchChartData()
+                fetchWeeksNumbers()
+            }
         }
     }
 }
@@ -58,12 +59,12 @@ private struct LegendView: View {
         Text("Legend:")
             .foregroundColor(.accentColor)
             .font(.headline)
-            .padding(20)
+            .padding()
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 HStack {
                     Circle()
-                        .fill(Color.white)
+                        .fill(Color("AlternateColor"))
                         .frame(width: 14, height: 14)
                         .overlay(
                             Circle()
@@ -84,7 +85,7 @@ private struct LegendView: View {
                     Text("Small Progress")
                 }
             }
-            .padding(10)
+            .padding()
             VStack(alignment: .leading) {
                 HStack {
                     Circle()
@@ -100,7 +101,7 @@ private struct LegendView: View {
                 }
                 
             }
-            .padding(10)
+            .padding()
         }
     }
 }

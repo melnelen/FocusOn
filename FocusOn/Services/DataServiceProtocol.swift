@@ -9,7 +9,7 @@ import Foundation
 
 protocol DataServiceProtocol {
     var allGoals: [Goal]? { get }
-    func fetchGoals() -> [Goal]
+    func fetchGoals() 
     func upsertGoal(goal: Goal) throws
-    func updateTask(task: Task) throws
+    func updateTask(goal: Goal, task: Task) throws
 }

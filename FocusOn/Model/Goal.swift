@@ -18,7 +18,7 @@ class Goal: Identifiable, Hashable, ObservableObject {
     
     let id: UUID 
     var name: String
-    let createdAt: Date
+    var createdAt: Date
     var isCompleted: Bool {
         return tasks.allSatisfy { $0.isCompleted }
     }
@@ -27,6 +27,13 @@ class Goal: Identifiable, Hashable, ObservableObject {
     init() {
         self.id = UUID()
         self.name = ""
+        self.createdAt = Date()
+        self.tasks = [Task(), Task(), Task()]
+    }
+    
+    init(name: String) {
+        self.id = UUID()
+        self.name = name
         self.createdAt = Date()
         self.tasks = [Task(), Task(), Task()]
     }

@@ -16,6 +16,8 @@
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
+		19B6F1A72B2B66F500A8842A /* GoalSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */; };
+		19B6F1A92B2B6BBB00A8842A /* TasksSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */; };
 		D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6902774BA6A001DB74C /* FocusOnApp.swift */; };
 		D01FD6932774BA6A001DB74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FD6922774BA6A001DB74C /* MainView.swift */; };
 		D01FD6952774BA6C001DB74C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01FD6942774BA6C001DB74C /* Assets.xcassets */; };
@@ -62,6 +64,9 @@
 		1939BD3D2B1B92880097340B /* TaskUncheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUncheckView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
+		19B6F1A52B29B08100A8842A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSectionView.swift; sourceTree = "<group>"; };
+		19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSectionView.swift; sourceTree = "<group>"; };
 		D01FD68D2774BA6A001DB74C /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01FD6902774BA6A001DB74C /* FocusOnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnApp.swift; sourceTree = "<group>"; };
 		D01FD6922774BA6A001DB74C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -142,6 +147,7 @@
 		D01FD68F2774BA6A001DB74C /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
+				19B6F1A52B29B08100A8842A /* Info.plist */,
 				D0A6FE8C27EDC4DD00B06218 /* View */,
 				D0A6FE8D27EDC4E900B06218 /* ViewModel */,
 				D07B0C0727FD92E400245BA0 /* Model */,
@@ -224,6 +230,8 @@
 				D09D99FF27B0564E004A283C /* HistoryView.swift */,
 				D09D99FB27B0562C004A283C /* TodayView.swift */,
 				D09D99FD27B05640004A283C /* ProgressView.swift */,
+				19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */,
+				19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */,
 				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
 				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
 				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
@@ -388,12 +396,14 @@
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
 				1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */,
 				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
+				19B6F1A72B2B66F500A8842A /* GoalSectionView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
 				D0DA100728452C1B000FDE98 /* HistoryViewModel.swift in Sources */,
 				1939BD3E2B1B92880097340B /* TaskUncheckView.swift in Sources */,
 				D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */,
 				D01FD6912774BA6A001DB74C /* FocusOnApp.swift in Sources */,
 				D09D99FE27B05642004A283C /* ProgressView.swift in Sources */,
+				19B6F1A92B2B6BBB00A8842A /* TasksSectionView.swift in Sources */,
 				D06A4CF527FDC3D4003F7C72 /* DataService.swift in Sources */,
 				D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */,
 				D07B0C0927FD930000245BA0 /* Goal.swift in Sources */,
@@ -562,6 +572,7 @@
 				DEVELOPMENT_TEAM = 6WAA8E6R87;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FocusOn/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -592,6 +603,7 @@
 				DEVELOPMENT_TEAM = 6WAA8E6R87;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FocusOn/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

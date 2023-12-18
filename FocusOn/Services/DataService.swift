@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 class DataService: DataServiceProtocol {
+    
     @Published var allGoals: [Goal]?
     let container: NSPersistentContainer
     private let containerName: String = "FocusOnDataModel"
@@ -24,24 +25,24 @@ class DataService: DataServiceProtocol {
                 fatalError("Error loading Core Data! \(error)")
             } else {
                 print("Successfully loaded core data!")
+                self.fetchGoals()
+//                completion() // Notify that goals have been loaded
             }
         })
-        allGoals = fetchGoals()
     }
     
     // MARK: PUBLIC
     
-    func fetchGoals() -> [Goal] {
+    func fetchGoals() {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
-        
+
         do {
             savedGoalsEntities = try container.viewContext.fetch(request)
-            
+            allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
+            print("Goals loaded successfully!")
         } catch let error {
             print("Error fetching! \(error)")
         }
-        
-        return savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
     }
     
     func upsertGoal(goal: Goal) throws {
@@ -51,8 +52,8 @@ class DataService: DataServiceProtocol {
         do {
             let result = try container.viewContext.fetch(request)
             // Check if goal entity already exists
-            if let goalEntity = result.first {
-                update(goalEntity: goalEntity, from: goal)
+            if result.first != nil {
+                update(goal: goal)
             } else {
                 createNewGoalEntity(from: goal)
             }
@@ -63,7 +64,7 @@ class DataService: DataServiceProtocol {
         }
     }
     
-    func updateTask(task: Task) throws {
+    func updateTask(goal: Goal, task: Task) throws {
         let request = NSFetchRequest<TaskEntity>(entityName: taskEntityName)
         request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
         
@@ -73,6 +74,7 @@ class DataService: DataServiceProtocol {
                 entity.name = task.name
                 entity.isCompleted = task.isCompleted
             }
+            update(goal: goal)
             save()
             
         } catch let error {
@@ -84,21 +86,38 @@ class DataService: DataServiceProtocol {
     
     private func createNewGoalEntity(from goal: Goal) {
         // Create new goal entity
-        let newGoalEntity = GoalEntity(context: container.viewContext)
-        newGoalEntity.id = goal.id
-        newGoalEntity.name = goal.name
-        newGoalEntity.createdAt = goal.createdAt
+        let entity = GoalEntity(context: container.viewContext)
+        entity.id = goal.id
+        entity.name = goal.name
+        entity.createdAt = goal.createdAt
         
         // Add tasks to new goal entity
-        addTasksToNewGoal(goalEntity: newGoalEntity, goalTasks: goal.tasks)
+        addTasksToNewGoal(goalEntity: entity, goalTasks: goal.tasks)
+        save()
     }
     
-    private func update(goalEntity: GoalEntity, from goal: Goal) {
-        // Update the goal's name
-        goalEntity.name = goal.name
+    private func update(goal: Goal) {
+        let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
+        request.predicate = NSPredicate(format: "id == %@", goal.id as CVarArg)
         
-        // Update existing tasks
-        updateTasksForGoal(goal: goal)
+        do {
+            let result = try container.viewContext.fetch(request)
+            // Check if goal entity already exists
+            if let entity = result.first {
+                // Update the goal's name
+                entity.name = goal.name
+                entity.createdAt = goal.createdAt
+            }
+            
+            // Update existing tasks
+            updateTasksForGoal(goal: goal)
+            
+            // Save changes after all updates
+            save()
+            
+        } catch {
+            print("Error fetching or saving a goal: \(error)")
+        }
     }
     
     private func addTasksToNewGoal(goalEntity: GoalEntity, goalTasks: [Task]) {
@@ -121,18 +140,22 @@ class DataService: DataServiceProtocol {
         
         do {
             let result = try container.viewContext.fetch(request)
-            if let updatedGoalEntity = result.first {
-                for taskEntity in updatedGoalEntity.taskEntities?.allObjects as! [TaskEntity] {
-                    for task in goal.tasks {
-                        if taskEntity.id == task.id {
-                            taskEntity.name = task.name
-                            taskEntity.isCompleted = task.isCompleted
-                        }
-                    }
-                }
+            guard let goalEntity = result.first else {
+                print("Goal not found for ID: \(goal.id)")
+                return
             }
+            
+            for taskEntity in goalEntity.taskEntities?.allObjects as? [TaskEntity] ?? [] {
+                guard let task = goal.tasks.first(where: { $0.id == taskEntity.id }) else {
+                    continue
+                }
+                taskEntity.name = task.name
+                taskEntity.isCompleted = task.isCompleted
+            }
+            
+            save()
         } catch {
-            print("Error upading goal's tasks: \(error)")
+            print("Error updating goal's tasks: \(error)")
         }
     }
     
@@ -146,25 +169,38 @@ class DataService: DataServiceProtocol {
     }
     
     private func save() {
-        do {
-            try container.viewContext.save()
-            allGoals = fetchGoals()
-            
-            print("Successfully saved to Core Data!")
-        } catch let error {
-            print("Error saving to Core Data. \(error)")
+        let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
+        
+        if container.viewContext.hasChanges {
+            do {
+                savedGoalsEntities = try container.viewContext.fetch(request)
+                try container.viewContext.save()
+                
+                allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
+                
+                print("Successfully saved to Core Data!")
+            } catch let error {
+                print("Error saving to Core Data. \(error)")
+            }
         }
     }
     
     private func convertToGoal(goalEntity: GoalEntity) -> Goal {
-        let tasks = (goalEntity.taskEntities?.allObjects as? [TaskEntity])?.map { convertToTask(taskEntity: $0) } ?? []
+        guard let taskEntities = goalEntity.taskEntities?.allObjects as? [TaskEntity] else {
+            return Goal(id: goalEntity.id!,
+                        name: goalEntity.name!,
+                        createdAt: goalEntity.createdAt!,
+                        tasks: [])
+        }
+        
+        let tasks = taskEntities.map { convertToTask(taskEntity: $0) }
         
         return Goal(id: goalEntity.id!,
                     name: goalEntity.name!,
                     createdAt: goalEntity.createdAt!,
                     tasks: tasks)
     }
-    
+
     private func convertToTask(taskEntity: TaskEntity) -> Task {
         return Task(id: taskEntity.id!,
                     name: taskEntity.name!,
