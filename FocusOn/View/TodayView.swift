@@ -81,19 +81,13 @@ extension TodayView {
         }
         
         do {
-            //            lastGoal.createdAt = Date()
             viewModel.goalText = lastGoal.name
             viewModel.goalIsCompleted = lastGoal.isCompleted
             try viewModel.updateGoal(goal: lastGoal, name: viewModel.goalText, date: Date())
-            //            for task in lastGoal.tasks { // ??
-            //                viewModel.tasksText.append(task.name)
-            //            }
         } catch {
             print("Something went wrong!")
         }
-        
-        //        checkForDailySetup()
-    }
+}
     
     private func showNameLengthAlert() -> Alert {
         Alert(title: Text("Oops 🙊"),

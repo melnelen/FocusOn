@@ -14,7 +14,6 @@ class TodayViewModel: ObservableObject {
     @Published var tasksText = ["", "", ""]
     @Published var goalIsCompleted = false
     @Published var tasksAreCompleted = [false, false, false]
-//    @Published var goalDate: Date?
     @Published var allGoals: [Goal]?
     
     // MARK: Private Properties
@@ -29,7 +28,6 @@ class TodayViewModel: ObservableObject {
     init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
-//        self.goalDate = dataService.allGoals?.last?.createdAt
     }
     
     // MARK: Public Properties
@@ -52,20 +50,14 @@ class TodayViewModel: ObservableObject {
         goal.name = name
         goalText = goal.name // ??
         goal.createdAt = Date()
-//        for (index, task) in goal.tasks.enumerated() {
-//            try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: tasksAreCompleted[index])
-//        }
         goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
-//        if let lastGoal = allGoals?.last {
-            do {
-                try dataService.upsertGoal(goal: goal)
-                allGoals = dataService.allGoals
-            } catch {
-                print("Error updating goal: \(error)")
-            }
-//        } else {
-//            print("No goals found")
-//        }
+        do {
+            try dataService.upsertGoal(goal: goal)
+            allGoals = dataService.allGoals
+        } catch {
+            print("Error updating goal: \(error)")
+        }
+        
     }
     
     func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool) throws {
@@ -90,19 +82,7 @@ class TodayViewModel: ObservableObject {
             try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: !goalIsCompleted)
             tasksAreCompleted[index] = task.isCompleted
         }
-        
-//        if goal.isCompleted { // || goalIsCompleted
-//            for (index, task) in goal.tasks.enumerated() {
-//                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: false)
-//                tasksAreCompleted[index] = task.isCompleted
-//            }
-//        } else {
-//            for (index, task) in goal.tasks.enumerated() {
-//                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: true)
-//                tasksAreCompleted[index] = task.isCompleted
-//            }
-//        }
-//        goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
+        goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
         try updateGoal(goal: goal, name: goalText, date: goal.createdAt)
         allGoals = dataService.allGoals
     }
@@ -111,30 +91,32 @@ class TodayViewModel: ObservableObject {
         // get the index of the task at hand
         guard let index = Array(goal.tasks).firstIndex(of: task) else {
             // Handle the case where the task is not found
+            print("Task was not found!")
             return
         }
-
+        
         do {
             if task.isCompleted {
                 try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: false)
             } else {
                 try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: true)
             }
-
+            
             // Update tasksText only if the update was successful
             if let updatedTask = goal.tasks.first(where: { $0.id == task.id }) {
                 tasksText[index] = updatedTask.name
             } else {
                 // Handle the case where the task was not found after the update
+                print("Task was not found after the update!")
             }
         } catch {
             // Handle the error from updateTask
             print("Error updating task: \(error)")
         }
-
+        
         tasksAreCompleted[index] = task.isCompleted
         goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
-
+        
         do {
             try updateGoal(goal: goal, name: goalText, date: goal.createdAt)
             allGoals = dataService.allGoals
@@ -147,5 +129,5 @@ class TodayViewModel: ObservableObject {
     func formattedGoalDate(from date: Date) -> String {
         return goalDateFormatter.string(from: date)
     }
-
+    
 }

@@ -11,7 +11,6 @@ struct GoalSectionView: View {
     @ObservedObject var viewModel: TodayViewModel
     
     @Binding var isShowingGoalCompletionAnimation: Bool
-//    @Binding var goalDate: Date?
     let calendar = Calendar.current
     
     var body: some View {
@@ -19,9 +18,6 @@ struct GoalSectionView: View {
             .bold()
             .font(.headline)
             .foregroundColor(.accentColor)) {
-//                if let date = goalDate {
-//                        Text("\(goalDate)")  // Format date to String !!!!
-//                }
                 if let lastGoal = viewModel.allGoals?.last {
                     Text("\(viewModel.formattedGoalDate(from: lastGoal.createdAt))")
                         .font(.caption)
@@ -102,10 +98,6 @@ extension UpdateGoalView {
                 print("No goals found!")
                 return
             }
-
-//            for (index, task) in lastGoal.tasks.enumerated() {
-//                try viewModel.updateTask(goal: lastGoal, task: task, name: viewModel.tasksText[index], isCompleted: !viewModel.goalIsCompleted)
-//            }
             
             try viewModel.checkGoalIsCompleted(goal: lastGoal)
             

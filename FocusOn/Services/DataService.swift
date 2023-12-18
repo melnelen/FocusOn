@@ -26,7 +26,6 @@ class DataService: DataServiceProtocol {
             } else {
                 print("Successfully loaded core data!")
                 self.fetchGoals()
-//                completion() // Notify that goals have been loaded
             }
         })
     }
