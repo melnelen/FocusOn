@@ -33,9 +33,10 @@ class TodayViewModel: ObservableObject {
     // MARK: Public Properties
     func addNewGoal(name: String) throws {
         allGoals?.append(Goal(name: name))
-        goalText = allGoals!.last!.name
+        
         if let lastGoal = allGoals?.last {
             do {
+                goalText = lastGoal.name
                 try dataService.upsertGoal(goal: lastGoal)
                 allGoals = dataService.allGoals
             } catch {
@@ -60,17 +61,11 @@ class TodayViewModel: ObservableObject {
         
     }
     
-    func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool) throws {
+    func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws {
         task.name = name
         task.isCompleted = isCompleted
-        for (index, task) in goal.tasks.enumerated() {
-            tasksText[index] = task.name
-        }
-        for (index, task) in goal.tasks.enumerated() {
-            tasksAreCompleted[index] = task.isCompleted
-        }
         do {
-            try dataService.updateTask(goal: goal, task: task)
+            try dataService.updateTask(goal: goal, task: task, name: name, isCompleted: isCompleted, index: index)
             allGoals = dataService.allGoals
         } catch {
             print("Error updating task: \(error)")
@@ -79,7 +74,7 @@ class TodayViewModel: ObservableObject {
     
     func checkGoalIsCompleted(goal: Goal) throws {
         for (index, task) in goal.tasks.enumerated() {
-            try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: !goalIsCompleted)
+            try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: !goalIsCompleted, index: index)
             tasksAreCompleted[index] = task.isCompleted
         }
         goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
@@ -97,9 +92,9 @@ class TodayViewModel: ObservableObject {
         
         do {
             if task.isCompleted {
-                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: false)
+                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: false, index: index)
             } else {
-                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: true)
+                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: true, index: index)
             }
             
             // Update tasksText only if the update was successful

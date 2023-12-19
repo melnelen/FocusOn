@@ -130,7 +130,7 @@ class MockDataService: DataServiceProtocol {
         }
     }
     
-    func updateTask(goal: Goal, task: Task) throws {
+    func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws {
         // check if task already exists
         let allTasks = extractTasks(from: allGoals ?? [])
         if let updatedTask = allTasks.first(where: { $0.id == task.id }) {

@@ -55,14 +55,14 @@ struct AddGoalView: View {
 extension AddGoalView {
     private func addGoalButtonPressed() {
         do {
-            // add the goal to the list of goals
+            // Add the goal to the list of goals
             try viewModel.addNewGoal(name: viewModel.goalText)
             
         } catch {
             print("Something went wrong!")
         }
         
-        // hide keyboard
+        // Hide keyboard
         UIApplication.shared.endEditing()
         
         
@@ -76,7 +76,11 @@ struct UpdateGoalView: View {
     
     var body: some View {
         HStack {
-            TextField("My goal is to ...", text: $viewModel.goalText)
+            TextField("My goal is to ...", text: $viewModel.goalText, onEditingChanged: { editingChanged in
+                if !editingChanged {
+                    updateGoalName()
+                }
+            })
             Button(action: {
                 goalCheckboxPressed()
             }) {
@@ -92,6 +96,22 @@ struct UpdateGoalView: View {
 }
 
 extension UpdateGoalView {
+    private func updateGoalName() {
+        // Use a delay to update after the user stops typing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            do {
+                guard let lastGoal = viewModel.allGoals?.last else {
+                    print("No goals found!")
+                    return
+                }
+                try viewModel.updateGoal(goal: lastGoal, name: viewModel.goalText, date: lastGoal.createdAt)
+            } catch {
+                print("Error updating goal: \(error)")
+            }
+        }
+    }
+
+    
     private func goalCheckboxPressed() {
         do {
             guard let lastGoal = viewModel.allGoals?.last else {
@@ -116,11 +136,19 @@ extension UpdateGoalView {
     }
     
     private func setupGoalText() {
-        viewModel.goalText = viewModel.allGoals?.last?.name ?? ""
+        guard let lastGoal = viewModel.allGoals?.last else {
+            print("No goals found!")
+            return
+        }
+        viewModel.goalText = lastGoal.name
     }
     
     private func setupGoalCheckbox() {
-        viewModel.goalIsCompleted = viewModel.allGoals?.last?.isCompleted ?? false
+        guard let lastGoal = viewModel.allGoals?.last else {
+            print("No goals found!")
+            return
+        }
+        viewModel.goalIsCompleted = lastGoal.isCompleted
     }
 }
 

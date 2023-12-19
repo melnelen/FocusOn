@@ -63,35 +63,63 @@ class DataService: DataServiceProtocol {
         }
     }
     
-    func updateTask(goal: Goal, task: Task) throws {
-        let request = NSFetchRequest<TaskEntity>(entityName: taskEntityName)
-        request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
-        
-        do {
-            let result = try container.viewContext.fetch(request)
-            if let entity = result.first {
-                entity.name = task.name
-                entity.isCompleted = task.isCompleted
-            }
-            update(goal: goal)
-            save()
-            
-        } catch let error {
-            print("Error fetching or saving a task: \(error)")
-        }
+     func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws {
+         // Check if goal exists
+         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
+         request.predicate = NSPredicate(format: "id == %@", goal.id as CVarArg)
+         
+         do {
+             let result = try container.viewContext.fetch(request)
+             guard let goalEntity = result.first else {
+                 print("Goal not found for ID: \(goal.id)")
+                 return
+             }
+             
+             // Update existing tasks
+             guard let taskEntity = goalEntity.taskEntities![index] as? TaskEntity else {
+                     print("Task not found for ID: \(task.id)")
+                     return
+                 }
+
+                 taskEntity.name = task.name
+                 taskEntity.isCompleted = task.isCompleted
+
+             save()
+         } catch {
+             print("Error updating goal's tasks: \(error)")
+         }
     }
     
     // MARK: PRIVATE
     
     private func createNewGoalEntity(from goal: Goal) {
         // Create new goal entity
-        let entity = GoalEntity(context: container.viewContext)
-        entity.id = goal.id
-        entity.name = goal.name
-        entity.createdAt = goal.createdAt
+        let goalEntity = GoalEntity(context: container.viewContext)
+        goalEntity.id = goal.id
+        goalEntity.name = goal.name
+        goalEntity.createdAt = goal.createdAt
         
         // Add tasks to new goal entity
-        addTasksToNewGoal(goalEntity: entity, goalTasks: goal.tasks)
+        addTasksTo(goalEntity: goalEntity, goalTasks: goal.tasks)
+        save()
+    }
+
+    // TOFIX ??
+    private func addTasksTo(goalEntity: GoalEntity, goalTasks: [Task]) {
+//        let taskEntities = goalEntity.mutableSetValue(forKey: "taskEntities")
+
+        for task in goalTasks {
+            let taskEntity = TaskEntity(context: container.viewContext)
+            taskEntity.id = task.id
+            taskEntity.name = task.name
+            taskEntity.isCompleted = task.isCompleted
+
+            // Set the relationship between TaskEntity and GoalEntity
+            taskEntity.goalEntity = goalEntity
+
+            // Add the taskEntity to the set
+//            taskEntities.add(taskEntity)
+        }
         save()
     }
     
@@ -119,21 +147,9 @@ class DataService: DataServiceProtocol {
         }
     }
     
-    private func addTasksToNewGoal(goalEntity: GoalEntity, goalTasks: [Task]) {
-        for task in goalTasks {
-            let newTaskEntity = TaskEntity(context: container.viewContext)
-            newTaskEntity.id = task.id
-            newTaskEntity.name = task.name
-            newTaskEntity.isCompleted = task.isCompleted
-            
-            let mutableTaskSet = goalEntity.mutableSetValue(forKey: goalTaskEntities)
-            mutableTaskSet.add(newTaskEntity)
-        }
-        save()
-    }
-    
+    // needed ??
     private func updateTasksForGoal(goal: Goal) {
-        // Check if goal already exists
+        // Check if goal exists
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         request.predicate = NSPredicate(format: "id == %@", goal.id as CVarArg)
         
@@ -144,19 +160,23 @@ class DataService: DataServiceProtocol {
                 return
             }
             
-            for taskEntity in goalEntity.taskEntities?.allObjects as? [TaskEntity] ?? [] {
-                guard let task = goal.tasks.first(where: { $0.id == taskEntity.id }) else {
+            // Update existing tasks            
+            for (taskEntity, task) in zip(goalEntity.taskEntities!, goal.tasks) {
+                guard let taskEntity = taskEntity as? TaskEntity else {
+                    print("Task not found for ID: \(task.id)")
                     continue
                 }
+
                 taskEntity.name = task.name
                 taskEntity.isCompleted = task.isCompleted
             }
-            
+
             save()
         } catch {
             print("Error updating goal's tasks: \(error)")
         }
     }
+
     
     private func deleteGoal(goal: Goal) {
         guard let goalEntity = savedGoalsEntities.first(where: { $0.id == goal.id }) else {
@@ -185,7 +205,7 @@ class DataService: DataServiceProtocol {
     }
     
     private func convertToGoal(goalEntity: GoalEntity) -> Goal {
-        guard let taskEntities = goalEntity.taskEntities?.allObjects as? [TaskEntity] else {
+        guard let taskEntities = goalEntity.taskEntities?.array as? [TaskEntity] else {
             return Goal(id: goalEntity.id!,
                         name: goalEntity.name!,
                         createdAt: goalEntity.createdAt!,
@@ -207,10 +227,10 @@ class DataService: DataServiceProtocol {
     }
     
     
-    func checkLength(of text: String) throws {
-        // check that the text is at least 3 characters long
-        guard text.count > 0 else { throw NameLengthError.empty }
-        guard text.count >= 3 else { throw NameLengthError.short }
-    }
+//    func checkLength(of text: String) throws {
+//        // check that the text is at least 3 characters long
+//        guard text.count > 0 else { throw NameLengthError.empty }
+//        guard text.count >= 3 else { throw NameLengthError.short }
+//    }
     
 }

@@ -22,13 +22,18 @@ struct TasksSectionView: View {
             .foregroundColor(.accentColor)) {
                 if let lastGoal = viewModel.allGoals?.last {
                     if (calendar.isDateInToday(lastGoal.createdAt)) {
-                        ForEach(Array(viewModel.allGoals!.last!.tasks.enumerated()), id: \.element) { index, task in
+                        ForEach(Array(lastGoal.tasks.enumerated()), id: \.element) { index, task in
                             HStack {
-                                TextField("My task is to ...", text: $viewModel.tasksText[index])
+//                                TextField("My task is to ...", text: $viewModel.tasksText[index])
+                                TextField("My task is to ...", text: $viewModel.tasksText[index], onEditingChanged: { editingChanged in
+                                    if !editingChanged {
+                                        updateTaskName(goal: lastGoal, task: task, index: index)
+                                    }
+                                })
                                 Button(action: {
-                                    taskCheckboxPressed(goal: viewModel.allGoals!.last!, task: task)
-                                    updateTasksText()
-                                    updateTasksCheckboxes()
+                                    taskCheckboxPressed(goal: lastGoal, task: task)
+//                                    updateTasksText()
+//                                    updateTasksCheckboxes()
                                 }) {
                                     Image(systemName: (viewModel.tasksAreCompleted[index] ? "checkmark.circle.fill" : "circle"))
                                         .foregroundColor(viewModel.tasksAreCompleted[index] ? Color("SuccessColor") : .accentColor)
@@ -46,6 +51,17 @@ struct TasksSectionView: View {
 }
 
 extension TasksSectionView {
+    private func updateTaskName(goal: Goal, task: Task, index: Int) {
+        // Use a delay to update after the user stops typing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            do {
+                try viewModel.updateTask(goal: goal, task: task, name: viewModel.tasksText[index], isCompleted: task.isCompleted, index: index)
+            } catch {
+                print("Error updating goal: \(error)")
+            }
+        }
+    }
+    
     private func taskCheckboxPressed(goal: Goal, task: Task) {
         do {
             try viewModel.checkTaskIsCompleted(goal: goal, task: task)
@@ -96,17 +112,17 @@ extension TasksSectionView {
         }
     }
     
-    private func updateTasksText() {
-        for (index, _) in viewModel.tasksText.enumerated() {
-            viewModel.allGoals!.last!.tasks[index].name = viewModel.tasksText[index]
-        }
-    }
-    
-    private func updateTasksCheckboxes() {
-        for (index, _) in viewModel.tasksAreCompleted.enumerated() {
-            viewModel.allGoals!.last!.tasks[index].isCompleted = viewModel.tasksAreCompleted[index]
-        }
-    }
+//    private func updateTasksText() {
+//        for (index, _) in viewModel.tasksText.enumerated() {
+//            viewModel.allGoals!.last!.tasks[index].name = viewModel.tasksText[index]
+//        }
+//    }
+//    
+//    private func updateTasksCheckboxes() {
+//        for (index, _) in viewModel.tasksAreCompleted.enumerated() {
+//            viewModel.allGoals!.last!.tasks[index].isCompleted = viewModel.tasksAreCompleted[index]
+//        }
+//    }
 }
 
 #Preview {
