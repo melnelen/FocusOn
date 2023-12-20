@@ -10,12 +10,14 @@ import SwiftUI
 struct HistoryView: View {
     @StateObject var viewModel = HistoryViewModel()
     
-    @State var allGoals: [Goal]?
+    @State private var allGoals: [Goal]?
+//    @State private var monthlySummaries: [String: String]?
+//    @State private var goalNameText: String = ""
         
     var body: some View {
         NavigationView {
             Section {
-                if let goals = allGoals { // [Goal(), Goal(), Goal()]
+                if var allGoals = allGoals { // [Goal(), Goal(), Goal()]
                     List {
                         
                         // Monthly Summary
@@ -36,7 +38,7 @@ struct HistoryView: View {
                             }
                             
                             // Goals for the month
-                            ForEach(viewModel.goalsForMonth(goals: goals, month: month), id: \.self) { goal in
+                            ForEach(viewModel.goalsForMonth(goals: allGoals, month: month), id: \.self) { goal in
                                 Section {
                                     // Goal with date
                                     HStack {
@@ -44,8 +46,12 @@ struct HistoryView: View {
                                             Text("\(viewModel.formattedGoalDate(from: goal.createdAt))")
                                                 .font(.caption)
                                                 .foregroundColor(Color.accentColor)
-                                            Text("\(goal.name)")
+                                            Text("\(goal.name)") // $goalNameText.wrappedValue
                                                 .font(.system(size: 25))
+//                                                .onReceive(viewModel.$allGoals) { _ in
+//                                                    print("Goal name changed.")
+//                                                    goalNameText = $viewModel.allGoals.wrappedValue!.filter({ $0.id == goal.id }).first?.name ?? ""
+//                                                }
                                         }
                                         Spacer()
                                         // Goal completion icon
@@ -80,6 +86,11 @@ struct HistoryView: View {
             }
             .navigationTitle("History")
             .onAppear { fetchGoals() }
+            .onReceive(viewModel.$allGoals) { goals in
+                // Handle changes to allGoals
+                print("Goals changed.")
+                allGoals = goals
+            }
         }
     }
 }

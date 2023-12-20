@@ -84,7 +84,7 @@ struct UpdateGoalView: View {
             Button(action: {
                 goalCheckboxPressed()
             }) {
-                Image(systemName: (viewModel.goalIsCompleted ? "checkmark.circle.fill" : "circle"))
+                Image(systemName: (viewModel.goalIsCompleted ? "checkmark.seal.fill" : "circle"))
                     .foregroundColor(viewModel.goalIsCompleted ? Color("SuccessColor") : .accentColor)
             }
         }
