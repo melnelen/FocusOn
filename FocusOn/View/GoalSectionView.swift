@@ -19,10 +19,10 @@ struct GoalSectionView: View {
             .font(.headline)
             .foregroundColor(.accentColor)) {
                 if let lastGoal = viewModel.allGoals?.last {
+                    if (calendar.isDateInToday(lastGoal.createdAt)) {
                     Text("\(viewModel.formattedGoalDate(from: lastGoal.createdAt))")
                         .font(.caption)
                         .foregroundColor(Color.accentColor)
-                    if (calendar.isDateInToday(lastGoal.createdAt)) {
                         UpdateGoalView(
                             viewModel: viewModel,
                             isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation)

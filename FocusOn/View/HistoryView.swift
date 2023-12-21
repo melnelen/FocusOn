@@ -11,13 +11,11 @@ struct HistoryView: View {
     @StateObject var viewModel = HistoryViewModel()
     
     @State private var allGoals: [Goal]?
-//    @State private var monthlySummaries: [String: String]?
-//    @State private var goalNameText: String = ""
         
     var body: some View {
         NavigationView {
             Section {
-                if var allGoals = allGoals { // [Goal(), Goal(), Goal()]
+                if let allGoals = allGoals { // [Goal(), Goal(), Goal()]
                     List {
                         
                         // Monthly Summary
@@ -48,10 +46,6 @@ struct HistoryView: View {
                                                 .foregroundColor(Color.accentColor)
                                             Text("\(goal.name)") // $goalNameText.wrappedValue
                                                 .font(.system(size: 25))
-//                                                .onReceive(viewModel.$allGoals) { _ in
-//                                                    print("Goal name changed.")
-//                                                    goalNameText = $viewModel.allGoals.wrappedValue!.filter({ $0.id == goal.id }).first?.name ?? ""
-//                                                }
                                         }
                                         Spacer()
                                         // Goal completion icon
@@ -86,11 +80,10 @@ struct HistoryView: View {
             }
             .navigationTitle("History")
             .onAppear { fetchGoals() }
-            .onReceive(viewModel.$allGoals) { goals in
-                // Handle changes to allGoals
-                print("Goals changed.")
-                allGoals = goals
-            }
+//            .onReceive(viewModel.$allGoals) { goals in
+//                print("Goals changed.")
+//                allGoals = goals
+//            }
         }
     }
 }
