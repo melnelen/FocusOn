@@ -36,8 +36,11 @@ class DataService: DataServiceProtocol {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
 
         do {
-            savedGoalsEntities = try container.viewContext.fetch(request)
-            allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
+            let savedGoalsEntities = try container.viewContext.fetch(request)
+            print("--> fetchCoreDataGoals \((savedGoalsEntities.first?.taskEntities?.array as? [TaskEntity])?.first?.name)")
+            let allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
+            print("--> fetchCoreDataGoals: \(allGoals.first?.tasks.first?.name)")
+            self.allGoals = allGoals
             print("Goals loaded successfully!")
         } catch let error {
             print("Error fetching! \(error)")
@@ -191,12 +194,13 @@ class DataService: DataServiceProtocol {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         
         if container.viewContext.hasChanges {
+
             do {
-                savedGoalsEntities = try container.viewContext.fetch(request)
                 try container.viewContext.save()
                 
+                let savedGoalsEntities = try container.viewContext.fetch(request)
                 allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
-                
+
                 print("Successfully saved to Core Data!")
             } catch let error {
                 print("Error saving to Core Data. \(error)")

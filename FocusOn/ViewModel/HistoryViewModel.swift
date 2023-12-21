@@ -34,7 +34,9 @@ class HistoryViewModel: ObservableObject {
     // MARK: Public Methods
     func fetchGoals() -> [Goal]? {
         dataService.fetchGoals()
-        allGoals = dataService.allGoals
+        let allGoals = dataService.allGoals
+        print("--> fetchGoals: \(allGoals?.first?.tasks.first?.name)")
+        self.allGoals = allGoals
         calculateMonthlySummaries()
         return allGoals
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Task: Identifiable, Hashable, Equatable {
+class Task: Identifiable, Hashable, Equatable, ObservableObject {
     static func == (lhs: Task, rhs: Task) -> Bool {
         return lhs.id == rhs.id
     }
@@ -17,8 +17,8 @@ class Task: Identifiable, Hashable, Equatable {
     }
 
     let id: UUID
-    var name: String
-    var isCompleted: Bool
+    @Published var name: String
+    @Published var isCompleted: Bool
 
     init() {
         self.id = UUID()

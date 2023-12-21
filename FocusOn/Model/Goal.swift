@@ -17,12 +17,12 @@ class Goal: Identifiable, Hashable, ObservableObject {
     }
     
     let id: UUID 
-    var name: String
-    var createdAt: Date
+    @Published var name: String
+    @Published var createdAt: Date
     var isCompleted: Bool {
         return tasks.allSatisfy { $0.isCompleted }
     }
-    var tasks: [Task]
+    @Published var tasks: [Task]
 
     init() {
         self.id = UUID()

@@ -10,14 +10,16 @@ import SwiftUI
 struct HistoryView: View {
     @StateObject var viewModel = HistoryViewModel()
     
-    @State private var allGoals: [Goal]?
+    //@StateObject private var allGoals: [Goal]?
 //    @State private var monthlySummaries: [String: String]?
 //    @State private var goalNameText: String = ""
         
     var body: some View {
         NavigationView {
             Section {
-                if var allGoals = allGoals { // [Goal(), Goal(), Goal()]
+                let _ = print("--> \(viewModel.allGoals?.count)")
+                let _ = print("--> \(viewModel.allGoals?.first?.tasks.first?.name)")
+                if var allGoals = viewModel.allGoals { // [Goal(), Goal(), Goal()]
                     List {
                         
                         // Monthly Summary
@@ -86,18 +88,18 @@ struct HistoryView: View {
             }
             .navigationTitle("History")
             .onAppear { fetchGoals() }
-            .onReceive(viewModel.$allGoals) { goals in
-                // Handle changes to allGoals
-                print("Goals changed.")
-                allGoals = goals
-            }
+//            .onReceive(viewModel.$allGoals) { goals in
+//                // Handle changes to allGoals
+//                print("Goals changed.")
+//                allGoals = goals
+//            }
         }
     }
 }
 
 extension HistoryView {
     private func fetchGoals() {
-        allGoals = viewModel.fetchGoals()
+        _ = viewModel.fetchGoals()
     }
 }
 
