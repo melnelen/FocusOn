@@ -28,6 +28,7 @@ class ProgressViewModel: ObservableObject {
     }
     
     func fetchGoals() -> [Goal]? {
+        dataService.fetchGoals()
         allGoals = dataService.allGoals
         return allGoals
     }

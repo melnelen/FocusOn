@@ -11,7 +11,6 @@ import SwiftUICharts
 struct ProgressView: View {
     @StateObject var viewModel = ProgressViewModel()
     
-    @State var allGoals: [Goal]?
     @State private var chunkedChartDataByWeek: [[DataPoint]]?
     @State private var weeksNumbers: [Int]?
     @State private var tabViewSelection = 0
@@ -108,7 +107,7 @@ private struct LegendView: View {
 
 extension ProgressView {
     private func fetchGoals() {
-        allGoals = viewModel.fetchGoals()
+        viewModel.allGoals = viewModel.fetchGoals()
     }
     
     private func fetchChartData() {
@@ -116,7 +115,7 @@ extension ProgressView {
     }
     
     private func fetchWeeksNumbers() {
-        weeksNumbers = viewModel.getWeeksNumbers(from: allGoals ?? [])
+        weeksNumbers = viewModel.getWeeksNumbers(from: viewModel.allGoals ?? [])
         tabViewSelection = weeksNumbers?.last ?? 0
     }
 }

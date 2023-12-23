@@ -36,8 +36,7 @@ class DataService: DataServiceProtocol {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
 
         do {
-            savedGoalsEntities = try container.viewContext.fetch(request)
-            try container.viewContext.save()
+            let savedGoalsEntities = try container.viewContext.fetch(request)
             allGoals = savedGoalsEntities.map { convertToGoal(goalEntity: $0) }
             print("Goals loaded successfully!")
         } catch let error {
