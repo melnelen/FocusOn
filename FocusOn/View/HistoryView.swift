@@ -9,13 +9,11 @@ import SwiftUI
 
 struct HistoryView: View {
     @StateObject var viewModel = HistoryViewModel()
-    
-//    @State private var allGoals: [Goal]?
-        
+            
     var body: some View {
         NavigationView {
             Section {
-                if let allGoals = viewModel.allGoals { // [Goal(), Goal(), Goal()]
+                if let allGoals = viewModel.allGoals, !allGoals.isEmpty { // [Goal(), Goal(), Goal()]
                     List {
                         
                         // Monthly Summary

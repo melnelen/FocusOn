@@ -18,30 +18,41 @@ struct ProgressView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TabView(selection: $tabViewSelection) {
-                    ForEach(Array(zip(weeksNumbers ?? [], chunkedChartDataByWeek ?? [])), id: \.0) { weekNumber, chartDataForWeek in
-                        LazyVStack {
-                            Text("Week \(weekNumber)")
-                                .foregroundColor(.accentColor)
-                                .font(.headline)
-                                .padding()
-                            
-                            BarChartView(dataPoints: chartDataForWeek)
-                                .chartStyle(
-                                    BarChartStyle(
-                                        barMinHeight: 200,
-                                        showAxis: false,
-                                        showLegends: false
+                if let allGoals = viewModel.allGoals, !allGoals.isEmpty {
+                    TabView(selection: $tabViewSelection) {
+                        ForEach(Array(zip(weeksNumbers ?? [], chunkedChartDataByWeek ?? [])), id: \.0) { weekNumber, chartDataForWeek in
+                            LazyVStack {
+                                Text("Week \(weekNumber)")
+                                    .foregroundColor(.accentColor)
+                                    .font(.headline)
+                                    .padding()
+                                
+                                BarChartView(dataPoints: chartDataForWeek)
+                                    .chartStyle(
+                                        BarChartStyle(
+                                            barMinHeight: 200,
+                                            showAxis: false,
+                                            showLegends: false
+                                        )
                                     )
-                                )
-                                .padding()
+                                    .padding()
+                            }
+                            .padding()
                         }
-                        .padding()
+                    }
+                    .tabViewStyle(.page)
+                    
+                    LegendView()
+                } else {
+                    // No Goals Message
+                    VStack {
+                        Image(systemName: "text.badge.xmark")
+                            .font(.system(size: 50, weight: .bold))
+                            .foregroundColor(Color("FailColor"))
+                            .padding(.bottom)
+                        Text("You have not worked on any goals yet.")
                     }
                 }
-                .tabViewStyle(.page)
-                
-                LegendView()
             }
             .navigationBarTitle("Progress")
             .onAppear {
