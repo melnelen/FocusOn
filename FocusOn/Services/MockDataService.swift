@@ -115,32 +115,38 @@ class MockDataService: DataServiceProtocol {
                                                      Task(name: "Test task 0.2", isCompleted: true),
                                                      Task(name: "Test task 0.3", isCompleted: true)])]
     
-    func upsertGoals(goal: Goal, name: String) { }
-    
-    func fetchGoals() -> [Goal] {
-        return allGoals ?? []
+    func fetchGoals() {
     }
     
-    func insertGoal(goal: Goal) throws {
-        try checkLength(of: goal.name)
-        allGoals = allGoals ?? []
-        allGoals?.append(goal)
+    func upsertGoal(goal: Goal) throws {
+        // check if gaol already exists
+        if let updatedGoal = allGoals?.first(where: { $0.id == goal.id }) {
+            // update goal
+            updatedGoal.name = goal.name
+        // if not, create new goal
+        } else {
+            allGoals = allGoals ?? []
+            allGoals?.append(goal)
+        }
     }
     
-    func updateGoal(goal: Goal, name: String) throws {
-        try checkLength(of: goal.name)
-        goal.name = name
+    func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws {
+        // check if task already exists
+        let allTasks = extractTasks(from: allGoals ?? [])
+        if let updatedTask = allTasks.first(where: { $0.id == task.id }) {
+            // update task
+            updatedTask.name = task.name
+            updatedTask.isCompleted = task.isCompleted
+        }
     }
     
-    func updateTask(task: Task, name: String, isCompleted: Bool) throws {
-        try checkLength(of: task.name)
-        task.name = name
-        task.isCompleted = isCompleted
+    func extractTasks(from goals: [Goal]) -> [Task] {
+        return goals.flatMap { $0.tasks }
     }
     
-    func checkLength(of text: String) throws {
-        // check that the text is at least 3 characters long
-        guard text.count > 0 else { throw NameLengthError.empty }
-        guard text.count >= 3 else { throw NameLengthError.short }
-    }
+//    func checkLength(of text: String) throws {
+//        // check that the text is at least 3 characters long
+//        guard text.count > 0 else { throw NameLengthError.empty }
+//        guard text.count >= 3 else { throw NameLengthError.short }
+//    }
 }

@@ -21,19 +21,45 @@ class ProgressViewModel: ObservableObject {
     let bigProgress = Legend(color: Color("AccentColor"), label: "Big Progress", order: 4)
     let success = Legend(color: Color("SuccessColor"), label: "Success", order: 5)
     
-    init( dataService: DataServiceProtocol = MockDataService(), calendar: Calendar = Calendar.current) {
+    init( dataService: DataServiceProtocol = DataService(), calendar: Calendar = Calendar.current) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
         self.calendar = calendar
+    }
+    
+    func fetchGoals() -> [Goal]? {
+        dataService.fetchGoals()
+        allGoals = dataService.allGoals
+        return allGoals
     }
     
     func fillChartData() -> [[DataPoint]]? {
         guard let unwrappedGoals = allGoals else {
             return nil
         }
-        let weeklyChunksOfDataPoints = generateDataPointsForWeeklyChunksOf(goals: unwrappedGoals)
+        let weeklyChunksOfDataPoints = generateDataPointsForWeeklyChunks(of: unwrappedGoals)
         
         return weeklyChunksOfDataPoints.isEmpty ? nil : weeklyChunksOfDataPoints
+    }
+    
+    func getWeeksNumbers(from goals: [Goal]) -> [Int] {
+        var weekNumbers: [Int] = []
+        let goalChunks = splitIntoWeeklyChunks(goals: goals)
+
+        for weeklyGoals in goalChunks {
+            guard let earliestDate = weeklyGoals.map({ $0.createdAt }).min(),
+                  let _ = weeklyGoals.first else {
+                continue
+            }
+
+            var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: earliestDate)
+            components.weekday = firstWeekday
+            let weekNumber = components.weekOfYear ?? 0
+
+            weekNumbers.append(weekNumber)
+        }
+
+        return weekNumbers
     }
     
     private func calculateNumberOfCompletedTasks(goal: Goal) -> Int {
@@ -63,16 +89,7 @@ class ProgressViewModel: ObservableObject {
         return legendSignature
     }
     
-    private func generateDataPointForGoal(goal: Goal) -> DataPoint {
-        let barHeight = Double(calculateNumberOfCompletedTasks(goal: goal) + 1)
-        let dayComponent = Calendar.current.component(.day, from: goal.createdAt)
-        let label = LocalizedStringKey(String(dayComponent))
-        let legend = calculateGoalProgress(goal: goal)
-        
-        return DataPoint(value: barHeight, label: label, legend: legend)
-    }
-    
-    private func splitGoalsIntoWeeklyChunks(goals: [Goal]) -> [[Goal]] {
+    private func splitIntoWeeklyChunks(goals: [Goal]) -> [[Goal]] {
         let sortedGoals = goals.sorted { $0.createdAt < $1.createdAt }
         var goalChunks: [[Goal]] = []
         
@@ -87,8 +104,17 @@ class ProgressViewModel: ObservableObject {
         return goalChunks
     }
     
-    private func generateDataPointsForWeeklyChunksOf(goals: [Goal]) -> [[DataPoint]] {
-        let goalChunks = splitGoalsIntoWeeklyChunks(goals: goals)
+    private func generateDataPoint(for goal: Goal) -> DataPoint {
+        let barHeight = Double(calculateNumberOfCompletedTasks(goal: goal) + 1)
+        let dayComponent = Calendar.current.component(.day, from: goal.createdAt)
+        let label = LocalizedStringKey(String(dayComponent))
+        let legend = calculateGoalProgress(goal: goal)
+        
+        return DataPoint(value: barHeight, label: label, legend: legend)
+    }
+    
+    private func generateDataPointsForWeeklyChunks(of goals: [Goal]) -> [[DataPoint]] {
+        let goalChunks = splitIntoWeeklyChunks(goals: goals)
         var dataPointChunks: [[DataPoint]] = []
         
         for weeklyGoals in goalChunks {
@@ -109,7 +135,7 @@ class ProgressViewModel: ObservableObject {
                 let currentDate = calendar.date(byAdding: .day, value: i, to: firstDay) ?? Date()
                 
                 if let goal = weeklyGoals.first(where: { calendar.isDate($0.createdAt, inSameDayAs: currentDate) }) {
-                    let dataPoint = generateDataPointForGoal(goal: goal)
+                    let dataPoint = generateDataPoint(for: goal)
                     dataPointsForWeek.append(dataPoint)
                 } else {
                     let components = calendar.dateComponents([.day], from: currentDate)

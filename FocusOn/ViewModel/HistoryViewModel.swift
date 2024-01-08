@@ -8,11 +8,11 @@
 import Foundation
 
 class HistoryViewModel: ObservableObject {
-    // MARK: - Published Properties
+    // MARK: Published Properties
     @Published var allGoals: [Goal]?
     @Published var monthlySummaries: [String: String] = [:]
     
-    // MARK: - Private Properties
+    // MARK: Private Properties
     private let dataService: DataServiceProtocol
     private let summaryDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,15 +25,16 @@ class HistoryViewModel: ObservableObject {
         return formatter
     }()
     
-    // MARK: - Initialization
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    // MARK: Initializer
+    init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
     }
     
-    // MARK: - Public Methods
+    // MARK: Public Methods
     func fetchGoals() -> [Goal]? {
-        allGoals = dataService.fetchGoals()
+        dataService.fetchGoals()
+        allGoals = dataService.allGoals
         calculateMonthlySummaries()
         return allGoals
     }
@@ -49,7 +50,7 @@ class HistoryViewModel: ObservableObject {
         return filteredGoals.sorted { $0.createdAt > $1.createdAt }
     }
     
-    // MARK: - Private Methods
+    // MARK: Private Methods
     private func calculateMonthlySummaries() {
         guard let goals = allGoals else { return }
         

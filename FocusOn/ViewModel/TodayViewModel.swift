@@ -9,66 +9,120 @@ import Foundation
 import Combine
 
 class TodayViewModel: ObservableObject {
-    @Published var todayGoal = Goal()
+    // MARK: Published Properties
+    @Published var goalText = ""
+    @Published var tasksText = ["", "", ""]
+    @Published var goalIsCompleted = false
+    @Published var tasksAreCompleted = [false, false, false]
     @Published var allGoals: [Goal]?
+    
+    // MARK: Private Properties
     private let dataService: DataServiceProtocol
+    private let goalDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter
+    }()
     
-    init( dataService: DataServiceProtocol = MockDataService()) {
+    // MARK: Initializer
+    init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
+        self.allGoals = dataService.allGoals
     }
     
-    // MARK: TODO
-    func updateAllGoals() {
-        //        $allGoals
-        //            .combineLatest(dataService.$savedGoals)
-        //            .map { (allGoals, goalsMO) -> [Goal] in
-        //                allGoals.compactMap { (goal) -> Goal? in
-        //                    guard let entity = goalsMO.first(where: { $0.id == goal.id }) else {
-        //                        return nil
-        //                    }
-        //                    return goal.updateGoal(name: entity.name!, isCompleted: entity.isCompleted)
-        //                }
-        //            }
-        //            .sink { [weak self] (returnedGoals) in
-        //                self?.allGoals =  returnedGoals
-        //            }
-        //            .store(in: &cancellables)
-    }
-    
-    func fetchGoals() -> [Goal]? {
-        allGoals = dataService.allGoals
-        return allGoals
-    }
-    
-    func addGoal(name: String) throws {
-        todayGoal.name = name
-        try dataService.insertGoal(goal: todayGoal)
-    }
-    
-    func updateGoal(goal: Goal, name: String) throws {
-        goal.name = name
-        try dataService.updateGoal(goal: goal, name: name)
-    }
-    
-    func updateTask(task: Task, name: String, isCompleted: Bool = false) throws {
-        task.name = name
-        task.isCompleted = isCompleted
-        try dataService.updateTask(task: task, name: name, isCompleted: isCompleted)
-    }
-    
-    func checkGoalIsCompleted(goal: Goal) {
-        if (goal.isCompleted) {
-            goal.tasks.forEach { task in
-                task.isCompleted = false
+    // MARK: Public Properties
+    func addNewGoal(name: String) throws {
+        allGoals?.append(Goal(name: name))
+        
+        if let lastGoal = allGoals?.last {
+            do {
+                goalText = lastGoal.name
+                try dataService.upsertGoal(goal: lastGoal)
+                allGoals = dataService.allGoals
+            } catch {
+                print("Error adding new goal: \(error)")
             }
         } else {
-            goal.tasks.forEach { task in
-                task.isCompleted = true
-            }
+            print("No goals found")
         }
     }
     
-    func checkTaskIsCompleted(goal: Goal, task: Task) {
-        task.isCompleted = !task.isCompleted
+    func updateGoal(goal: Goal, name: String, date: Date) throws {
+        goal.name = name
+        goalText = goal.name // ??
+        goal.createdAt = Date()
+        goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
+        do {
+            try dataService.upsertGoal(goal: goal)
+            allGoals = dataService.allGoals
+        } catch {
+            print("Error updating goal: \(error)")
+        }
+        
     }
+    
+    func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws {
+        task.name = name
+        task.isCompleted = isCompleted
+        do {
+            try dataService.updateTask(goal: goal, task: task, name: name, isCompleted: isCompleted, index: index)
+            allGoals = dataService.allGoals
+        } catch {
+            print("Error updating task: \(error)")
+        }
+    }
+    
+    func checkGoalIsCompleted(goal: Goal) throws {
+        for (index, task) in goal.tasks.enumerated() {
+            try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: !goalIsCompleted, index: index)
+            tasksAreCompleted[index] = task.isCompleted
+        }
+        goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
+        try updateGoal(goal: goal, name: goalText, date: goal.createdAt)
+        allGoals = dataService.allGoals
+    }
+    
+    func checkTaskIsCompleted(goal: Goal, task: Task) throws {
+        // get the index of the task at hand
+        guard let index = Array(goal.tasks).firstIndex(of: task) else {
+            // Handle the case where the task is not found
+            print("Task was not found!")
+            return
+        }
+        
+        do {
+            if task.isCompleted {
+                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: false, index: index)
+            } else {
+                try updateTask(goal: goal, task: task, name: tasksText[index], isCompleted: true, index: index)
+            }
+            
+            // Update tasksText only if the update was successful
+            if let updatedTask = goal.tasks.first(where: { $0.id == task.id }) {
+                tasksText[index] = updatedTask.name
+            } else {
+                // Handle the case where the task was not found after the update
+                print("Task was not found after the update!")
+            }
+        } catch {
+            // Handle the error from updateTask
+            print("Error updating task: \(error)")
+        }
+        
+        tasksAreCompleted[index] = task.isCompleted
+        goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
+        
+        do {
+            try updateGoal(goal: goal, name: goalText, date: goal.createdAt)
+            allGoals = dataService.allGoals
+        } catch {
+            // Handle the error from updateGoal
+            print("Error updating goal: \(error)")
+        }
+    }
+    
+    func formattedGoalDate(from date: Date) -> String {
+        return goalDateFormatter.string(from: date)
+    }
+    
 }
