@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct AddGoalView: View {
+    @ObservedObject var viewModel: TodayViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            TextField("My goal is to ...", text: $viewModel.goalText)
+            Button(action: {
+                addGoalButtonPressed()
+            }) {
+                Text("Add")
+            }
+        }
+    }
+}
+
+extension AddGoalView {
+    private func addGoalButtonPressed() {
+        do {
+            // Add the goal to the list of goals
+            try viewModel.addNewGoal(name: viewModel.goalText)
+            
+        } catch {
+            print("Something went wrong!")
+        }
+        
+        // Hide keyboard
+        UIApplication.shared.endEditing()
+        
+        
     }
 }
 
 #Preview {
-    AddGoalView()
+    AddGoalView(
+        viewModel: TodayView().viewModel)
 }

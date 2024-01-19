@@ -8,11 +8,14 @@
 import Foundation
 
 class HistoryViewModel: ObservableObject {
+    
     // MARK: Published Properties
+    
     @Published var allGoals: [Goal]?
     @Published var monthlySummaries: [String: String] = [:]
     
     // MARK: Private Properties
+    
     private let dataService: DataServiceProtocol
     private let summaryDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -26,12 +29,14 @@ class HistoryViewModel: ObservableObject {
     }()
     
     // MARK: Initializer
+    
     init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
     }
     
     // MARK: Public Methods
+    
     func fetchGoals() -> [Goal]? {
         dataService.fetchGoals()
         allGoals = dataService.allGoals
@@ -51,6 +56,7 @@ class HistoryViewModel: ObservableObject {
     }
     
     // MARK: Private Methods
+    
     private func calculateMonthlySummaries() {
         guard let goals = allGoals else { return }
         

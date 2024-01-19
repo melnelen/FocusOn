@@ -8,11 +8,90 @@
 import SwiftUI
 
 struct UpdateGoalView: View {
+    @ObservedObject var viewModel: TodayViewModel
+    
+    @Binding var isShowingGoalCompletionAnimation: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            TextField("My goal is to ...", text: $viewModel.goalText, onEditingChanged: { editingChanged in
+                if !editingChanged {
+                    updateGoalName()
+                }
+            })
+            Button(action: {
+                goalCheckboxPressed()
+            }) {
+                Image(systemName: (viewModel.goalIsCompleted ? "checkmark.seal.fill" : "circle"))
+                    .foregroundColor(viewModel.goalIsCompleted ? Color("SuccessColor") : .accentColor)
+            }
+        }
+        .onAppear {
+            setupGoalText()
+            setupGoalCheckbox()
+        }
+    }
+}
+
+extension UpdateGoalView {
+    private func updateGoalName() {
+        // Use a delay to update after the user stops typing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            do {
+                guard let lastGoal = viewModel.allGoals?.last else {
+                    print("No goals found!")
+                    return
+                }
+                try viewModel.updateGoal(goal: lastGoal, name: viewModel.goalText, date: lastGoal.createdAt)
+            } catch {
+                print("Error updating goal: \(error)")
+            }
+        }
+    }
+
+    
+    private func goalCheckboxPressed() {
+        do {
+            guard let lastGoal = viewModel.allGoals?.last else {
+                print("No goals found!")
+                return
+            }
+            
+            try viewModel.checkGoalIsCompleted(goal: lastGoal)
+            
+            // Show the goal completion animation
+            if viewModel.goalIsCompleted {
+                isShowingGoalCompletionAnimation = true
+            }
+            
+            // Reset the animation state after a short delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                isShowingGoalCompletionAnimation = false
+            }
+        } catch {
+            print("Something went wrong!")
+        }
+    }
+    
+    private func setupGoalText() {
+        guard let lastGoal = viewModel.allGoals?.last else {
+            print("No goals found!")
+            return
+        }
+        viewModel.goalText = lastGoal.name
+    }
+    
+    private func setupGoalCheckbox() {
+        guard let lastGoal = viewModel.allGoals?.last else {
+            print("No goals found!")
+            return
+        }
+        viewModel.goalIsCompleted = lastGoal.isCompleted
     }
 }
 
 #Preview {
-    UpdateGoalView()
+    UpdateGoalView(
+        viewModel: TodayView().viewModel,
+        isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation)
 }

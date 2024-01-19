@@ -15,12 +15,18 @@ class ProgressViewModelTests: XCTestCase {
     private var mockDataService: DataServiceProtocol!
     private var chunkedChartDataByWeek: [[DataPoint]]?
     private let calendar = Calendar.current
-    private let firstWeekday = 4
+    private let firstWeekday = 4 // Wednesday
     
     override func setUp() {
         super.setUp()
         mockDataService = MockDataService()
         sut = ProgressViewModel(dataService: mockDataService, calendar: Calendar.current)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        mockDataService = nil
+        super.tearDown()
     }
     
     func test_ProgressViewModel_FillChartData_WithNoGoals() {
@@ -144,20 +150,14 @@ class ProgressViewModelTests: XCTestCase {
     func test_ProgressViewModel_WeekStartsOnWednesday() {
         // Given
         var customCalendar = Calendar.current
-        customCalendar.firstWeekday = 4 // Wednesday
+        customCalendar.firstWeekday = firstWeekday
         sut = ProgressViewModel(dataService: mockDataService, calendar: customCalendar)
-        
         // When
         let chartData = sut.fillChartData()
-        let testDataPiont = chartData![3][0] // data point for last goal
-        let legend = testDataPiont.legend
+        let testDataPiont = chartData![3][0] // data point for forst goal of the lest week
+        let firstWeekDay = LocalizedStringKey("9")
+        let label = testDataPiont.label.self
         // Then
-        XCTAssertEqual(legend, Legend(color: Color("AccentColor"), label: "Big Progress", order: 4))
-    }
-    
-    override func tearDown() {
-        sut = nil
-        mockDataService = nil
-        super.tearDown()
+        XCTAssertEqual(label, firstWeekDay, "Label should be the date of the first day of the week.")
     }
 }

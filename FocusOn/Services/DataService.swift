@@ -81,13 +81,22 @@ class DataService: DataServiceProtocol {
                 return
             }
             
-            taskEntity.name = task.name
-            taskEntity.isCompleted = task.isCompleted
+            taskEntity.name = name
+            taskEntity.isCompleted = isCompleted
             
             save()
         } catch {
             print("Error updating goal's tasks: \(error)")
         }
+    }
+    
+    func deleteGoal(goal: Goal) throws {
+        guard let goalEntity = savedGoalsEntities.first(where: { $0.id == goal.id }) else {
+            print("Goal not found with ID: \(goal.id)")
+            return
+        }
+        container.viewContext.delete(goalEntity)
+        save()
     }
     
     // MARK: PRIVATE
@@ -170,16 +179,6 @@ class DataService: DataServiceProtocol {
         }
     }
     
-    
-    private func deleteGoal(goal: Goal) {
-        guard let goalEntity = savedGoalsEntities.first(where: { $0.id == goal.id }) else {
-            print("Goal not found with ID: \(goal.id)")
-            return
-        }
-        container.viewContext.delete(goalEntity)
-        save()
-    }
-    
     private func save() {
         let request = NSFetchRequest<GoalEntity>(entityName: goalEntityName)
         
@@ -218,12 +217,4 @@ class DataService: DataServiceProtocol {
                     name: taskEntity.name!,
                     isCompleted: taskEntity.isCompleted)
     }
-    
-    
-    //    func checkLength(of text: String) throws {
-    //        // check that the text is at least 3 characters long
-    //        guard text.count > 0 else { throw NameLengthError.empty }
-    //        guard text.count >= 3 else { throw NameLengthError.short }
-    //    }
-    
 }

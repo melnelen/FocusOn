@@ -19,8 +19,6 @@ struct GoalCompletionView: View {
     }
 }
 
-struct GoalCompletionView_Previews: PreviewProvider {
-    static var previews: some View {
-        GoalCompletionView()
-    }
+#Preview {
+    GoalCompletionView()
 }

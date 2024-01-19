@@ -12,4 +12,5 @@ protocol DataServiceProtocol {
     func fetchGoals() 
     func upsertGoal(goal: Goal) throws
     func updateTask(goal: Goal, task: Task, name: String, isCompleted: Bool, index: Int) throws
+    func deleteGoal(goal: Goal) throws
 }

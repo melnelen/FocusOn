@@ -8,11 +8,39 @@
 import SwiftUI
 
 struct MonthlySummaryView: View {
+    @ObservedObject var viewModel: HistoryViewModel
+    
+    var month: String
+    var summary: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        LazyVStack {
+            // Monthly Summary header
+            Text("\(month)")
+                .font(.title)
+                .foregroundColor(Color.accentColor)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.vertical, 10)
+            // Monthly Summary details
+            Text("\(summary)")
+                .font(.headline)
+                .foregroundColor(Color.accentColor)
+                .padding(.vertical, 5)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .onAppear { fetchGoals() }
+    }
+}
+
+extension MonthlySummaryView {
+    private func fetchGoals() {
+        viewModel.allGoals = viewModel.fetchGoals()
     }
 }
 
 #Preview {
-    MonthlySummaryView()
+    MonthlySummaryView(
+        viewModel: HistoryView().viewModel, 
+        month: "January",
+        summary: "2 out of 3 goals completed")
 }

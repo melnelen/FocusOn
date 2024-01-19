@@ -47,9 +47,6 @@ extension Color {
     }
 }
 
-
-struct ConfettiView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfettiView()
-    }
+#Preview {
+    ConfettiView()
 }

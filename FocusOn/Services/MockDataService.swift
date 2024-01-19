@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUICharts
 
 class MockDataService: DataServiceProtocol {
     @Published var allGoals: [Goal]? = [Goal(name: "Test goal 23",
@@ -123,10 +122,11 @@ class MockDataService: DataServiceProtocol {
         if let updatedGoal = allGoals?.first(where: { $0.id == goal.id }) {
             // update goal
             updatedGoal.name = goal.name
+            updatedGoal.createdAt = goal.createdAt
         // if not, create new goal
         } else {
-            allGoals = allGoals ?? []
-            allGoals?.append(goal)
+            let newGoal = Goal(name: goal.name, createdAt: goal.createdAt, tasks: goal.tasks)
+            allGoals?.append(newGoal)
         }
     }
     
@@ -135,8 +135,8 @@ class MockDataService: DataServiceProtocol {
         let allTasks = extractTasks(from: allGoals ?? [])
         if let updatedTask = allTasks.first(where: { $0.id == task.id }) {
             // update task
-            updatedTask.name = task.name
-            updatedTask.isCompleted = task.isCompleted
+            updatedTask.name = name
+            updatedTask.isCompleted = isCompleted
         }
     }
     
@@ -144,9 +144,7 @@ class MockDataService: DataServiceProtocol {
         return goals.flatMap { $0.tasks }
     }
     
-//    func checkLength(of text: String) throws {
-//        // check that the text is at least 3 characters long
-//        guard text.count > 0 else { throw NameLengthError.empty }
-//        guard text.count >= 3 else { throw NameLengthError.short }
-//    }
+    func deleteGoal(goal: Goal) throws {
+        allGoals?.removeAll(where: { $0.id == goal.id })
+    }
 }

@@ -87,12 +87,6 @@ extension TodayView {
         } catch {
             print("Something went wrong!")
         }
-}
-    
-    private func showNameLengthAlert() -> Alert {
-        Alert(title: Text("Oops 🙊"),
-              message: Text("Please, make sure that the name of your goal and all of your tasks are at least 3 characters long"),
-              dismissButton: .default(Text("OK")))
     }
     
     private func checkForDailySetup() {
@@ -111,9 +105,6 @@ extension TodayView {
     
 }
 
-struct TodayView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayView()
-            .environmentObject(TodayViewModel())
-    }
+#Preview {
+    TodayView()
 }

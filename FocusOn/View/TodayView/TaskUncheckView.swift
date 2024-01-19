@@ -18,8 +18,6 @@ struct TaskUncheckView: View {
     }
 }
 
-struct TaskUncheckView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskUncheckView()
-    }
+#Preview {
+    TaskUncheckView()
 }

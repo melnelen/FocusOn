@@ -9,7 +9,13 @@ import SwiftUI
 
 struct NoGoalsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Image(systemName: "text.badge.xmark")
+                .font(.system(size: 50, weight: .bold))
+                .foregroundColor(Color("FailColor"))
+                .padding(.bottom)
+            Text("You have not worked on any goals yet.")
+        }
     }
 }
 
