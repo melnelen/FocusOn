@@ -67,13 +67,7 @@ struct HistoryView: View {
                     }
                 } else {
                     // No Goals Message
-                    VStack {
-                        Image(systemName: "text.badge.xmark")
-                            .font(.system(size: 50, weight: .bold))
-                            .foregroundColor(Color("FailColor"))
-                            .padding(.bottom)
-                        Text("You have not worked on any goals yet.")
-                    }
+                    NoGoalsView()
                 }
             }
             .navigationTitle("History")

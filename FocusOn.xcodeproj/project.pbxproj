@@ -13,6 +13,7 @@
 		190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190853A02AE86D18005C20EE /* GoalCompletionView.swift */; };
 		1913E6C72B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1913E6C52B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodeld */; };
 		1939BD3E2B1B92880097340B /* TaskUncheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939BD3D2B1B92880097340B /* TaskUncheckView.swift */; };
+		198A64C12B5B2A7800393A1F /* NoGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64C02B5B2A7800393A1F /* NoGoalsView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -62,6 +63,7 @@
 		190853A02AE86D18005C20EE /* GoalCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCompletionView.swift; sourceTree = "<group>"; };
 		1913E6C62B1A9E73008D9AC9 /* FocusOnDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOnDataModel.xcdatamodel; sourceTree = "<group>"; };
 		1939BD3D2B1B92880097340B /* TaskUncheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUncheckView.swift; sourceTree = "<group>"; };
+		198A64C02B5B2A7800393A1F /* NoGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGoalsView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19B6F1A52B29B08100A8842A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
 				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
 				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
+				198A64C02B5B2A7800393A1F /* NoGoalsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				D06A4CF527FDC3D4003F7C72 /* DataService.swift in Sources */,
 				D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */,
 				D07B0C0927FD930000245BA0 /* Goal.swift in Sources */,
+				198A64C12B5B2A7800393A1F /* NoGoalsView.swift in Sources */,
 				D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
