@@ -74,9 +74,6 @@ extension ProgressView {
 }
 
 
-struct ProgressView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProgressView()
-            .environmentObject(ProgressViewModel())
-    }
+#Preview {
+    ProgressView()
 }

@@ -18,8 +18,6 @@ struct TaskCompletionView: View {
     }
 }
 
-struct TaskCompletionView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskCompletionView()
-    }
+#Preview {
+    TaskCompletionView()
 }

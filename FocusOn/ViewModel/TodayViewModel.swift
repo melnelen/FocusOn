@@ -9,7 +9,9 @@ import Foundation
 import Combine
 
 class TodayViewModel: ObservableObject {
+    
     // MARK: Published Properties
+    
     @Published var goalText = ""
     @Published var tasksText = ["", "", ""]
     @Published var goalIsCompleted = false
@@ -17,6 +19,7 @@ class TodayViewModel: ObservableObject {
     @Published var allGoals: [Goal]?
     
     // MARK: Private Properties
+    
     private let dataService: DataServiceProtocol
     private let goalDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,12 +28,14 @@ class TodayViewModel: ObservableObject {
     }()
     
     // MARK: Initializer
+    
     init( dataService: DataServiceProtocol = DataService()) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
     }
     
-    // MARK: Public Properties
+    // MARK: Public Methods
+    
     func addNewGoal(name: String) throws {
         allGoals?.append(Goal(name: name))
         
@@ -49,7 +54,7 @@ class TodayViewModel: ObservableObject {
     
     func updateGoal(goal: Goal, name: String, date: Date) throws {
         goal.name = name
-        goalText = goal.name // ??
+        goalText = goal.name
         goal.createdAt = Date()
         goalIsCompleted = goal.tasks.allSatisfy { $0.isCompleted }
         do {
@@ -125,4 +130,12 @@ class TodayViewModel: ObservableObject {
         return goalDateFormatter.string(from: date)
     }
     
+    func deleteGoal(goal: Goal) throws {
+        do {
+            try dataService.deleteGoal(goal: goal)
+            allGoals = dataService.allGoals
+        } catch {
+            print("Error deleting goal: \(error)")
+        }
+    }
 }
