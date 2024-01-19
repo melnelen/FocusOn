@@ -1,73 +1,11 @@
 //
-//  GoalSectionView.swift
+//  UpdateGoalView.swift
 //  FocusOn
 //
-//  Created by Alexandra Ivanova on 14/12/2023.
+//  Created by Alexandra Ivanova on 19/01/2024.
 //
 
 import SwiftUI
-
-struct GoalSectionView: View {
-    @ObservedObject var viewModel: TodayViewModel
-    
-    @Binding var isShowingGoalCompletionAnimation: Bool
-    let calendar = Calendar.current
-    
-    var body: some View {
-        Section(header: Text("What is your goal for today?")
-            .bold()
-            .font(.headline)
-            .foregroundColor(.accentColor)) {
-                if let lastGoal = viewModel.allGoals?.last {
-                    if (calendar.isDateInToday(lastGoal.createdAt)) {
-                    Text("\(viewModel.formattedGoalDate(from: lastGoal.createdAt))")
-                        .font(.caption)
-                        .foregroundColor(Color.accentColor)
-                        UpdateGoalView(
-                            viewModel: viewModel,
-                            isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation)
-                    } else {
-                        AddGoalView(viewModel: viewModel)
-                    }
-                } else {
-                    AddGoalView(viewModel: viewModel)
-                }
-            }
-            .font(.system(size: 25))
-    }
-}
-
-struct AddGoalView: View {
-    @ObservedObject var viewModel: TodayViewModel
-    
-    var body: some View {
-        HStack {
-            TextField("My goal is to ...", text: $viewModel.goalText)
-            Button(action: {
-                addGoalButtonPressed()
-            }) {
-                Text("Add")
-            }
-        }
-    }
-}
-
-extension AddGoalView {
-    private func addGoalButtonPressed() {
-        do {
-            // Add the goal to the list of goals
-            try viewModel.addNewGoal(name: viewModel.goalText)
-            
-        } catch {
-            print("Something went wrong!")
-        }
-        
-        // Hide keyboard
-        UIApplication.shared.endEditing()
-        
-        
-    }
-}
 
 struct UpdateGoalView: View {
     @ObservedObject var viewModel: TodayViewModel
@@ -153,7 +91,7 @@ extension UpdateGoalView {
 }
 
 #Preview {
-    GoalSectionView(
+    UpdateGoalView(
         viewModel: TodayView().viewModel,
         isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation)
 }

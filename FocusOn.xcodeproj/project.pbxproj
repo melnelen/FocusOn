@@ -16,6 +16,8 @@
 		198A64C12B5B2A7800393A1F /* NoGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64C02B5B2A7800393A1F /* NoGoalsView.swift */; };
 		198A64C32B5B2B2A00393A1F /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64C22B5B2B2A00393A1F /* LegendView.swift */; };
 		198A64C72B5B2EC900393A1F /* MonthlySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */; };
+		198A64CC2B5B312F00393A1F /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64CB2B5B312F00393A1F /* AddGoalView.swift */; };
+		198A64CE2B5B319F00393A1F /* UpdateGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -68,6 +70,8 @@
 		198A64C02B5B2A7800393A1F /* NoGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGoalsView.swift; sourceTree = "<group>"; };
 		198A64C22B5B2B2A00393A1F /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySummaryView.swift; sourceTree = "<group>"; };
+		198A64CB2B5B312F00393A1F /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
+		198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGoalView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19B6F1A52B29B08100A8842A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +130,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		198A64C82B5B2FAF00393A1F /* HistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				D09D99FF27B0564E004A283C /* HistoryView.swift */,
+				198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */,
+			);
+			path = HistoryView;
+			sourceTree = "<group>";
+		};
+		198A64C92B5B2FCE00393A1F /* TodayView */ = {
+			isa = PBXGroup;
+			children = (
+				D09D99FB27B0562C004A283C /* TodayView.swift */,
+				19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */,
+				19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */,
+				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
+				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
+				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
+				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
+				198A64CB2B5B312F00393A1F /* AddGoalView.swift */,
+				198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */,
+			);
+			path = TodayView;
+			sourceTree = "<group>";
+		};
+		198A64CA2B5B300200393A1F /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				D09D99FD27B05640004A283C /* ProgressView.swift */,
+				198A64C22B5B2B2A00393A1F /* LegendView.swift */,
+			);
+			path = ProgressView;
+			sourceTree = "<group>";
+		};
 		D01FD6842774BA6A001DB74C = {
 			isa = PBXGroup;
 			children = (
@@ -233,18 +271,10 @@
 			isa = PBXGroup;
 			children = (
 				D01FD6922774BA6A001DB74C /* MainView.swift */,
-				D09D99FF27B0564E004A283C /* HistoryView.swift */,
-				198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */,
-				D09D99FB27B0562C004A283C /* TodayView.swift */,
-				D09D99FD27B05640004A283C /* ProgressView.swift */,
-				198A64C22B5B2B2A00393A1F /* LegendView.swift */,
-				19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */,
-				19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */,
-				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
-				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
-				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
-				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
 				198A64C02B5B2A7800393A1F /* NoGoalsView.swift */,
+				198A64C82B5B2FAF00393A1F /* HistoryView */,
+				198A64C92B5B2FCE00393A1F /* TodayView */,
+				198A64CA2B5B300200393A1F /* ProgressView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,7 +433,9 @@
 				190853A12AE86D18005C20EE /* GoalCompletionView.swift in Sources */,
 				19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */,
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
+				198A64CE2B5B319F00393A1F /* UpdateGoalView.swift in Sources */,
 				1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */,
+				198A64CC2B5B312F00393A1F /* AddGoalView.swift in Sources */,
 				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
 				198A64C72B5B2EC900393A1F /* MonthlySummaryView.swift in Sources */,
 				19B6F1A72B2B66F500A8842A /* GoalSectionView.swift in Sources */,
