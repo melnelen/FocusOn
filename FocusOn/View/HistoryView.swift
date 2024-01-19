@@ -18,20 +18,7 @@ struct HistoryView: View {
                         
                         // Monthly Summary
                         ForEach(viewModel.monthlySummaries.sorted(by: { $0.key < $1.key }), id: \.key) { (month, summary) in
-                            LazyVStack {
-                                // Monthly Summary header
-                                Text("\(month)")
-                                    .font(.title)
-                                    .foregroundColor(Color.accentColor)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.vertical, 10)
-                                // Monthly Summary details
-                                Text("\(summary)")
-                                    .font(.headline)
-                                    .foregroundColor(Color.accentColor)
-                                    .padding(.vertical, 5)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
+                            MonthlySummaryView(viewModel: viewModel, month: month, summary: summary)
                             
                             // Goals for the month
                             ForEach(viewModel.goalsForMonth(goals: allGoals, month: month), id: \.self) { goal in
@@ -42,7 +29,7 @@ struct HistoryView: View {
                                             Text("\(viewModel.formattedGoalDate(from: goal.createdAt))")
                                                 .font(.caption)
                                                 .foregroundColor(Color.accentColor)
-                                            Text("\(goal.name)") // $goalNameText.wrappedValue
+                                            Text("\(goal.name)")
                                                 .font(.system(size: 25))
                                         }
                                         Spacer()
@@ -82,9 +69,6 @@ extension HistoryView {
     }
 }
 
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        HistoryView()
-            .environmentObject(HistoryViewModel())
-    }
+#Preview {
+    HistoryView()
 }
