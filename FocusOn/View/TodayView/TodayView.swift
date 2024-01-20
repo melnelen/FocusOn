@@ -14,6 +14,7 @@ struct TodayView: View {
     @State var isShowingTaskCompletionAnimation = false
     @State var isShowingTaskUncheckAnimation = false
     @State var isShowingGoalCompletionAnimation = false
+    @State var isShowingGoalUncheckAnimation = false
     let calendar = Calendar.current
     
     var body: some View {
@@ -21,7 +22,8 @@ struct TodayView: View {
             Form {
                 GoalSectionView(
                     viewModel: viewModel,
-                    isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation)
+                    isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation,
+                    isShowingGoalUncheckAnimation: $isShowingGoalUncheckAnimation)
                 
                 TasksSectionView(
                     viewModel: viewModel,
@@ -52,6 +54,16 @@ struct TodayView: View {
             .overlay(
                 ConfettiView()
                     .opacity(isShowingGoalCompletionAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.5))
+            )
+            .overlay(
+                GoalUncheckView()
+                    .opacity(isShowingGoalUncheckAnimation ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 1.5))
+            )
+            .overlay(
+                SadFaceRainView()
+                    .opacity(isShowingGoalUncheckAnimation ? 1.0 : 0.0)
                     .animation(.easeInOut(duration: 1.5))
             )
         }

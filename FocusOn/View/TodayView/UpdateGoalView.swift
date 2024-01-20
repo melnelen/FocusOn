@@ -11,6 +11,7 @@ struct UpdateGoalView: View {
     @ObservedObject var viewModel: TodayViewModel
     
     @Binding var isShowingGoalCompletionAnimation: Bool
+    @Binding var isShowingGoalUncheckAnimation: Bool
     
     var body: some View {
         HStack {
@@ -60,13 +61,16 @@ extension UpdateGoalView {
             try viewModel.checkGoalIsCompleted(goal: lastGoal)
             
             // Show the goal completion animation
-            if viewModel.goalIsCompleted {
+            if lastGoal.isCompleted {
                 isShowingGoalCompletionAnimation = true
+            } else if !lastGoal.isCompleted {
+                isShowingGoalUncheckAnimation = true
             }
             
             // Reset the animation state after a short delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 isShowingGoalCompletionAnimation = false
+                isShowingGoalUncheckAnimation = false
             }
         } catch {
             print("Something went wrong!")
@@ -93,5 +97,6 @@ extension UpdateGoalView {
 #Preview {
     UpdateGoalView(
         viewModel: TodayView().viewModel,
-        isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation)
+        isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation,
+        isShowingGoalUncheckAnimation: TodayView().$isShowingGoalUncheckAnimation)
 }

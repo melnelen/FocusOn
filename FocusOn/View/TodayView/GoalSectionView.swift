@@ -11,6 +11,7 @@ struct GoalSectionView: View {
     @ObservedObject var viewModel: TodayViewModel
     
     @Binding var isShowingGoalCompletionAnimation: Bool
+    @Binding var isShowingGoalUncheckAnimation: Bool
     let calendar = Calendar.current
     
     var body: some View {
@@ -25,7 +26,8 @@ struct GoalSectionView: View {
                         .foregroundColor(Color.accentColor)
                         UpdateGoalView(
                             viewModel: viewModel,
-                            isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation)
+                            isShowingGoalCompletionAnimation: $isShowingGoalCompletionAnimation,
+                            isShowingGoalUncheckAnimation: $isShowingGoalUncheckAnimation)
                     } else {
                         AddGoalView(viewModel: viewModel)
                     }
@@ -40,5 +42,6 @@ struct GoalSectionView: View {
 #Preview {
     GoalSectionView(
         viewModel: TodayView().viewModel,
-        isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation)
+        isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation,
+        isShowingGoalUncheckAnimation: TodayView().$isShowingGoalUncheckAnimation)
 }

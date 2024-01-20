@@ -10,22 +10,32 @@ import SwiftUICharts
 import SwiftUI
 
 class ProgressViewModel: ObservableObject {
+    
+    // MARK: Published Properties
+    
     @Published var allGoals: [Goal]?
+    
+    // MARK: Private Properties
+    
     private let dataService: DataServiceProtocol
     private let calendar: Calendar
-    let firstWeekday = Calendar.current.firstWeekday
+    private let firstWeekday = Calendar.current.firstWeekday
     
-    let noGoal = Legend(color: .gray, label: "No goal", order: 1)
-    let fail = Legend(color: Color("FailColor"), label: "Fail", order: 2)
-    let smallProgress = Legend(color: Color("ProgressColor"), label: "Small Progress", order: 3)
-    let bigProgress = Legend(color: Color("AccentColor"), label: "Big Progress", order: 4)
-    let success = Legend(color: Color("SuccessColor"), label: "Success", order: 5)
+    private let noGoal = Legend(color: .gray, label: "No goal", order: 1)
+    private let fail = Legend(color: Color("FailColor"), label: "Fail", order: 2)
+    private let smallProgress = Legend(color: Color("ProgressColor"), label: "Small Progress", order: 3)
+    private let bigProgress = Legend(color: Color("AccentColor"), label: "Big Progress", order: 4)
+    private let success = Legend(color: Color("SuccessColor"), label: "Success", order: 5)
+    
+    // MARK: Initializer
     
     init( dataService: DataServiceProtocol = DataService(), calendar: Calendar = Calendar.current) {
         self.dataService = dataService
         self.allGoals = dataService.allGoals
         self.calendar = calendar
     }
+    
+    // MARK: Public Methods
     
     func fetchGoals() -> [Goal]? {
         dataService.fetchGoals()
@@ -45,22 +55,24 @@ class ProgressViewModel: ObservableObject {
     func getWeeksNumbers(from goals: [Goal]) -> [Int] {
         var weekNumbers: [Int] = []
         let goalChunks = splitIntoWeeklyChunks(goals: goals)
-
+        
         for weeklyGoals in goalChunks {
             guard let earliestDate = weeklyGoals.map({ $0.createdAt }).min(),
                   let _ = weeklyGoals.first else {
                 continue
             }
-
+            
             var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: earliestDate)
             components.weekday = firstWeekday
             let weekNumber = components.weekOfYear ?? 0
-
+            
             weekNumbers.append(weekNumber)
         }
-
+        
         return weekNumbers
     }
+    
+    // MARK: Private Methods
     
     private func calculateNumberOfCompletedTasks(goal: Goal) -> Int {
         var numberOfCompletedTasks = 0

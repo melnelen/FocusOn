@@ -43,7 +43,7 @@ private struct ConfettiParticle: View {
 
 extension Color {
     static func randomColor() -> Color {
-        return Color(red: Double.random(in: 0.3...1.0), green: Double.random(in: 0.3...1.0), blue: Double.random(in: 0.0...0.7))
+        return Color(red: Double.random(in: 0.5...1.0), green: Double.random(in: 0.5...1.0), blue: Double.random(in: 0.0...0.5))
     }
 }
 

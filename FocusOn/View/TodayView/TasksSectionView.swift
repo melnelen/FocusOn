@@ -126,5 +126,8 @@ extension TasksSectionView {
 }
 
 #Preview {
-    TasksSectionView(viewModel: TodayView().viewModel, isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation, isShowingTaskCompletionAnimation: TodayView().$isShowingTaskCompletionAnimation, isShowingTaskUncheckAnimation: TodayView().$isShowingTaskUncheckAnimation)
+    TasksSectionView(viewModel: TodayView().viewModel, 
+                     isShowingGoalCompletionAnimation: TodayView().$isShowingGoalCompletionAnimation,
+                     isShowingTaskCompletionAnimation: TodayView().$isShowingTaskCompletionAnimation,
+                     isShowingTaskUncheckAnimation: TodayView().$isShowingTaskUncheckAnimation)
 }

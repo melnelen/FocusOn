@@ -18,6 +18,8 @@
 		198A64C72B5B2EC900393A1F /* MonthlySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */; };
 		198A64CC2B5B312F00393A1F /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64CB2B5B312F00393A1F /* AddGoalView.swift */; };
 		198A64CE2B5B319F00393A1F /* UpdateGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */; };
+		198A64D02B5BE3AF00393A1F /* GoalUncheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64CF2B5BE3AE00393A1F /* GoalUncheckView.swift */; };
+		198A64D22B5BE4CA00393A1F /* SadFaceRainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A64D12B5BE4CA00393A1F /* SadFaceRainView.swift */; };
 		19ACCBAA2A5AF82E00C08E93 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 19ACCBA92A5AF82E00C08E93 /* SwiftUICharts */; };
 		19ACCBAC2A5EABC700C08E93 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */; };
 		19B42F6F2A7EA14800FE7FD5 /* ProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */; };
@@ -39,7 +41,6 @@
 		D0A6FE8F27EDC66500B06218 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */; };
 		D0BD1B972808705F00058C21 /* DataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */; };
 		D0BD1B9928087BFE00058C21 /* MockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD1B9828087BFE00058C21 /* MockDataService.swift */; };
-		D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA10042841145A000FDE98 /* NameLengthError.swift */; };
 		D0DA100728452C1B000FDE98 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA100628452C1B000FDE98 /* HistoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,8 @@
 		198A64C62B5B2EC900393A1F /* MonthlySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySummaryView.swift; sourceTree = "<group>"; };
 		198A64CB2B5B312F00393A1F /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
 		198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGoalView.swift; sourceTree = "<group>"; };
+		198A64CF2B5BE3AE00393A1F /* GoalUncheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalUncheckView.swift; sourceTree = "<group>"; };
+		198A64D12B5BE4CA00393A1F /* SadFaceRainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SadFaceRainView.swift; sourceTree = "<group>"; };
 		19ACCBAB2A5EABC700C08E93 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		19B42F6E2A7EA14800FE7FD5 /* ProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModelTests.swift; sourceTree = "<group>"; };
 		19B6F1A52B29B08100A8842A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -100,7 +103,6 @@
 		D0A6FE8E27EDC66500B06218 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		D0BD1B962808705F00058C21 /* DataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServiceProtocol.swift; sourceTree = "<group>"; };
 		D0BD1B9828087BFE00058C21 /* MockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataService.swift; sourceTree = "<group>"; };
-		D0DA10042841145A000FDE98 /* NameLengthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameLengthError.swift; sourceTree = "<group>"; };
 		D0DA100628452C1B000FDE98 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,13 +146,15 @@
 			children = (
 				D09D99FB27B0562C004A283C /* TodayView.swift */,
 				19B6F1A62B2B66F500A8842A /* GoalSectionView.swift */,
-				19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */,
-				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
-				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
-				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
-				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
 				198A64CB2B5B312F00393A1F /* AddGoalView.swift */,
 				198A64CD2B5B319F00393A1F /* UpdateGoalView.swift */,
+				190853A02AE86D18005C20EE /* GoalCompletionView.swift */,
+				1908539E2AE6BE87005C20EE /* ConfettiView.swift */,
+				198A64CF2B5BE3AE00393A1F /* GoalUncheckView.swift */,
+				198A64D12B5BE4CA00393A1F /* SadFaceRainView.swift */,
+				19B6F1A82B2B6BBB00A8842A /* TasksSectionView.swift */,
+				1908539C2AE6A558005C20EE /* TaskCompletionView.swift */,
+				1939BD3D2B1B92880097340B /* TaskUncheckView.swift */,
 			);
 			path = TodayView;
 			sourceTree = "<group>";
@@ -262,7 +266,6 @@
 			children = (
 				D07B0C0827FD930000245BA0 /* Goal.swift */,
 				D07B0C0A27FD931400245BA0 /* Task.swift */,
-				D0DA10042841145A000FDE98 /* NameLengthError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -425,7 +428,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0DA10052841145A000FDE98 /* NameLengthError.swift in Sources */,
 				1908539B2AE2C739005C20EE /* NotificationManager.swift in Sources */,
 				D09D9A0027B0564F004A283C /* HistoryView.swift in Sources */,
 				D07B0C0B27FD931400245BA0 /* Task.swift in Sources */,
@@ -435,8 +437,10 @@
 				D01FD6932774BA6A001DB74C /* MainView.swift in Sources */,
 				198A64CE2B5B319F00393A1F /* UpdateGoalView.swift in Sources */,
 				1908539F2AE6BE87005C20EE /* ConfettiView.swift in Sources */,
+				198A64D02B5BE3AF00393A1F /* GoalUncheckView.swift in Sources */,
 				198A64CC2B5B312F00393A1F /* AddGoalView.swift in Sources */,
 				1908539D2AE6A558005C20EE /* TaskCompletionView.swift in Sources */,
+				198A64D22B5BE4CA00393A1F /* SadFaceRainView.swift in Sources */,
 				198A64C72B5B2EC900393A1F /* MonthlySummaryView.swift in Sources */,
 				19B6F1A72B2B66F500A8842A /* GoalSectionView.swift in Sources */,
 				D09D99FC27B0562D004A283C /* TodayView.swift in Sources */,
