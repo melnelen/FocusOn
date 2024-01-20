@@ -38,10 +38,11 @@ final class HistoryViewModelTests: XCTestCase {
 
     func test_HistoryViewModel_GoalsForMonth_NumberOfGoals_MonthWithData() {
         // Given
-        let allGoals = mockDataService.allGoals!
+        sut.allGoals = sut.fetchGoals()
+        let goals = sut.allGoals!
 
         // When
-        let result = sut.goalsForMonth(goals: allGoals, month: "October 2023")
+        let result = sut.goalsForMonth(goals: goals, month: "October 2023")
 
         // Then
         XCTAssertEqual(result.count, 11, "Incorrect number of goals for the month.")
@@ -49,10 +50,11 @@ final class HistoryViewModelTests: XCTestCase {
     
     func test_HistoryViewModel_GoalsForMonth_NumberOfGoals_MonthWithNoData() {
         // Given
-        let allGoals = mockDataService.allGoals!
+        sut.allGoals = sut.fetchGoals()
+        let goals = sut.allGoals!
 
         // When
-        let result = sut.goalsForMonth(goals: allGoals, month: "January 2022")
+        let result = sut.goalsForMonth(goals: goals, month: "January 2022")
 
         // Then
         XCTAssertEqual(result.count, 0, "Incorrect number of goals for the month.")
@@ -60,10 +62,11 @@ final class HistoryViewModelTests: XCTestCase {
     
     func test_HistoryViewModel_GoalsForMonth_GoalsSorting() {
         // Given
-        let allGoals = mockDataService.allGoals!
+        sut.allGoals = sut.fetchGoals()
+        let goals = sut.allGoals!
 
         // When
-        let result = sut.goalsForMonth(goals: allGoals, month: "October 2023")
+        let result = sut.goalsForMonth(goals: goals, month: "October 2023")
         let firstGoal = result[0]
         let secondGoal = result[1]
 

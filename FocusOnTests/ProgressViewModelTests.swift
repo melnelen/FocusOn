@@ -15,12 +15,18 @@ class ProgressViewModelTests: XCTestCase {
     private var mockDataService: DataServiceProtocol!
     private var chunkedChartDataByWeek: [[DataPoint]]?
     private let calendar = Calendar.current
-    private let firstWeekday = 4
+    private let firstWeekday = 4 // Wednesday
     
     override func setUp() {
         super.setUp()
         mockDataService = MockDataService()
         sut = ProgressViewModel(dataService: mockDataService, calendar: Calendar.current)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        mockDataService = nil
+        super.tearDown()
     }
     
     func test_ProgressViewModel_FillChartData_WithNoGoals() {
@@ -43,7 +49,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_FillChartData_WithGoals() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         // Then
@@ -52,7 +58,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartBarHeight_ForNoGoal() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][3] // data point for an empty day
@@ -63,7 +69,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartBarHeight_ForFail() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][0] // data point for failed goal
@@ -74,7 +80,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartBarHeight_ForSmallProgress() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][1] // data point for small progress goal
@@ -85,7 +91,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartBarHeight_ForBigProgress() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][2] // data point for big progress goal
@@ -96,7 +102,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartBarHeight_ForSussess() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][4] // data point for last goal
@@ -107,7 +113,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartLabel() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         let mockGoal = sut.allGoals!.last! // last goal
         // When
         let chartData = sut.fillChartData()
@@ -120,7 +126,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartLabel_NoGoalDay() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][3] // data point for a day with no goal set up
@@ -132,7 +138,7 @@ class ProgressViewModelTests: XCTestCase {
     
     func test_ProgressViewModel_ChartLegend() {
         // Given
-        sut.allGoals = mockDataService.allGoals
+        sut.allGoals = sut.fetchGoals()
         // When
         let chartData = sut.fillChartData()
         let testDataPiont = chartData![3][4] // data point for last goal
@@ -144,20 +150,24 @@ class ProgressViewModelTests: XCTestCase {
     func test_ProgressViewModel_WeekStartsOnWednesday() {
         // Given
         var customCalendar = Calendar.current
-        customCalendar.firstWeekday = 4 // Wednesday
+        customCalendar.firstWeekday = firstWeekday
         sut = ProgressViewModel(dataService: mockDataService, calendar: customCalendar)
-        
         // When
         let chartData = sut.fillChartData()
-        let testDataPiont = chartData![3][0] // data point for last goal
-        let legend = testDataPiont.legend
+        let testDataPiont = chartData![3][0] // data point for forst goal of the lest week
+        let firstWeekDay = LocalizedStringKey("9")
+        let label = testDataPiont.label.self
         // Then
-        XCTAssertEqual(legend, Legend(color: Color("AccentColor"), label: "Big Progress", order: 4))
+        XCTAssertEqual(label, firstWeekDay, "Label should be the date of the first day of the week.")
     }
     
-    override func tearDown() {
-        sut = nil
-        mockDataService = nil
-        super.tearDown()
+    func test_ProgressViewModel_getWeeksNumbers() {
+        // Given
+        sut.allGoals = sut.fetchGoals()
+        let goals = sut.allGoals!
+        // When
+        let weeksNumbers = sut.getWeeksNumbers(from: goals)
+        // Then
+        XCTAssertEqual(weeksNumbers, [38, 39, 40, 41], "Weeks numbers should be 38, 39, 40, 41.")
     }
 }
