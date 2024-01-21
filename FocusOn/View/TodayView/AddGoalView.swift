@@ -13,11 +13,13 @@ struct AddGoalView: View {
     var body: some View {
         HStack {
             TextField("My goal is to ...", text: $viewModel.goalText)
+                .accessibility(identifier: "MyAddGoalTextField")
             Button(action: {
                 addGoalButtonPressed()
             }) {
                 Text("Add")
             }
+            .accessibility(identifier: "AddGoalButton")
         }
     }
 }

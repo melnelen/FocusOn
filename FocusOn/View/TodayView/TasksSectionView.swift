@@ -24,20 +24,19 @@ struct TasksSectionView: View {
                     if (calendar.isDateInToday(lastGoal.createdAt)) {
                         ForEach(Array(lastGoal.tasks.enumerated()), id: \.element) { index, task in
                             HStack {
-//                                TextField("My task is to ...", text: $viewModel.tasksText[index])
                                 TextField("My task is to ...", text: $viewModel.tasksText[index], onEditingChanged: { editingChanged in
                                     if !editingChanged {
                                         updateTaskName(goal: lastGoal, task: task, index: index)
                                     }
                                 })
+                                .accessibility(identifier: "myTaskTextField\(index)")
                                 Button(action: {
                                     taskCheckboxPressed(goal: lastGoal, task: task)
-//                                    updateTasksText()
-//                                    updateTasksCheckboxes()
                                 }) {
                                     Image(systemName: (viewModel.tasksAreCompleted[index] ? "checkmark.circle.fill" : "circle"))
                                         .foregroundColor(viewModel.tasksAreCompleted[index] ? Color("SuccessColor") : .accentColor)
                                 }
+                                .accessibility(identifier: "myTaskCheckboxButton\(index)")
                             }
                         }
                     }
@@ -65,7 +64,6 @@ extension TasksSectionView {
     private func taskCheckboxPressed(goal: Goal, task: Task) {
         do {
             try viewModel.checkTaskIsCompleted(goal: goal, task: task)
-            
             
             // Show the task completion animation
             if task.isCompleted && !goal.isCompleted {
@@ -111,18 +109,6 @@ extension TasksSectionView {
             viewModel.tasksAreCompleted[index] = task.isCompleted
         }
     }
-    
-//    private func updateTasksText() {
-//        for (index, _) in viewModel.tasksText.enumerated() {
-//            viewModel.allGoals!.last!.tasks[index].name = viewModel.tasksText[index]
-//        }
-//    }
-//    
-//    private func updateTasksCheckboxes() {
-//        for (index, _) in viewModel.tasksAreCompleted.enumerated() {
-//            viewModel.allGoals!.last!.tasks[index].isCompleted = viewModel.tasksAreCompleted[index]
-//        }
-//    }
 }
 
 #Preview {

@@ -20,12 +20,14 @@ struct UpdateGoalView: View {
                     updateGoalName()
                 }
             })
+            .accessibility(identifier: "MyUpdateGoalTextField")
             Button(action: {
                 goalCheckboxPressed()
             }) {
                 Image(systemName: (viewModel.goalIsCompleted ? "checkmark.seal.fill" : "circle"))
                     .foregroundColor(viewModel.goalIsCompleted ? Color("SuccessColor") : .accentColor)
             }
+            .accessibility(identifier: "MyGoalCheckboxButton")
         }
         .onAppear {
             setupGoalText()
