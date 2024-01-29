@@ -112,7 +112,7 @@ class MockDataService: DataServiceProtocol {
                                              createdAt: Date(timeIntervalSince1970: 1697191200), // Fri 13 Oct 2023
                                              tasks: [Task(name: "Test task 0.1", isCompleted: true),
                                                      Task(name: "Test task 0.2", isCompleted: true),
-                                                     Task(name: "Test task 0.3", isCompleted: true)])]
+                                                     Task(name: "Test task 0.3", isCompleted: false)])]
     
     func fetchGoals() {
     }
